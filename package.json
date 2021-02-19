@@ -9,11 +9,38 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@types/enzyme": "^3.10.8",
+    "@types/jest": "^26.0.20",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
-    "typescript": "~4.0.0"
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "jest-environment-enzyme": "^7.1.2",
+    "jest-enzyme": "^7.1.2",
+    "react-dom": "^16.13.1",
+    "ts-jest": "^26.5.1",
+    "typescript": "^4.0.7"
+  },
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "jest-enzyme"
+    ],
+    "testEnvironment": "enzyme",
+    "testEnvironmentOptions": {
+      "enzymeAdapter": "react16"
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   },
   "scripts": {
+    "test": "jest",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
