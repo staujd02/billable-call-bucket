@@ -1,10 +1,11 @@
 import { shallow } from "enzyme"
 import React from "react";
 import App from "./App";
+import MainNavigation from "./MainNavigation";
 
-describe("I can test things", () => {
-    it("can test stuff too", () => {
+describe("The App element", () => {
+    it("contains the root navigation", () => {
         const app = shallow(<App />);
-        expect(app.first().first().text()).toEqual("Open up App.tsx to start working on your app!");
+        expect(app.children().first()).toEqual(<MainNavigation />);
     })
 })
