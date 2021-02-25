@@ -1,7 +1,7 @@
 import { shallow } from "enzyme"
 import React from "react";
 import App from "./App";
-import MainNavigation from "./MainNavigation";
+import MainNavigation from "./src/MainNavigation";
 
 describe("The App element", () => {
     it("contains the root navigation", () => {
