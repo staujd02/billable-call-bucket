@@ -17,6 +17,7 @@ export type RootStackParamList = {
   LinkClientToCall: undefined;
 };
 
+type HomeScreenProps = StackScreenProps<RootStackParamList, 'HomeScreen'>;
 type DraftBillProps = StackScreenProps<RootStackParamList, 'DraftBill'>;
 type CallLinkedToClientProps = StackScreenProps<RootStackParamList, 'CallLinkedToClient'>;
 type EditLinkedCallProps = StackScreenProps<RootStackParamList, 'EditLinkedCall'>;
