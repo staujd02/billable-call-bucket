@@ -6,6 +6,7 @@ import MainNavigation from "./src/MainNavigation";
 describe("The App element", () => {
     it("contains the root navigation", () => {
         const app = shallow(<App />);
-        expect(app.children().first()).toEqual(<MainNavigation />);
-    })
-})
+        expect(app.contains(<MainNavigation />))
+        .toBe(true);
+    });
+});

@@ -29,6 +29,9 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": [
+      "./test-setup.ts"
+    ],
     "setupFilesAfterEnv": [
       "jest-enzyme"
     ],
@@ -39,6 +42,9 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation|@react-navigation/.*)"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
