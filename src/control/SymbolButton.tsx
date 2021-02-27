@@ -1,13 +1,17 @@
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { AppStyle } from "../../styles/default";
+import { Icon } from "react-native-vector-icons/Icon";
 
-const AppButton = ({ onPress, title }) => (
-    <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-        <Text style={styles.appButtonText}>{title}</Text>
-    </TouchableOpacity>
-);
+const SymbolButton = ({ onPress, symbol, title }) => {
+    return (
+        <TouchableOpacity accessibilityActions={[{ name: "click", label: title}]} 
+            onPress={onPress} style={styles.appButtonContainer}>
+            <Icon name={symbol}></Icon>
+        </TouchableOpacity>
+    );
+}
 
 const styles = StyleSheet.create({
     appButtonContainer: {
@@ -25,4 +29,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AppButton;
+export default SymbolButton;

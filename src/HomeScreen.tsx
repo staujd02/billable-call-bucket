@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppStyle } from '../styles/default';
 import { HomeScreenProps } from '../types/routes';
-import AppButton from './control/Button';
+import AppButton from './control/AppButton';
 import SelectableListItem from './control/SelectableListItem';
 
 const HomeScreen = (props: HomeScreenProps) => {

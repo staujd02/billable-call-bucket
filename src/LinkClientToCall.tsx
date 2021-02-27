@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import { LinkClientToCallProps } from '../types/routes';
+import MultiActionButton from './control/MultiActionButton';
 
 const LinkClientToCall = (props: LinkClientToCallProps) => {
 
@@ -25,10 +26,12 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
         data={data}
         renderItem={
           ({ item }) => (
-            <Button onPress={onGoToDraftBill} title="Recent Call">
-              <Button onPress={onGoToClientDetail} title="Client Detail">{item.key}</Button>
-              <Button onPress={onGoToDraftBill} title="Bill Call">Bill Call</Button>
-            </Button>
+            <MultiActionButton 
+              mainTitle={item.key} 
+              onPressMainAction={onGoToClientDetail}
+              onPressSecondaryAction={onGoToDraftBill}
+              secondaryTitle={"bill " + item.key} 
+              secondarySymbol='money-bill'  />
           )
         }
       />
