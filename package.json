@@ -1,19 +1,58 @@
 {
   "dependencies": {
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/native": "^5.9.2",
+    "@react-navigation/stack": "^5.14.2",
     "expo": "~40.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-    "react-native-screens": "~2.15.0",
-    "react-native-web": "~0.13.12"
+    "react-native-gesture-handler": "~1.8.0",
+    "react-native-reanimated": "~1.13.0",
+    "react-native-safe-area-context": "3.1.9",
+    "react-native-screens": "~2.15.2",
+    "react-native-web": "^0.15.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@types/enzyme": "^3.10.8",
+    "@types/jest": "^26.0.20",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
-    "typescript": "~4.0.0"
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "jest-environment-enzyme": "^7.1.2",
+    "jest-enzyme": "^7.1.2",
+    "react-dom": "^16.13.1",
+    "ts-jest": "^26.5.1",
+    "typescript": "^4.0.7"
+  },
+  "jest": {
+    "preset": "react-native",
+    "setupFiles": [
+      "./test-setup.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "jest-enzyme"
+    ],
+    "testEnvironment": "enzyme",
+    "testEnvironmentOptions": {
+      "enzymeAdapter": "react16"
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation|@react-navigation/.*)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   },
   "scripts": {
+    "test": "jest --watch",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
