@@ -14,7 +14,7 @@ const DraftBill = (props: DraftBillProps) => {
     { key: 'Doctor', duration: "3 min." },
     { key: 'Lead', duration: "2 min." },
     { key: 'Program Manager', duration: "5 min." },
-    { key: 'Doctor', duration: "35 min." },
+    { key: 'Doctor Two', duration: "35 min." },
   ];
 
   return (

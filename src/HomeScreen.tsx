@@ -1,7 +1,10 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { AppStyle } from '../styles/default';
 import { HomeScreenProps } from '../types/routes';
+import AppButton from './control/Button';
+import SelectableListItem from './control/SelectableListItem';
 
 const HomeScreen = (props: HomeScreenProps) => {
 
@@ -14,29 +17,42 @@ const HomeScreen = (props: HomeScreenProps) => {
   const onGoToLinkClientToCall = () => navigation.push('LinkClientToCall');
 
   const data = [
-    { key: 'Jerry: (222) 111-1111'},
-    { key: '(222) 222-2222'},
-    { key: 'Kate: (333) 333-3332'},
+    { key: 'Jerry: (222) 111-1111' },
+    { key: '(222) 222-2222' },
+    { key: 'Kate: (232) 333-3332' },
+    { key: 'Kate: (133) 333-3332' },
+    { key: 'Kate: (233) 333-3332' },
+    { key: 'Kate: (333) 353-3332' },
+    { key: 'Kate: (444) 333-3332' },
+    { key: 'Kate: (555) 333-3332' },
+    { key: 'Kate: (666) 333-3332' },
+    { key: 'Kate: (777) 333-3332' },
+    { key: 'Kate: (888) 333-3332' },
+    { key: 'Kate: (999) 333-3332' },
+    { key: 'Kate: (313) 333-3332' },
+    { key: 'Kate: (323) 333-3332' },
+    { key: 'Kate: (333) 333-3332' },
+    { key: 'Kate: (343) 333-3332' },
+    { key: 'Kate: (353) 333-3332' },
   ];
 
   return (
     <View style={styles.container} >
-      <Text>HomeScreen</Text>
-      <Button title="Draft Bills By Client" onPress={onGoToDraftBillsByClient}>Billable List</Button>
-      <Button title="Billing History By Client" onPress={onGoToBillingHistoryByClient}>Billed Call</Button>
-      <Button title="Client List" onPress={onGoToClientList}>Client List</Button>
-      <Text>Recent Calls</Text>
-      <Button title="Recent Calls" onPress={() => false}>Recent Calls</Button>
-      <FlatList
-        data={data}
-        renderItem={
-          ({ item }) => (
-            <Button onPress={onGoToLinkClientToCall} title="Recent Call">
-              {item.key}
-            </Button>
-          )
-        }
-      />
+      <View style={styles.navigationRow} >
+        <AppButton title="Draft Bills" onPress={onGoToDraftBillsByClient} />
+        <AppButton title="Billing History" onPress={onGoToBillingHistoryByClient} />
+        <AppButton title="Client List" onPress={onGoToClientList} />
+      </View>
+      <View style={styles.content} >
+        <Text style={styles.callHeader} >Recent Calls</Text>
+        <FlatList
+          data={data}
+          style={styles.list}
+          renderItem={
+            ({ item }) => <SelectableListItem onPress={onGoToLinkClientToCall} title={item.key} />
+          }
+        />
+      </View>
     </View>
   );
 };
@@ -44,10 +60,30 @@ const HomeScreen = (props: HomeScreenProps) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  navigationRow: {
+    backgroundColor: AppStyle.navigationBackground,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginBottom: 20,
+    marginTop: 20,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: AppStyle.navigationBackground,
   },
+  content: {
+    paddingTop: 10,
+    flex: 1,
+    backgroundColor: AppStyle.background,
+  },
+  callHeader: {
+    color: AppStyle.text,
+    textAlign: 'center',
+    fontSize: AppStyle.titleSize,
+    marginBottom: 10,
+  },
+  list: {
+    paddingLeft: 5,
+    paddingRight: 5,
+  }
 });
