@@ -4,6 +4,8 @@ export const ColorPalette = {
     light: '#b7c9db',
     dark: '#1f4c82',
     boring: '#688ab2',
+    
+    green: "#00802b",
 
     white: "#fff",
     black: "#000",
@@ -21,6 +23,10 @@ export const AppStyle = {
     buttonBackground: ColorPalette.light,
 
     listItemBorderColor: ColorPalette.boring,
+
+    multiActionSymbolColor: ColorPalette.white,
+    multiActionSymbolButtonColor: ColorPalette.green, // "#ff0",
+    multiActionBackgroundColor: ColorPalette.light,
 
     titleSize: 24,
 }

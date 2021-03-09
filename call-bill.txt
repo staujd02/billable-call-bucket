@@ -1,0 +1,4 @@
+Call Bill
+
+Call Date      Which House         Who Called - Contact        Who was helped (client)         Call Duration        Notes
+=========    ===============       ======================      ==========================     =================   ===========

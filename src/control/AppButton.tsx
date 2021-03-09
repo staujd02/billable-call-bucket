@@ -4,8 +4,7 @@ import { StyleSheet, Text } from 'react-native';
 import { AppStyle } from "../../styles/default";
 
 const AppButton = ({ onPress, title }) => (
-    <TouchableOpacity accessibilityActions={[{name: "click", label: title}]} 
-                        onPress={onPress} style={styles.appButtonContainer}>
+    <TouchableOpacity accessibilityActions={[{name: "click", label: title}]} onPress={onPress} style={styles.appButtonContainer}>
         <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>
 );
