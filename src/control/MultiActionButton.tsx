@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 const MultiActionButton = ({ onPressMainAction, onPressSecondaryAction, mainTitle, secondaryTitle, secondarySymbol }) => (
     <View style={styles.buttonContainer} >
-        <TouchableOpacity accessibilityActions={[{name: "click", label: mainTitle}]} onPress={onPressMainAction}>
+        <TouchableOpacity style={styles.appButtonTextContainer} accessibilityActions={[{name: "click", label: mainTitle}]} onPress={onPressMainAction}>
             <Text style={styles.appButtonText}>{mainTitle}</Text>
         </TouchableOpacity>
         <TouchableOpacity accessibilityActions={[{ name: "click", label: secondaryTitle}]} 
@@ -35,11 +35,13 @@ const styles = StyleSheet.create({
         paddingVertical: 15, 
         borderLeftWidth: 1,
     },
-    appButtonText: {
-        width: 100,
-        fontSize: 16,
+    appButtonTextContainer: {
+        flexGrow: 1,
         paddingHorizontal: 15, 
         paddingVertical: 15, 
+    },
+    appButtonText: {
+        fontSize: 16,
         textAlign: 'center',
     }
 });
