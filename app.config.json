@@ -1,0 +1,8 @@
+{
+    "android": {
+        "permissions": [
+            "READ_CALL_LOG",
+            "READ_CONTACTS"
+        ]
+    }
+}

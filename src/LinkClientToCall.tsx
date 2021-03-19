@@ -13,7 +13,6 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
   const onGoToClientDetail = () => navigation.push('ClientDetail');
 
   const [searchValue, setSearchValue] = useState("");
-
   const data = [
     { key: 'Dave' },
     { key: 'Joaniz' },

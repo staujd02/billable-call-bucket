@@ -5,10 +5,13 @@ import { AppStyle } from '../styles/default';
 import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import SelectableListItem from './control/SelectableListItem';
+import useCallLogs from './hooks/useCallLogs';
 
 const HomeScreen = (props: HomeScreenProps) => {
 
   const { navigation } = props;
+
+  const { callLogData } = useCallLogs();
 
   const onGoToDraftBillsByClient = () => navigation.push('DraftBillsByClient');
   const onGoToClientList = () => navigation.push('ClientList');
@@ -16,25 +19,24 @@ const HomeScreen = (props: HomeScreenProps) => {
 
   const onGoToLinkClientToCall = () => navigation.push('LinkClientToCall');
 
-  const data = [
-    { key: 'Jerry: (222) 111-1111' },
-    { key: '(222) 222-2222' },
-    { key: 'Kate: (232) 333-3332' },
-    { key: 'Kate: (133) 333-3332' },
-    { key: 'Kate: (233) 333-3332' },
-    { key: 'Kate: (333) 353-3332' },
-    { key: 'Kate: (444) 333-3332' },
-    { key: 'Kate: (555) 333-3332' },
-    { key: 'Kate: (666) 333-3332' },
-    { key: 'Kate: (777) 333-3332' },
-    { key: 'Kate: (888) 333-3332' },
-    { key: 'Kate: (999) 333-3332' },
-    { key: 'Kate: (313) 333-3332' },
-    { key: 'Kate: (323) 333-3332' },
-    { key: 'Kate: (333) 333-3332' },
-    { key: 'Kate: (343) 333-3332' },
-    { key: 'Kate: (353) 333-3332' },
-  ];
+  // getContactsByPhoneNumber - react-native-contacts
+  // https://aboutreact.com/access-contact-list-react-native/
+
+  // [
+// Name : {item.name ? item.name : 'NA'}
+//           {'\n'}
+//           DateTime : {item.dateTime}
+//           {'\n'}
+//           Duration : {item.duration}
+//           {'\n'}
+//           PhoneNumber : {item.phoneNumber}
+//           {'\n'}
+//           RawType : {item.rawType}
+//           {'\n'}
+//           Timestamp : {item.timestamp}
+//           {'\n'}
+//           Type : {item.type}
+  // ];
 
   return (
     <View style={styles.container} >
@@ -46,10 +48,10 @@ const HomeScreen = (props: HomeScreenProps) => {
       <View style={styles.content} >
         <Text style={styles.callHeader} >Recent Calls</Text>
         <FlatList
-          data={data}
+          data={callLogData}
           style={styles.list}
           renderItem={
-            ({ item }) => <SelectableListItem onPress={onGoToLinkClientToCall} title={item.key} />
+            ({ item }) => <SelectableListItem onPress={onGoToLinkClientToCall} title={item.phoneNumber} />
           }
         />
       </View>
