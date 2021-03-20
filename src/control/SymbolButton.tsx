@@ -3,8 +3,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet } from 'react-native';
 import { AppStyle } from "../../styles/default";
 import { FontAwesome5 } from '@expo/vector-icons';
+import { SymbolButtonProps } from "../../types/controls";
 
-const SymbolButton = ({ onPress, symbol, title }) => {
+const SymbolButton = ({ onPress, symbol, title }: SymbolButtonProps) => {
     return (
         <TouchableOpacity accessibilityActions={[{ name: "click", label: title}]} 
             onPress={onPress} style={styles.appButtonContainer}>

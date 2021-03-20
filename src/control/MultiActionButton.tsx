@@ -3,8 +3,9 @@ import { Text } from "react-native";
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { AppStyle } from "../../styles/default";
 import { FontAwesome5 } from '@expo/vector-icons';
+import { MultiActionButtonProps } from "../../types/controls";
 
-const MultiActionButton = ({ onPressMainAction, onPressSecondaryAction, mainTitle, secondaryTitle, secondarySymbol }) => (
+const MultiActionButton = ({ onPressMainAction, onPressSecondaryAction, mainTitle, secondaryTitle, secondarySymbol }: MultiActionButtonProps) => (
     <View style={styles.buttonContainer} >
         <TouchableOpacity style={styles.appButtonTextContainer} accessibilityActions={[{name: "click", label: mainTitle}]} onPress={onPressMainAction}>
             <Text style={styles.appButtonText}>{mainTitle}</Text>

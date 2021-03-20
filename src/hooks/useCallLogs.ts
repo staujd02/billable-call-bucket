@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { requestCallLogPermission } from "../service/permissionRequest";
+import { CallLog } from "../../types/calls";
 
 import CallLogs from 'react-native-call-log';
 
 const useCallLogs = () => {
 
-    const [callLogData, setCallLogData] = useState([]);
+    const [callLogData, setCallLogData] = useState<Array<CallLog>>([]);
 
     useEffect(() => {
         fetchData();
@@ -13,8 +14,8 @@ const useCallLogs = () => {
 
     async function fetchData() {
         const allowedToGetCallLogs = await requestCallLogPermission();
-        if(allowedToGetCallLogs ){
-            const logs = CallLogs.loadAll();
+        if(allowedToGetCallLogs){
+            const logs = await CallLogs.load(5);
             setCallLogData(logs);
         }
     }

@@ -2,8 +2,9 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet, Text, View } from 'react-native';
 import { AppStyle } from "../../styles/default";
+import { SelectableListItemProps } from "../../types/controls";
 
-const SelectableListItem = ({ onPress, title }) => (
+const SelectableListItem = ({ onPress, title }: SelectableListItemProps) => (
     <View style={styles.spacing} >
         <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
             <Text style={styles.appButtonText}>{title}</Text>

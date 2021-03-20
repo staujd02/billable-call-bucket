@@ -2,8 +2,9 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet, Text } from 'react-native';
 import { AppStyle } from "../../styles/default";
+import { AppButtonProps } from "../../types/controls";
 
-const AppButton = ({ onPress, title }) => (
+const AppButton = ({ onPress, title }: AppButtonProps) => (
     <TouchableOpacity accessibilityActions={[{name: "click", label: title}]} onPress={onPress} style={styles.appButtonContainer}>
         <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>

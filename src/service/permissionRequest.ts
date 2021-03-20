@@ -1,18 +1,24 @@
 import * as Permissions from 'expo-permissions';
+import { PermissionsAndroid } from 'react-native';
 
 async function requestCallLogPermission(): Promise<boolean> {
     try {
-        const customPermission: any = "READ_CALL_LOG";
-        const { status } = await Permissions.getAsync(customPermission);
-        if (status === "undetermined") {
-            const { status } = await Permissions.askAsync(
-                Permissions.CONTACTS,
-            );
-            return status === 'granted';
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+            {
+                title: 'Allow App To Access Call Logs',
+                message: "This app needs access to your call logs to link recent calls.",
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+            },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            return true;
+        } else {
+            return false;
         }
-        return status === 'granted';
-    } catch (error) {
-        console.error(error);
+    } catch (e) {
         return false;
     }
 }

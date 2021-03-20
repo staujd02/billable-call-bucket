@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AppStyle } from '../styles/default';
 import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
-import SelectableListItem from './control/SelectableListItem';
+import SelectableCallItem from './custom-control/SelectableCallItem';
 import useCallLogs from './hooks/useCallLogs';
 
 const HomeScreen = (props: HomeScreenProps) => {
@@ -19,25 +19,6 @@ const HomeScreen = (props: HomeScreenProps) => {
 
   const onGoToLinkClientToCall = () => navigation.push('LinkClientToCall');
 
-  // getContactsByPhoneNumber - react-native-contacts
-  // https://aboutreact.com/access-contact-list-react-native/
-
-  // [
-// Name : {item.name ? item.name : 'NA'}
-//           {'\n'}
-//           DateTime : {item.dateTime}
-//           {'\n'}
-//           Duration : {item.duration}
-//           {'\n'}
-//           PhoneNumber : {item.phoneNumber}
-//           {'\n'}
-//           RawType : {item.rawType}
-//           {'\n'}
-//           Timestamp : {item.timestamp}
-//           {'\n'}
-//           Type : {item.type}
-  // ];
-
   return (
     <View style={styles.container} >
       <View style={styles.navigationRow} >
@@ -46,12 +27,12 @@ const HomeScreen = (props: HomeScreenProps) => {
         <AppButton title="Client List" onPress={onGoToClientList} />
       </View>
       <View style={styles.content} >
-        <Text style={styles.callHeader} >Recent Calls</Text>
+        <Text style={styles.callHeader}>Recent Calls</Text>
         <FlatList
-          data={callLogData}
+          data={callLogData || []}
           style={styles.list}
           renderItem={
-            ({ item }) => <SelectableListItem onPress={onGoToLinkClientToCall} title={item.phoneNumber} />
+            ({ item }) => <SelectableCallItem onPress={onGoToLinkClientToCall} callLog={item} />
           }
         />
       </View>
