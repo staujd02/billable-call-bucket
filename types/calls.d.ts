@@ -1,9 +1,9 @@
 export type CallLog = {
-    name?: string,
-    dateTime: Date,
-    duration: number,
     phoneNumber: string,
-    rawType: any,
-    timestamp: number,
-    type: any,
+    duration: number,
+    name: string,
+    timestamp: string,
+    dateTime: string,
+    type: "OUTGOING" | "INCOMING" | "MISSED" | "UNKNOWN",
+    rawType: number,
 }

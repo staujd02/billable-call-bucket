@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     appButtonContainer: {
         elevation: 3,
         backgroundColor: AppStyle.buttonBackground,
+        display: 'flex',
         borderStyle: 'solid',
         borderBottomRightRadius: 20,
         borderTopLeftRadius: 20,
