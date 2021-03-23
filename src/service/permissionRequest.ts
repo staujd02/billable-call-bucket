@@ -1,4 +1,3 @@
-import * as Permissions from 'expo-permissions';
 import { PermissionsAndroid } from 'react-native';
 
 async function requestCallLogPermission(): Promise<boolean> {
@@ -13,11 +12,7 @@ async function requestCallLogPermission(): Promise<boolean> {
                 buttonPositive: 'OK',
             },
         );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
     } catch (e) {
         return false;
     }
@@ -25,19 +20,18 @@ async function requestCallLogPermission(): Promise<boolean> {
 
 async function requestContactPermission(): Promise<boolean> {
     try {
-        console.log("Asked");
-        const { status } = await Permissions.getAsync(
-            Permissions.CONTACTS,
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+            {
+                title: 'Allow App Access to Contacts',
+                message: "This app needs access to your contacts to link names with numbers.",
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+            },
         );
-        if (status === "undetermined") {
-            const { status } = await Permissions.askAsync(
-                Permissions.CONTACTS,
-            );
-            return status === 'granted';
-        }
-        return status === 'granted';
-    } catch (error) {
-        console.error(error);
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+    } catch (e) {
         return false;
     }
 }

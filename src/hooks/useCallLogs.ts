@@ -28,4 +28,3 @@ const useCallLogs = () => {
 }
 
 export default useCallLogs;
-
