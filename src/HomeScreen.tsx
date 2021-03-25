@@ -1,9 +1,10 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControlBase } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppStyle } from '../styles/default';
 import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
+import SymbolButton from './control/SymbolButton';
 import SelectableCallItem from './custom-control/SelectableCallItem';
 import useCallLogs from './hooks/useCallLogs';
 
@@ -11,7 +12,7 @@ const HomeScreen = (props: HomeScreenProps) => {
 
   const { navigation } = props;
 
-  const { callLogData } = useCallLogs();
+  const { callLogData, refreshLogs, loadMore } = useCallLogs();
 
   const onGoToDraftBillsByClient = () => navigation.push('DraftBillsByClient');
   const onGoToClientList = () => navigation.push('ClientList');
@@ -27,7 +28,11 @@ const HomeScreen = (props: HomeScreenProps) => {
         <AppButton title="Client List" onPress={onGoToClientList} />
       </View>
       <View style={styles.content} >
-        <Text style={styles.callHeader}>Recent Calls</Text>
+        <View style={styles.callHeader}>
+          <SymbolButton onPress={() => loadMore(3)} symbol="chevron-circle-down" title="Load More"></SymbolButton>
+          <Text style={styles.callHeaderText}>Recent Calls</Text>
+          <SymbolButton onPress={() => refreshLogs()} symbol="sync-alt" title="Refresh"></SymbolButton>
+        </View>
         <FlatList
           data={callLogData || []}
           style={styles.list}
@@ -61,10 +66,19 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyle.background,
   },
   callHeader: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    alignItems: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  callHeaderText: {
     color: AppStyle.text,
     textAlign: 'center',
     fontSize: AppStyle.titleSize,
-    marginBottom: 10,
   },
   list: {
     paddingLeft: 5,

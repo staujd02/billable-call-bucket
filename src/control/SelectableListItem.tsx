@@ -4,10 +4,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AppStyle } from "../../styles/default";
 import { SelectableListItemProps } from "../../types/controls";
 
-const SelectableListItem = ({ onPress, title }: SelectableListItemProps) => (
+const SelectableListItem = ({ onPress, titles }: SelectableListItemProps) => (
     <View style={styles.spacing} >
         <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-            <Text style={styles.appButtonText}>{title}</Text>
+            {titles.map((v, key) =>
+                <Text key={key} style={styles.appButtonText}>{v}</Text>
+            )}
         </TouchableOpacity>
     </View>
 );
@@ -20,7 +22,10 @@ const styles = StyleSheet.create({
     appButtonContainer: {
         elevation: 3,
         backgroundColor: AppStyle.buttonBackground,
+        fontFamily: 'monospace',
         display: 'flex',
+        flexDirection: 'row',
+        justifyContent: "space-around",
         borderStyle: 'solid',
         borderBottomRightRadius: 20,
         borderTopLeftRadius: 20,
@@ -36,7 +41,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         alignSelf: "center",
-        textTransform: "uppercase"
     }
 });
 
