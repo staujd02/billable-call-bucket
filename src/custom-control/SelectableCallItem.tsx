@@ -5,7 +5,7 @@ import { CallLog } from '../../types/calls';
 
 import SelectableListItem from '../control/SelectableListItem';
 import useContacts from '../hooks/useContacts';
-import { formatHoursMinutesSeconds, formatPhoneNumber } from '../service/formatter';
+import { formatPhoneNumber } from '../service/formatter';
 
 const SelectableCallItem = ({ callLog, onPress }: SelectableCallItemProps) => {
 
@@ -30,12 +30,17 @@ const SelectableCallItem = ({ callLog, onPress }: SelectableCallItemProps) => {
         ? formatContact(matchingContacts[0])
         : formatPhoneNumber(callLog.phoneNumber);
 
-    const durationString = formatHoursMinutesSeconds(callLog.duration);
+    const dateObject = new Date(parseInt(callLog.timestamp));
+    const dateString = `${dateObject.getDay()}/${dateObject.getMonth()}/${dateObject.getFullYear()}`;
+    const timeString = `${dateObject.getHours()}:${dateObject.getMinutes()}${dateObject.getMinutes() < 10 ? "0" : ""}`;
+    const stamp = `${dateString} ${timeString}`;
 
     return (
         <SelectableListItem
             onPress={onPress}
-            titles={[title, durationString, callDirection]} />
+            titles={[title, callDirection, stamp]}
+            flexLayout={[2, 1, 2]}
+        />
     )
 }
 

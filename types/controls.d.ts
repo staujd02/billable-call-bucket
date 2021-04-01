@@ -14,6 +14,7 @@ export type SearchBoxProps = {
 export type SelectableListItemProps = {
     onPress: (event: GestureResponderEvent) => void,
     titles: Array<string>
+    flexLayout: Array<number>
 }
 
 export type AppButtonProps = {

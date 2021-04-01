@@ -4,12 +4,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AppStyle } from "../../styles/default";
 import { SelectableListItemProps } from "../../types/controls";
 
-const SelectableListItem = ({ onPress, titles }: SelectableListItemProps) => (
+const SelectableListItem = ({ onPress, titles, flexLayout }: SelectableListItemProps) => (
     <View style={styles.spacing} >
         <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-            {titles.map((v, key) =>
-                <Text key={key} style={styles.appButtonText}>{v}</Text>
-            )}
+            {titles.map((v, key) => {
+                let flex = flexLayout[key];
+                return <Text key={key} style={{ ...styles.appButtonText, flex}}>{v}</Text>
+            })}
         </TouchableOpacity>
     </View>
 );
@@ -22,26 +23,29 @@ const styles = StyleSheet.create({
     appButtonContainer: {
         elevation: 3,
         backgroundColor: AppStyle.buttonBackground,
-        fontFamily: 'monospace',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: "space-around",
+        justifyContent: 'space-evenly',
         borderStyle: 'solid',
         borderBottomRightRadius: 20,
         borderTopLeftRadius: 20,
         paddingTop: 15,
         paddingBottom: 15,
+        paddingLeft: 15,
+        paddingRight: 15,
         borderWidth: 3,
         borderColor: AppStyle.listItemBorderColor,
         paddingVertical: 6,
         paddingHorizontal: 8
     },
     appButtonText: {
+        flex: 1,
+        textAlign: 'center',
         color: AppStyle.buttonText,
         fontSize: 16,
         fontWeight: "bold",
         alignSelf: "center",
-    }
+    },
 });
 
 export default SelectableListItem;
