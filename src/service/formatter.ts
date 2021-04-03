@@ -1,3 +1,6 @@
+import { Contact } from "react-native-contacts";
+import { CallLogType } from "../../types/calls";
+
 export function formatPhoneNumber(phoneNumber: string): string {
     switch (phoneNumber.length) {
         case 10:
@@ -7,6 +10,21 @@ export function formatPhoneNumber(phoneNumber: string): string {
         default:
             return phoneNumber;
     }
+}
+
+export function formatLogType(type:CallLogType): string {
+    return type === "INCOMING" ? 'IN' : 'OUT';
+}
+
+export function formatTimestamp(timestamp: string): string{
+    const dateObject = new Date(parseInt(timestamp));
+    const dateString = `${dateObject.getDay()}/${dateObject.getMonth()}/${dateObject.getFullYear()}`;
+    const timeString = `${dateObject.getHours()}:${dateObject.getMinutes()}${dateObject.getMinutes() < 10 ? "0" : ""}`;
+    return `${dateString} ${timeString}`;
+}
+
+export function formatContact(contact: Contact): string {
+    return `${contact.givenName} ${contact.familyName}`;
 }
 
 export function formatHoursMinutesSeconds(totalSeconds: number): string {

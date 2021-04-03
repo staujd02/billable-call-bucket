@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, RefreshControlBase } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppStyle } from '../styles/default';
+import { CallLog } from '../types/calls';
 import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import SymbolButton from './control/SymbolButton';
@@ -18,7 +19,9 @@ const HomeScreen = (props: HomeScreenProps) => {
   const onGoToClientList = () => navigation.push('ClientList');
   const onGoToBillingHistoryByClient = () => navigation.push('BillingHistoryByClient');
 
-  const onGoToLinkClientToCall = () => navigation.push('LinkClientToCall');
+  const onGoToLinkClientToCall = (callLog: CallLog) => navigation.push('LinkClientToCall', {
+    callLog
+  });
 
   return (
     <View style={styles.container} >
@@ -38,7 +41,7 @@ const HomeScreen = (props: HomeScreenProps) => {
           style={styles.list}
           keyExtractor={i => i.timestamp}
           renderItem={
-            ({ item }) => <SelectableCallItem onPress={onGoToLinkClientToCall} callLog={item} />
+            ({ item }) => <SelectableCallItem onPress={() => onGoToLinkClientToCall(item)} callLog={item} />
           }
         />
       </View>

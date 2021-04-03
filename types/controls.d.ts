@@ -11,6 +11,11 @@ export type SearchBoxProps = {
     onChangeText: (text: string) => void
 }
 
+export type DoubleTextLayoutProps = {
+    label: string
+    content: string
+}
+
 export type SelectableListItemProps = {
     onPress: (event: GestureResponderEvent) => void,
     titles: Array<string>

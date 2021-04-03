@@ -14,7 +14,7 @@ export type RootStackParamList = {
   Bill: undefined;
   ClientDetail: undefined;
   ClientList: undefined;
-  LinkClientToCall: undefined;
+  LinkClientToCall: CallLog;
 };
 
 type HomeScreenProps = StackScreenProps<RootStackParamList, 'HomeScreen'>;

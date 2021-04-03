@@ -18,6 +18,7 @@ export const AppStyle = {
     background: ColorPalette.lightest,
 
     text: ColorPalette.pop,
+    detailText: ColorPalette.dark,
 
     buttonText: ColorPalette.pop,
     buttonBackground: ColorPalette.light,
@@ -33,4 +34,5 @@ export const AppStyle = {
     searchTextColor: ColorPalette.dark,
 
     titleSize: 24,
+    detailSize: 18,
 }
