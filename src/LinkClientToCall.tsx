@@ -32,6 +32,8 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
     : formatPhoneNumber(phoneNumber);
 
   const [searchValue, setSearchValue] = useState("");
+  // load with this:
+  // https://rnmmkv.now.sh/#/asyncapi
   const data = [
     { key: 'Dave' },
     { key: 'Joaniz' },
