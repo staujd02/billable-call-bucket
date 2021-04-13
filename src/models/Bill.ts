@@ -1,4 +1,4 @@
-export const Bill = {
+const BillSchema = {
     name: 'Bill', 
     primaryKey: 'pk',
     properties: {
@@ -11,3 +11,5 @@ export const Bill = {
         }
     }
 }
+
+export default BillSchema;

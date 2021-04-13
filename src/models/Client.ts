@@ -1,4 +1,4 @@
-export const ClientSchema = {
+const ClientSchema = {
     name: 'Client', 
     primaryKey: 'pk',
     properties: {
@@ -11,3 +11,5 @@ export const ClientSchema = {
         }
     }
 }
+
+export default ClientSchema;

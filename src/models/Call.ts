@@ -1,4 +1,4 @@
-export const Call = {
+const CallSchema  = {
     name: 'Call', 
     primaryKey: 'pk',
     properties: {
@@ -12,3 +12,5 @@ export const Call = {
         type: 'string',
     }
 }
+
+export default CallSchema;
