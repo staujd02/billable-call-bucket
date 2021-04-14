@@ -1,5 +1,6 @@
+const ClientSchemaName = 'Client';
 const ClientSchema = {
-    name: 'Client', 
+    name: ClientSchemaName,
     primaryKey: 'pk',
     properties: {
         pk: 'int',
@@ -13,3 +14,6 @@ const ClientSchema = {
 }
 
 export default ClientSchema;
+export {
+    ClientSchemaName
+}

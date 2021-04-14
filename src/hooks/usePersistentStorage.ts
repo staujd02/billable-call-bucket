@@ -8,7 +8,7 @@ const usePersistentStorage = () => {
 
     async function loadRealm() {
         const openedRealm = await Realm.open(
-            { 
+            {
                 schema: Schema_1.schema,
                 schemaVersion: Schema_1.version,
             }
@@ -16,12 +16,25 @@ const usePersistentStorage = () => {
         setRealm(openedRealm);
     }
 
+    function enumerate<T>(result: IterableIterator<T & Realm.Object>, count: number): Array<T> {
+        let limit = 0;
+        const memoryList = [];
+        for (const r of result) {
+            memoryList.push(r);
+            if (limit++ > count)
+                break;
+        }
+        return memoryList;
+    }
+
+
     useEffect(() => {
         loadRealm();
     }, [])
 
     return {
-        realm
+        realm,
+        enumerate
     }
 }
 

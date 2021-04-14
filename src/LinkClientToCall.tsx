@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { Contact } from 'react-native-contacts';
 import { AppStyle } from '../styles/default';
 import { CallLog } from '../types/calls';
 import { LinkClientToCallProps } from '../types/routes';
 import MultiActionButton from './control/MultiActionButton';
 import SearchBox from './control/SearchBox';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
+import useClients from './hooks/useClients';
 import useContacts from './hooks/useContacts';
 import { formatContact, formatHoursMinutesSeconds, formatPhoneNumber, formatTimestamp } from './service/formatter';
 
@@ -17,36 +17,30 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
 
   const { loadContactByNumber, loadedContact } = useContacts();
 
+  const { clients, loadClients, searchClients } = useClients();
+
   const onGoToDraftBill = () => navigation.navigate('DraftBill');
   const onGoToClientDetail = () => navigation.push('ClientDetail');
 
   const formattedDuration = formatHoursMinutesSeconds(duration);
   const formattedStamp = formatTimestamp(timestamp);
 
-  useEffect(() => {
-    loadContactByNumber(phoneNumber)
-  }, []);
-
   const title = loadedContact !== null
     ? formatContact(loadedContact)
     : formatPhoneNumber(phoneNumber);
 
   const [searchValue, setSearchValue] = useState("");
-  // load with this:
-  // https://rnmmkv.now.sh/#/asyncapi
-  const data = [
-    { key: 'Dave' },
-    { key: 'Joaniz' },
-    { key: 'Sarah' },
-    { key: 'Meradith' },
-    { key: 'Keith' },
-    { key: 'Keith1' },
-    { key: 'Keith2' },
-    { key: 'Keith3' },
-    { key: 'Keith4' },
-    { key: 'Keith5' },
-  ];
+  const [loadCount, setLoadCount] = useState(10);
 
+  useEffect(() => {
+    loadContactByNumber(phoneNumber)
+  }, []);
+
+  useEffect(() => {
+    searchValue
+      ? searchClients(searchValue, loadCount)
+      : loadClients(loadCount);
+  }, [searchValue, loadCount]);
 
   return (
     <View style={styles.container}>
@@ -59,14 +53,15 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
       <SearchBox value={searchValue} onChangeText={text => setSearchValue(text)} />
       <FlatList
         style={styles.list}
-        data={data.filter(d => !searchValue || d.key.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()))}
+        data={clients}
+        keyExtractor={c => c.pk.toString()}
         renderItem={
           ({ item }) => (
             <MultiActionButton
-              mainTitle={item.key}
+              mainTitle={item.name}
               onPressMainAction={onGoToClientDetail}
               onPressSecondaryAction={onGoToDraftBill}
-              secondaryTitle={"bill " + item.key}
+              secondaryTitle={"bill " + item.name}
               secondarySymbol='money-bill' />
           )
         }

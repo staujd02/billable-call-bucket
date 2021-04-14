@@ -1,5 +1,6 @@
+const BillSchemaName = 'Bill';
 const BillSchema = {
-    name: 'Bill', 
+    name: BillSchemaName,
     primaryKey: 'pk',
     properties: {
         pk: 'int',
@@ -13,3 +14,6 @@ const BillSchema = {
 }
 
 export default BillSchema;
+export {
+    BillSchemaName
+}

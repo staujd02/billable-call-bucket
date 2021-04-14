@@ -1,5 +1,6 @@
-const CallSchema  = {
-    name: 'Call', 
+const CallSchemaName = 'Call';
+const CallSchema = {
+    name: CallSchemaName,
     primaryKey: 'pk',
     properties: {
         pk: 'int',
@@ -14,3 +15,6 @@ const CallSchema  = {
 }
 
 export default CallSchema;
+export {
+    CallSchemaName
+}
