@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import { AppStyle } from '../styles/default';
 import { ClientListProps } from '../types/routes';
+import AppButton from './control/AppButton';
+import SearchBox from './control/SearchBox';
+import useClients from './hooks/useClients';
 
 const ClientList = (props: ClientListProps) => {
 
   const { navigation } = props;
+  
+  const { clients, loadClients, searchClients } = useClients();
 
   const onGoToClientDetail = () => navigation.push('ClientDetail');
   const onGoToAddClient = () => navigation.push('AddNewClient');
+  
+  const [searchValue, setSearchValue] = useState("");
+  const [loadCount, setLoadCount] = useState(10);
+  
+  useEffect(() => {
+    searchValue
+      ? searchClients(searchValue, loadCount)
+      : loadClients(loadCount);
+  }, [searchValue, loadCount]);
 
   const data = [
     { key: 'Dave' },
@@ -20,18 +35,20 @@ const ClientList = (props: ClientListProps) => {
 
   return (
     <View style={styles.container} >
-      <Text>Client List</Text>
+      <Text style={styles.header}>Client List</Text>
+      <SearchBox value={searchValue} onChangeText={text => setSearchValue(text)} />
       <FlatList
-        data={data}
+        data={clients}
+        keyExtractor={c => c.pk.toString()}
         renderItem={
           ({ item }) => (
-            <Button onPress={onGoToClientDetail} title="Client Detail">
-              {item.key}
-            </Button>
+            <AppButton
+              onPress={onGoToClientDetail}
+              title={item.name} />
           )
         }
       />
-      <Button onPress={onGoToAddClient} title="Add Client">Add Client</Button>
+      <AppButton onPress={onGoToAddClient} title="Add Client" />
     </View>
   );
 };
@@ -44,5 +61,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  header: {
+    color: AppStyle.text,
+    textAlign: 'center',
+    fontSize: AppStyle.titleSize,
+    marginBottom: 10,
+    marginTop: 10,
   },
 });

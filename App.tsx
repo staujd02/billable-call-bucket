@@ -4,7 +4,7 @@ import MainNavigation from './src/MainNavigation';
 
 const App = () => {
   return (
-    <MainNavigation />
+      <MainNavigation />
   );
 };
 

@@ -1,27 +1,27 @@
 import { useState } from "react";
 import { Client } from "../../types/calls";
 import { ClientSchemaName } from "../models/Client";
+import { enumerate } from "../utility/enumerate";
 import usePersistentStorage from "./usePersistentStorage";
 
 const useClients = () => {
 
     const [clients, setClients] = useState<Array<Client>>();
 
-    const { realm, enumerate } = usePersistentStorage();
+    const { getRealm } = usePersistentStorage();
 
-    const loadClients = (count: number) => {
-        const result = realm
+    const loadClients = async (count: number) => {
+        const result = (await getRealm())
             .objects<Client>(ClientSchemaName)
             .sorted('name')
             .values();
         setClients(
             enumerate<Client>(result, count)
         );
-        realm.close();
     }
     
-    const searchClients = (search: string, count: number) => {
-        const result = realm
+    const searchClients = async (search: string, count: number) => {
+        const result = (await getRealm())
             .objects<Client>(ClientSchemaName)
             .sorted('name')
             .filter(f => f.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
@@ -29,7 +29,6 @@ const useClients = () => {
         setClients(
             enumerate<Client>(result, count)
         );
-        realm.close();
     }
 
     return {
