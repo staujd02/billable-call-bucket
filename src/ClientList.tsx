@@ -25,14 +25,6 @@ const ClientList = (props: ClientListProps) => {
       : loadClients(loadCount);
   }, [searchValue, loadCount]);
 
-  const data = [
-    { key: 'Dave' },
-    { key: 'Joaniz' },
-    { key: 'Sarah' },
-    { key: 'Meradith' },
-    { key: 'Keith' },
-  ];
-
   return (
     <View style={styles.container} >
       <Text style={styles.header}>Client List</Text>
@@ -49,6 +41,7 @@ const ClientList = (props: ClientListProps) => {
         }
       />
       <AppButton onPress={onGoToAddClient} title="Add Client" />
+      <View style={styles.spacer} />
     </View>
   );
 };
@@ -56,6 +49,9 @@ const ClientList = (props: ClientListProps) => {
 export default ClientList;
 
 const styles = StyleSheet.create({
+  spacer: {
+    height: 20
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

@@ -19,7 +19,18 @@ const useClients = () => {
             enumerate<Client>(result, count)
         );
     }
-    
+
+    const addClient = async (client: Client) => {
+        const realm = (await getRealm());
+        await new Promise<void>(async (resolve, reject) => {
+            realm.write(() => {
+                realm.create(ClientSchemaName, client)
+                setClients([...clients].concat([client]))
+                resolve();
+            })
+        });
+    }
+
     const searchClients = async (search: string, count: number) => {
         const result = (await getRealm())
             .objects<Client>(ClientSchemaName)
@@ -35,6 +46,7 @@ const useClients = () => {
         clients,
         loadClients,
         searchClients,
+        addClient,
     }
 }
 
