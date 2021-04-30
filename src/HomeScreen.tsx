@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, RefreshControlBase } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
-import { AppStyle } from '../styles/default';
+import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
 import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
@@ -53,7 +53,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   navigationRow: {
-    backgroundColor: AppStyle.navigationBackground,
+    backgroundColor: AppColorStyles.navigationBackground,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginBottom: 20,
@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: AppStyle.navigationBackground,
+    backgroundColor: AppColorStyles.navigationBackground,
   },
   content: {
     paddingTop: 10,
     flex: 1,
-    backgroundColor: AppStyle.background,
+    backgroundColor: AppColorStyles.background,
   },
   callHeader: {
     display: 'flex',
@@ -79,9 +79,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   callHeaderText: {
-    color: AppStyle.text,
+    color: AppColorStyles.text,
     textAlign: 'center',
-    fontSize: AppStyle.titleSize,
+    fontSize: AppFontStyles.titleSize,
   },
   list: {
     paddingLeft: 5,

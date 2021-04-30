@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet, Text, View } from 'react-native';
-import { AppStyle } from "../../styles/default";
+import { AppColorStyles } from "../../styles/default";
 import { SelectableListItemProps } from "../../types/controls";
 
 const SelectableListItem = ({ onPress, titles, flexLayout }: SelectableListItemProps) => (
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
     appButtonContainer: {
         elevation: 3,
-        backgroundColor: AppStyle.buttonBackground,
+        backgroundColor: AppColorStyles.buttonBackground,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
@@ -34,14 +34,14 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         borderWidth: 3,
-        borderColor: AppStyle.listItemBorderColor,
+        borderColor: AppColorStyles.listItemBorderColor,
         paddingVertical: 6,
         paddingHorizontal: 8
     },
     appButtonText: {
         flex: 1,
         textAlign: 'center',
-        color: AppStyle.buttonText,
+        color: AppColorStyles.buttonText,
         fontSize: 16,
         fontWeight: "bold",
         alignSelf: "center",

@@ -11,7 +11,7 @@ export const ColorPalette = {
     black: "#000",
 }
 
-export const AppStyle = {
+export const AppColorStyles = {
     headerBackground: ColorPalette.pop,
     headerText: ColorPalette.lightest,
     navigationBackground: ColorPalette.boring,
@@ -32,7 +32,9 @@ export const AppStyle = {
     searchPlaceholderTextColor: ColorPalette.pop,
     searchBackgroundColor: ColorPalette.lightest,
     searchTextColor: ColorPalette.dark,
+}
 
+export const AppFontStyles = {
     titleSize: 24,
     detailSize: 18,
 }

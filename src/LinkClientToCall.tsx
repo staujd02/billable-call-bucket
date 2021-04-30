@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { AppStyle } from '../styles/default';
+import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
 import { LinkClientToCallProps } from '../types/routes';
 import MultiActionButton from './control/MultiActionButton';
@@ -74,22 +74,22 @@ export default LinkClientToCall;
 
 const styles = StyleSheet.create({
   topHeader: {
-    color: AppStyle.text,
+    color: AppColorStyles.text,
     textAlign: 'left',
-    fontSize: AppStyle.titleSize,
+    fontSize: AppFontStyles.titleSize,
     marginBottom: 10,
     marginTop: 10,
   },
   header: {
-    color: AppStyle.text,
+    color: AppColorStyles.text,
     textAlign: 'center',
-    fontSize: AppStyle.titleSize,
+    fontSize: AppFontStyles.titleSize,
     marginBottom: 10,
     marginTop: 10,
   },
   detail: {
-    color: AppStyle.detailText,
-    fontSize: AppStyle.detailSize,
+    color: AppColorStyles.detailText,
+    fontSize: AppFontStyles.detailSize,
     textAlign: 'left',
     paddingLeft: 5,
   },

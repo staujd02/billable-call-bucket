@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet, Text } from 'react-native';
-import { AppStyle } from "../../styles/default";
+import { AppColorStyles } from "../../styles/default";
 import { AppButtonProps } from "../../types/controls";
 
 const AppButton = ({ onPress, title,  }: AppButtonProps) => (
@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
     appButtonContainer: {
         elevation: 3,
         borderRadius: 3,
-        backgroundColor: AppStyle.buttonBackground,
+        backgroundColor: AppColorStyles.buttonBackground,
         paddingVertical: 6,
         paddingHorizontal: 8
     },
     appButtonText: {
-        color: AppStyle.buttonText,
+        color: AppColorStyles.buttonText,
         fontWeight: "bold",
         alignSelf: "center",
         textTransform: "uppercase"

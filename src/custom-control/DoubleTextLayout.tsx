@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from 'react-native';
-import { AppStyle } from "../../styles/default";
+import { AppColorStyles, AppFontStyles } from "../../styles/default";
 import { DoubleTextLayoutProps } from "../../types/controls";
 
 const DoubleTextLayout = ({ label, content }: DoubleTextLayoutProps) => (
@@ -22,16 +22,16 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingRight: 5,
         textAlign: 'right',
-        color: AppStyle.buttonText,
-        fontSize: AppStyle.detailSize,
+        color: AppColorStyles.buttonText,
+        fontSize: AppFontStyles.detailSize,
         fontWeight: "bold",
     },
     content: {
         flex: 1,
         paddingLeft: 5,
         textAlign: 'left',
-        color: AppStyle.buttonText,
-        fontSize: AppStyle.detailSize,
+        color: AppColorStyles.buttonText,
+        fontSize: AppFontStyles.detailSize,
     },
 });
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { AppStyle } from "../../styles/default";
+import { AppColorStyles } from "../../styles/default";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MultiActionButtonProps } from "../../types/controls";
 
@@ -12,7 +12,7 @@ const MultiActionButton = ({ onPressMainAction, onPressSecondaryAction, mainTitl
         </TouchableOpacity>
         <TouchableOpacity accessibilityActions={[{ name: "click", label: secondaryTitle}]} 
             onPress={onPressSecondaryAction} style={styles.symbolContainer}>
-            <FontAwesome5 name={secondarySymbol} size={24} color={AppStyle.multiActionSymbolColor} />
+            <FontAwesome5 name={secondarySymbol} size={24} color={AppColorStyles.multiActionSymbolColor} />
         </TouchableOpacity>
     </View>
 );
@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         elevation: 3,
         borderRadius: 10,
-        backgroundColor: AppStyle.multiActionBackgroundColor,
+        backgroundColor: AppColorStyles.multiActionBackgroundColor,
         marginBottom: 15,
     },
     symbolContainer: {
-        backgroundColor: AppStyle.multiActionSymbolButtonColor,
+        backgroundColor: AppColorStyles.multiActionSymbolButtonColor,
         borderTopRightRadius: 8,
         borderBottomRightRadius: 8,
         paddingHorizontal: 15, 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { AppStyle } from '../styles/default';
+import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { ClientListProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import SearchBox from './control/SearchBox';
@@ -59,9 +59,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    color: AppStyle.text,
+    color: AppColorStyles.text,
     textAlign: 'center',
-    fontSize: AppStyle.titleSize,
+    fontSize: AppFontStyles.titleSize,
     marginBottom: 10,
     marginTop: 10,
   },

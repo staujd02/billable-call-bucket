@@ -15,16 +15,16 @@ import AddNewClient from './AddNewClient';
 import Bill from './Bill';
 import ClientDetail from './ClientDetail';
 import ClientList from './ClientList';
-import { AppStyle } from '../styles/default';
+import { AppColorStyles } from '../styles/default';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const defaultStyle = {
-  backgroundColor: AppStyle.headerBackground,
+  backgroundColor: AppColorStyles.headerBackground,
 };
 
 const MainNavigation = () => {
-  const createOptions = title => ({  title, headerTintColor: AppStyle.headerText, headerStyle: defaultStyle });
+  const createOptions = title => ({  title, headerTintColor: AppColorStyles.headerText, headerStyle: defaultStyle });
   return (
     <NavigationContainer>
       <Stack.Navigator>
