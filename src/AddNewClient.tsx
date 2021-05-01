@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { AddNewClientProps } from '../types/routes';
+import AppButton from './control/AppButton';
 
 const AddNewClient = (props: AddNewClientProps) => {
 
@@ -14,12 +15,13 @@ const AddNewClient = (props: AddNewClientProps) => {
 
   return (
     <View style={styles.container} >
-        <Text style={styles.header}>Add New Client</Text>
-        <Text style={styles.header}>Add New Client</Text>
-        <TextInput value={name} onChangeText={e => setName(e)}></TextInput>
-        <Text style={styles.header}>Add New Client</Text>
-        <TextInput value={description} onChangeText={e => setDescription(e)}></TextInput>
-        <Button title="Done" onPress={onDone}>Done</Button>
+      <Text style={styles.header}>Add New Client</Text>
+      <Text style={styles.label}>Name:</Text>
+      <TextInput style={styles.entry} value={name} onChangeText={e => setName(e)}></TextInput>
+      <Text style={styles.label}>Description:</Text>
+      <TextInput style={styles.entry} value={description} onChangeText={e => setDescription(e)}></TextInput>
+      <View style={styles.spacer}></View>
+      <AppButton title="Add Client" onPress={onDone} />
     </View>
   );
 };
@@ -31,19 +33,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+  },
+  spacer: {
+    height: 20,
+  },
+  entry: {
+    fontSize: AppFontStyles.detailSize,
+    marginBottom: 10,
   },
   header: {
     color: AppColorStyles.text,
     textAlign: 'center',
     fontSize: AppFontStyles.titleSize,
-    marginBottom: 10,
     marginTop: 10,
+    marginBottom: 30,
   },
   label: {
     color: AppColorStyles.text,
     textAlign: 'center',
-    marginBottom: 10,
-    marginTop: 10,
+    fontSize: AppFontStyles.detailSize,
   },
 });

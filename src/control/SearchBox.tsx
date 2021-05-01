@@ -21,11 +21,13 @@ const styles = StyleSheet.create({
         color: AppColorStyles.searchTextColor,
         borderRadius: 15,
         borderWidth: 2,
+        marginLeft: 25, 
+        marginRight: 25, 
         paddingHorizontal: 5, 
         paddingVertical: 5, 
         fontSize: 16,
-        width: 250,
         textAlign: 'center',
+        alignSelf: 'stretch',
         marginBottom: 10,
     }
 });
