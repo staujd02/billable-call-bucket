@@ -56,12 +56,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: AppFontStyles.titleSize,
     marginTop: 10,
-    marginBottom: 20,
-  },
-  doubleLabel: {
-    color: AppColorStyles.text,
-    textAlign: 'center',
-    fontSize: AppFontStyles.detailSize,
     marginBottom: 10,
   },
   label: {
