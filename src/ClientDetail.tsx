@@ -11,7 +11,7 @@ const ClientDetail = ({ navigation, route }: ClientDetailProps) => {
   const [client, setClient] = useState<Client>(null);
   const { getClient } = useClients();
 
-  const loadClient = async () => 
+  const loadClient = async () =>
     setClient(await getClient(route.params.clientId))
 
   useEffect(() => {
@@ -22,12 +22,10 @@ const ClientDetail = ({ navigation, route }: ClientDetailProps) => {
   const onDelete = () => navigation.navigate('ClientList');
 
   return (
-    <View style={styles.container} >
-      <Text style={styles.header}>Client Detail</Text>
-      <Text style={styles.label}>Name: {client?.name}</Text>
-      <Text style={styles.label}>Description:</Text>
+    <View style={styles.column} >
+      <Text style={styles.header}>{client?.name}</Text>
       <Text style={styles.label}>{client?.description}</Text>
-      <View style={styles.row}>
+      <View style={styles.row} >
         <AppButton title="Edit" onPress={onGoToEditClient} />
         <AppButton title="Delete" onPress={onDelete} />
       </View>
@@ -38,24 +36,33 @@ const ClientDetail = ({ navigation, route }: ClientDetailProps) => {
 export default ClientDetail;
 
 const styles = StyleSheet.create({
-  row: {
-    display: "flex",
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: "center",
-  },
-  container: {
+  column: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  row: {
+    backgroundColor: '#fff',
+    alignSelf: 'stretch',
+    display: "flex",
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: "center",
+    marginTop: 20,
   },
   header: {
     color: AppColorStyles.text,
     textAlign: 'center',
     fontSize: AppFontStyles.titleSize,
     marginTop: 10,
-    marginBottom: 30,
+    marginBottom: 20,
+  },
+  doubleLabel: {
+    color: AppColorStyles.text,
+    textAlign: 'center',
+    fontSize: AppFontStyles.detailSize,
+    marginBottom: 10,
   },
   label: {
     color: AppColorStyles.text,
