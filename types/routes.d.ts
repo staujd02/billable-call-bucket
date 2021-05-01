@@ -12,7 +12,7 @@ export type RootStackParamList = {
   EditClient: undefined;
   AddNewClient: undefined;
   Bill: undefined;
-  ClientDetail: undefined;
+  ClientDetail: Guid;
   ClientList: undefined;
   LinkClientToCall: CallLog;
 };

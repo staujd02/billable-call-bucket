@@ -15,21 +15,21 @@ export type NewClient = {
 }
 
 export type Client = {
-    pk: Guid,
+    pk: string,
     name: string,
     description: string,
     bills: Array<Bill>
 }
 
 export type Bill = {
-    pk: Guid,
+    pk: string,
     isBilled: boolean,
     isFinalized: boolean,
     calls: Array<Call>
 }
 
 export type Call = {
-    pk: Guid,
+    pk: string,
     callReason: string,
     contactNotes: string,
     phoneNumber: string,

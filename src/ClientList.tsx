@@ -1,5 +1,6 @@
+import { Guid } from 'guid-typescript';
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { ClientListProps } from '../types/routes';
@@ -10,15 +11,16 @@ import useClients from './hooks/useClients';
 const ClientList = (props: ClientListProps) => {
 
   const { navigation } = props;
-  
+
   const { clients, loadClients, searchClients } = useClients();
 
-  const onGoToClientDetail = () => navigation.push('ClientDetail');
+  const onGoToClientDetail = (id: string) =>
+    navigation.push('ClientDetail', { clientId: id });
   const onGoToAddClient = () => navigation.push('AddNewClient');
-  
+
   const [searchValue, setSearchValue] = useState("");
   const [loadCount, setLoadCount] = useState(10);
-  
+
   useEffect(() => {
     searchValue
       ? searchClients(searchValue, loadCount)
@@ -35,7 +37,7 @@ const ClientList = (props: ClientListProps) => {
         renderItem={
           ({ item }) => (
             <AppButton
-              onPress={onGoToClientDetail}
+              onPress={() => onGoToClientDetail(item.pk)}
               title={item.name} />
           )
         }

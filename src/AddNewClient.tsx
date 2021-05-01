@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
   entry: {
     fontSize: AppFontStyles.detailSize,
     marginBottom: 10,
+    borderBottomWidth: 1,
+    borderColor: 'black',
   },
   header: {
     color: AppColorStyles.text,

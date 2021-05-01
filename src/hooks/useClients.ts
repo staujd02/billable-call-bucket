@@ -25,14 +25,24 @@ const useClients = () => {
         const realm = (await getRealm());
         await new Promise<void>(async (resolve, reject) => {
             realm.write(() => {
-                const addedClient = { 
-                    ...client,
+                const pk = Guid.create().toString();
+                const addedClient = {
+                    pk,
                     bills: [],
-                    pk: Guid.create()
+                    ...client,
                 };
                 realm.create(ClientSchemaName, addedClient);
-                setClients(clients.concat([addedClient]));
                 resolve();
+            })
+        });
+    }
+
+    const getClient = async (clientGuid: Guid): Promise<Client> => {
+        const realm = (await getRealm());
+        return await new Promise<Client>(async (resolve, reject) => {
+            realm.write(() => {
+                const client = realm.objectForPrimaryKey<Client>(ClientSchemaName, clientGuid.toString());
+                resolve(client);
             })
         });
     }
@@ -53,6 +63,7 @@ const useClients = () => {
         loadClients,
         searchClients,
         addClient,
+        getClient,
     }
 }
 
