@@ -3,15 +3,23 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { AddNewClientProps } from '../types/routes';
 import AppButton from './control/AppButton';
+import useClients from './hooks/useClients';
 
 const AddNewClient = (props: AddNewClientProps) => {
 
   const { navigation } = props;
+  const { addClient } = useClients();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  const onDone = () => navigation.navigate('ClientList');
+  const onDone = async () => { 
+    await addClient({
+      name,
+      description,
+    });
+    navigation.navigate('ClientList');
+  }
 
   return (
     <View style={styles.container} >

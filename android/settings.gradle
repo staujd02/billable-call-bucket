@@ -1,4 +1,4 @@
-rootProject.name = 'my-react-app'
+rootProject.name = 'Bill Me'
 include ':realm'
 project(':realm').projectDir = new File(rootProject.projectDir, '../node_modules/realm/react-native/android')
 

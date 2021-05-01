@@ -3,7 +3,7 @@ const ClientSchema = {
     name: ClientSchemaName,
     primaryKey: 'pk',
     properties: {
-        pk: 'int',
+        pk: 'string',
         name: 'string',
         description: 'string',
         bills: {

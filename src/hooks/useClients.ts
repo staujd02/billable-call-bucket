@@ -1,5 +1,6 @@
+import { Guid } from "guid-typescript";
 import { useState } from "react";
-import { Client } from "../../types/calls";
+import { Client, NewClient } from "../../types/calls";
 import { ClientSchemaName } from "../models/Client";
 import { enumerate } from "../utility/enumerate";
 import usePersistentStorage from "./usePersistentStorage";
@@ -20,12 +21,17 @@ const useClients = () => {
         );
     }
 
-    const addClient = async (client: Client) => {
+    const addClient = async (client: NewClient) => {
         const realm = (await getRealm());
         await new Promise<void>(async (resolve, reject) => {
             realm.write(() => {
-                realm.create(ClientSchemaName, client)
-                setClients([...clients].concat([client]))
+                const addedClient = { 
+                    ...client,
+                    bills: [],
+                    pk: Guid.create()
+                };
+                realm.create(ClientSchemaName, addedClient);
+                setClients(clients.concat([addedClient]));
                 resolve();
             })
         });
