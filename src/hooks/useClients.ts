@@ -47,6 +47,17 @@ const useClients = () => {
         });
     }
 
+    const deleteClient = async (clientId: string): Promise<void> => {
+        const realm = (await getRealm());
+        await new Promise<void>(async (resolve, reject) => {
+            realm.write(() => {
+                const client = realm.objectForPrimaryKey<Client>(ClientSchemaName, clientId);
+                realm.delete(client);
+                resolve();
+            })
+        });
+    }
+
     const searchClients = async (search: string, count: number) => {
         const result = (await getRealm())
             .objects<Client>(ClientSchemaName)
@@ -64,6 +75,7 @@ const useClients = () => {
         searchClients,
         addClient,
         getClient,
+        deleteClient,
     }
 }
 

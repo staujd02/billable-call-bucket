@@ -9,17 +9,23 @@ import useClients from './hooks/useClients';
 const ClientDetail = ({ navigation, route }: ClientDetailProps) => {
 
   const [client, setClient] = useState<Client>(null);
-  const { getClient } = useClients();
+
+  const { getClient, deleteClient } = useClients();
+  
+  const id = () => route.params.clientId;
 
   const loadClient = async () =>
-    setClient(await getClient(route.params.clientId))
+    setClient(await getClient(id()));
 
   useEffect(() => {
     loadClient()
   }, []);
 
   const onGoToEditClient = () => navigation.push('EditClient');
-  const onDelete = () => navigation.navigate('ClientList');
+  const onDelete = async () => {
+    await deleteClient(id()); 
+    navigation.navigate('ClientList');
+  }
 
   return (
     <View style={styles.column} >
