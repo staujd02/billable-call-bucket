@@ -33,6 +33,7 @@ const ClientList = (props: ClientListProps) => {
       <FlatList
         data={clients}
         keyExtractor={c => c.pk.toString()}
+        style={styles.flatList}
         renderItem={
           ({ item }) => (
             <AppButton
@@ -60,9 +61,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  flatList: {
+    alignSelf: 'stretch',
+    marginBottom: 10
+  },
   appButton: {
-    flex: 1,
-    backgroundColor: 'orange',
+    borderRadius: 5,
+    borderWidth: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    fontSize: 16,
+    textAlign: 'center',
+    alignSelf: 'stretch',
+    marginBottom: 10,
   },
   header: {
     color: AppColorStyles.text,

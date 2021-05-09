@@ -8,7 +8,7 @@ const AppButton = ({ onPress, title, styleOverrides }: AppButtonProps) => (
     <TouchableOpacity
         accessibilityActions={[{ name: "click", label: title }]} 
         onPress={onPress} 
-        style={{ ...styleOverrides, ...styles.appButtonContainer }}>
+        style={{ ...styles.appButtonContainer, ...styleOverrides }}>
             <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>
 );
