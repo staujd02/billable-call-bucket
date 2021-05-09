@@ -1,6 +1,6 @@
 import { Guid } from "guid-typescript";
 import { useState } from "react";
-import { Client, NewClient } from "../../types/calls";
+import { Client, NewClient, UpdateClient } from "../../types/calls";
 import { ClientSchemaName } from "../models/Client";
 import { enumerate } from "../utility/enumerate";
 import usePersistentStorage from "./usePersistentStorage";
@@ -32,6 +32,18 @@ const useClients = () => {
                     ...client,
                 };
                 realm.create(ClientSchemaName, addedClient);
+                resolve();
+            })
+        });
+    }
+    
+    const updateClient = async (client: UpdateClient) => {
+        const realm = (await getRealm());
+        await new Promise<void>(async (resolve, reject) => {
+            realm.write(() => {
+                const dbClient = realm.objectForPrimaryKey<Client>(ClientSchemaName, client.pk);
+                dbClient.name = client.name;
+                dbClient.description = client.description;
                 resolve();
             })
         });
@@ -76,6 +88,7 @@ const useClients = () => {
         addClient,
         getClient,
         deleteClient,
+        updateClient ,
     }
 }
 

@@ -25,6 +25,7 @@ export type SelectableListItemProps = {
 export type AppButtonProps = {
     onPress: (event: GestureResponderEvent) => void,
     title: string
+    styleOverrides?: StyleProp<TextStyle>
 }
 
 export type SymbolButtonProps = {

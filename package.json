@@ -72,6 +72,6 @@
     "eject": "expo eject"
   },
   "private": true,
-  "name": "my-react-app",
+  "name": "bill-me",
   "version": "1.0.0"
 }

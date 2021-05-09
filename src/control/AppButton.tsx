@@ -4,9 +4,12 @@ import { StyleSheet, Text } from 'react-native';
 import { AppColorStyles } from "../../styles/default";
 import { AppButtonProps } from "../../types/controls";
 
-const AppButton = ({ onPress, title,  }: AppButtonProps) => (
-    <TouchableOpacity accessibilityActions={[{name: "click", label: title}]} onPress={onPress} style={styles.appButtonContainer}>
-        <Text style={styles.appButtonText}>{title}</Text>
+const AppButton = ({ onPress, title, styleOverrides }: AppButtonProps) => (
+    <TouchableOpacity
+        accessibilityActions={[{ name: "click", label: title }]} 
+        onPress={onPress} 
+        style={{ ...styleOverrides, ...styles.appButtonContainer }}>
+            <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>
 );
 

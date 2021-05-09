@@ -9,7 +9,7 @@ const EditLinkedCall = (props: EditLinkedCallProps) => {
   const [contact, setContact] = useState("");
   const [callNotes, setCallNotes] = useState("");
 
-  const onGoToCallLinkedToClient = () => navigation.navigate('CallLinkedToClient');
+  const onGoToCallLinkedToClient = () => navigation.pop();
 
   return (
     <View style={styles.container} >

@@ -7,7 +7,7 @@ const CallLinkedToClient = (props: CallLinkedToClientProps) => {
   const { navigation } = props;
 
   const onGotoEdit = () => navigation.push('EditLinkedCall');
-  const onDelete = () => navigation.navigate('DraftBill');
+  const onDelete = () => navigation.pop();
 
   return (
     <View style={styles.container} >

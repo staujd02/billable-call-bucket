@@ -36,6 +36,7 @@ const ClientList = (props: ClientListProps) => {
         renderItem={
           ({ item }) => (
             <AppButton
+              styleOverrides={styles.appButton}
               onPress={() => onGoToClientDetail(item.pk)}
               title={item.name} />
           )
@@ -58,6 +59,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  appButton: {
+    flex: 1,
+    backgroundColor: 'orange',
   },
   header: {
     color: AppColorStyles.text,

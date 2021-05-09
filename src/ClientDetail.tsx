@@ -21,10 +21,12 @@ const ClientDetail = ({ navigation, route }: ClientDetailProps) => {
     loadClient()
   }, []);
 
-  const onGoToEditClient = () => navigation.push('EditClient');
+  const onGoToEditClient = () =>
+    navigation.push('EditClient', { clientId: id() });
+
   const onDelete = async () => {
     await deleteClient(id()); 
-    navigation.navigate('ClientList');
+    navigation.pop();
   }
 
   return (

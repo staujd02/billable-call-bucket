@@ -9,7 +9,7 @@ export type RootStackParamList = {
   DraftBillsByClient: undefined;
   BillingHistoryByClient: undefined;
   ClientBillingHistory: undefined;
-  EditClient: undefined;
+  EditClient: Guid;
   AddNewClient: undefined;
   Bill: undefined;
   ClientDetail: Guid;

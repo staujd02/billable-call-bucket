@@ -14,6 +14,12 @@ export type NewClient = {
     description: string,
 }
 
+export type UpdateClient = {
+    pk: string,
+    name: string,
+    description: string,
+}
+
 export type Client = {
     pk: string,
     name: string,

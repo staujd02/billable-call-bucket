@@ -18,7 +18,7 @@ const AddNewClient = (props: AddNewClientProps) => {
       name,
       description,
     });
-    navigation.navigate('ClientList');
+    navigation.pop();
   }
 
   return (

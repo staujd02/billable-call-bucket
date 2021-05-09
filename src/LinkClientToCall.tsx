@@ -20,7 +20,8 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
   const { clients, loadClients, searchClients } = useClients();
 
   const onGoToDraftBill = () => navigation.navigate('DraftBill');
-  const onGoToClientDetail = () => navigation.push('ClientDetail');
+  const onGoToClientDetail = (clientId: string) => 
+    navigation.push('ClientDetail', { clientId });
 
   const formattedDuration = formatHoursMinutesSeconds(duration);
   const formattedStamp = formatTimestamp(timestamp);
@@ -59,7 +60,7 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
           ({ item }) => (
             <MultiActionButton
               mainTitle={item.name}
-              onPressMainAction={onGoToClientDetail}
+              onPressMainAction={() => onGoToClientDetail(item.pk.toString())}
               onPressSecondaryAction={onGoToDraftBill}
               secondaryTitle={"bill " + item.name}
               secondarySymbol='money-bill' />
