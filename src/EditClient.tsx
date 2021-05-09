@@ -38,13 +38,12 @@ const EditClient = (props: EditClientProps) => {
 
   return (
     <View style={styles.container} >
-      <Text style={styles.header}>Edit New Client</Text>
       <Text style={styles.label}>Name:</Text>
       <TextInput style={styles.entry} value={name} onChangeText={e => setName(e)}></TextInput>
       <Text style={styles.label}>Description:</Text>
       <TextInput style={styles.entry} value={description} onChangeText={e => setDescription(e)}></TextInput>
       <View style={styles.spacer}></View>
-      <AppButton title="Edit Client" onPress={onDone} />
+      <AppButton title="Save Changes" onPress={onDone} />
     </View>
   );
 };
@@ -76,6 +75,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: AppColorStyles.text,
+    marginTop: 10,
     textAlign: 'center',
     fontSize: AppFontStyles.detailSize,
   },
