@@ -11,6 +11,12 @@ export type SearchBoxProps = {
     onChangeText: (text: string) => void
 }
 
+export type InlineTextInputWithLabelProps = {
+    label: string
+    value: string
+    onChangeText: (text: string) => void
+}
+
 export type DoubleTextLayoutProps = {
     label: string
     content: string

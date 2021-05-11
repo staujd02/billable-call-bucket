@@ -6,6 +6,7 @@ import { LinkClientToCallProps } from '../types/routes';
 import MultiActionButton from './control/MultiActionButton';
 import SearchBox from './control/SearchBox';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
+import InlineTextInputWithLabel from './custom-control/InlineTextInputWithLabel';
 import useClients from './hooks/useClients';
 import useContacts from './hooks/useContacts';
 import { formatContact, formatHoursMinutesSeconds, formatPhoneNumber, formatTimestamp } from './service/formatter';
@@ -20,7 +21,7 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
   const { clients, loadClients, searchClients } = useClients();
 
   const onGoToDraftBill = () => navigation.navigate('DraftBill');
-  const onGoToClientDetail = (clientId: string) => 
+  const onGoToClientDetail = (clientId: string) =>
     navigation.push('ClientDetail', { clientId });
 
   const formattedDuration = formatHoursMinutesSeconds(duration);
@@ -32,6 +33,8 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [loadCount, setLoadCount] = useState(10);
+  const [callNotes, setCallNotes] = useState("");
+  const [contactNotes, setContactNotes] = useState("");
 
   useEffect(() => {
     loadContactByNumber(phoneNumber)
@@ -50,6 +53,14 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
       <DoubleTextLayout label="When:" content={formattedStamp} />
       <DoubleTextLayout label="Duration:" content={formattedDuration} />
       <DoubleTextLayout label="Call Direction:" content={type} />
+      <InlineTextInputWithLabel
+        label="Contact Notes:"
+        onChangeText={s => setContactNotes(s)}
+        value={contactNotes} />
+      <InlineTextInputWithLabel
+        label="Call Notes:"
+        onChangeText={s => setCallNotes(s)}
+        value={callNotes} />
       <Text style={styles.header}>Clients</Text>
       <SearchBox value={searchValue} onChangeText={text => setSearchValue(text)} />
       <FlatList
