@@ -9,6 +9,17 @@ export type CallLog = {
     rawType: number,
 }
 
+export type NewBillbleCall = {
+    clientPk: string,
+    callReason: string,
+    contactNotes: string,
+    phoneNumber: string,
+    duration: number,
+    timestamp: string,
+    dateTime: Date,
+    type: string,
+}
+
 export type NewClient = {
     name: string,
     description: string,
@@ -29,7 +40,6 @@ export type Client = {
 
 export type Bill = {
     pk: string,
-    isBilled: boolean,
     isFinalized: boolean,
     calls: Array<Call>
 }

@@ -4,6 +4,7 @@ const CallSchema = {
     primaryKey: 'pk',
     properties: {
         pk: 'int',
+        isBilled: 'bool',
         callReason: 'string',
         contactNotes: 'string',
         phoneNumber: 'string',
