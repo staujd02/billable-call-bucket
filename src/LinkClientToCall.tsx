@@ -7,6 +7,7 @@ import MultiActionButton from './control/MultiActionButton';
 import SearchBox from './control/SearchBox';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
 import InlineTextInputWithLabel from './custom-control/InlineTextInputWithLabel';
+import useCalls from './hooks/useCalls';
 import useClients from './hooks/useClients';
 import useContacts from './hooks/useContacts';
 import { formatContact, formatHoursMinutesSeconds, formatPhoneNumber, formatTimestamp } from './service/formatter';
@@ -17,15 +18,8 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
   const { phoneNumber, duration, timestamp, type }: CallLog = route.params.callLog;
 
   const { loadContactByNumber, loadedContact } = useContacts();
-
   const { clients, loadClients, searchClients } = useClients();
-
-  const onGoToDraftBill = () => navigation.navigate('DraftBill');
-  const onGoToClientDetail = (clientId: string) =>
-    navigation.push('ClientDetail', { clientId });
-
-  const formattedDuration = formatHoursMinutesSeconds(duration);
-  const formattedStamp = formatTimestamp(timestamp);
+  const { addBillableCall } = useCalls();
 
   const title = loadedContact !== null
     ? formatContact(loadedContact)
@@ -33,7 +27,7 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [loadCount, setLoadCount] = useState(10);
-  const [callNotes, setCallNotes] = useState("");
+  const [callReason, setCallNotes] = useState("");
   const [contactNotes, setContactNotes] = useState("");
 
   useEffect(() => {
@@ -41,10 +35,33 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
   }, []);
 
   useEffect(() => {
+    if (loadedContact !== null && contactNotes === "")
+      setContactNotes(formatContact(loadedContact))
+  }, [loadedContact])
+
+  useEffect(() => {
     searchValue
       ? searchClients(searchValue, loadCount)
       : loadClients(loadCount);
   }, [searchValue, loadCount]);
+
+  const onGoToDraftBill = async (clientId: string) => {
+    await addBillableCall({
+      callReason,
+      contactNotes,
+      clientPk: clientId,
+      phoneNumber,
+      duration,
+      timestamp,
+      type,
+    });
+    navigation.navigate('DraftBill');
+  }
+  const onGoToClientDetail = (clientId: string) =>
+    navigation.push('ClientDetail', { clientId });
+
+  const formattedDuration = formatHoursMinutesSeconds(duration);
+  const formattedStamp = formatTimestamp(timestamp);
 
   return (
     <View style={styles.container}>
@@ -60,7 +77,7 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
       <InlineTextInputWithLabel
         label="Call Notes:"
         onChangeText={s => setCallNotes(s)}
-        value={callNotes} />
+        value={callReason} />
       <Text style={styles.header}>Clients</Text>
       <SearchBox value={searchValue} onChangeText={text => setSearchValue(text)} />
       <FlatList
@@ -72,7 +89,7 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
             <MultiActionButton
               mainTitle={item.name}
               onPressMainAction={() => onGoToClientDetail(item.pk.toString())}
-              onPressSecondaryAction={onGoToDraftBill}
+              onPressSecondaryAction={() => onGoToDraftBill(item.pk.toString())}
               secondaryTitle={"bill " + item.name}
               secondarySymbol='money-bill' />
           )

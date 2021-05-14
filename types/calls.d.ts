@@ -16,7 +16,6 @@ export type NewBillbleCall = {
     phoneNumber: string,
     duration: number,
     timestamp: string,
-    dateTime: Date,
     type: string,
 }
 
@@ -40,17 +39,17 @@ export type Client = {
 
 export type Bill = {
     pk: string,
-    isFinalized: boolean,
+    finalizedOn: Date,
     calls: Array<Call>
 }
 
 export type Call = {
     pk: string,
+    isBilled: boolean,
     callReason: string,
     contactNotes: string,
     phoneNumber: string,
     duration: number,
     timestamp: string,
-    dateTime: Date,
     type: string,
 }

@@ -10,7 +10,6 @@ const CallSchema = {
         phoneNumber: 'string',
         duration: 'int',
         timestamp: 'string',
-        dateTime: 'date',
         type: 'string',
     }
 }

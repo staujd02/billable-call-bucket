@@ -21,6 +21,7 @@ const useCalls = () => {
                 bill.calls.push({ 
                     ...billableCall,
                     pk: Guid.create().toString(),
+                    isBilled: false,
                 });
                 resolve();
             })
