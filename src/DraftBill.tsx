@@ -1,34 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { Bill, Client } from '../types/calls';
 import { DraftBillProps } from '../types/routes';
+import AppButton from './control/AppButton';
+import useBills from './hooks/useBills';
+import useClients from './hooks/useClients';
 
-const DraftBill = (props: DraftBillProps) => {
+const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
-  const { navigation } = props;
+  const id = () => route.params.clientId;
 
-  const onGoToLinkedToClient = () => navigation.push('CallLinkedToClient');
+  const [client, setClient] = useState<Client>(null);
+  const [bill, setBill] = useState<Bill>(null);
+
+  const { getClient } = useClients();
+  const { getOpenBill } = useBills();
+
+  const loadClient = async () => setClient(await getClient(id()))
+  const loadBill = async () => setBill(await getOpenBill(id()))
+
+  useEffect(() => {
+    loadClient();
+    loadBill();
+  }, [])
+
+  const onGoToCallLinkedToClient = () => navigation.push('CallLinkedToClient');
   const onGoToBill = () => navigation.navigate('Bill');
 
-  const data = [
-    { key: 'Nurse', duration: "15 min." },
-    { key: 'Doctor', duration: "3 min." },
-    { key: 'Lead', duration: "2 min." },
-    { key: 'Program Manager', duration: "5 min." },
-    { key: 'Doctor Two', duration: "35 min." },
-  ];
+  const calls = bill === null ? [] : bill.calls;
 
   return (
     <View style={styles.container} >
       <Text>Draft Bill</Text>
-      <Text>Client Name</Text>
+      <Text>Client: {client}</Text>
       <Text>Calls</Text>
       <FlatList
-        data={data}
+        data={calls}
+        keyExtractor={c => c.pk.toString()}
         renderItem={
           ({ item }) => (
-            <Button onPress={onGoToLinkedToClient} title="Call Detail">
-              {item.key} - {item.duration}
-            </Button>
+            <AppButton
+              onPress={onGoToCallLinkedToClient}
+              title={item.contactNotes + ' ' + item.callReason} />
           )
         }
       />

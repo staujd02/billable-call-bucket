@@ -36,7 +36,7 @@ const useClients = () => {
             })
         });
     }
-    
+
     const updateClient = async (client: UpdateClient) => {
         const realm = (await getRealm());
         await new Promise<void>(async (resolve, reject) => {
@@ -81,6 +81,31 @@ const useClients = () => {
         );
     }
 
+    const searchClientsWithOpenBills = async (search: string, count: number) => {
+        const result = (await getRealm())
+            .objects<Client>(ClientSchemaName)
+            .sorted('name')
+            .filter(f =>
+                f.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+                && f.bills.some(b => b.finalizedOn === null)
+            )
+            .values();
+        setClients(
+            enumerate<Client>(result, count)
+        );
+    }
+
+    const loadClientsWithOpenBills = async (count: number): Promise<void> => {
+        const result = (await getRealm())
+            .objects<Client>(ClientSchemaName)
+            .sorted('name')
+            .filter(f => f.bills.some(b => b.finalizedOn === null))
+            .values();
+        setClients(
+            enumerate<Client>(result, count)
+        );
+    }
+
     return {
         clients,
         loadClients,
@@ -88,7 +113,9 @@ const useClients = () => {
         addClient,
         getClient,
         deleteClient,
-        updateClient ,
+        updateClient,
+        searchClientsWithOpenBills,
+        loadClientsWithOpenBills,
     }
 }
 
