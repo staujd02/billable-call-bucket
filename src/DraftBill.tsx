@@ -28,11 +28,12 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
   const onGoToBill = () => navigation.navigate('Bill');
 
   const calls = bill === null ? [] : bill.calls;
+  const clientName = client === null ? "" : client.name;
 
   return (
     <View style={styles.container} >
       <Text>Draft Bill</Text>
-      <Text>Client: {client}</Text>
+      <Text>Client: {clientName}</Text>
       <Text>Calls</Text>
       <FlatList
         data={calls}
