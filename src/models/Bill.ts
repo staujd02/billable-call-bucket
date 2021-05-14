@@ -4,7 +4,7 @@ const BillSchema = {
     primaryKey: 'pk',
     properties: {
         pk: 'string',
-        finalizedOn: 'date',
+        finalizedOn: 'date?',
         calls: {
             type: 'list',
             objectType: 'Call',
