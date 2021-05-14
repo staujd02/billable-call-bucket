@@ -3,8 +3,7 @@ const BillSchema = {
     name: BillSchemaName,
     primaryKey: 'pk',
     properties: {
-        pk: 'int',
-        isFinalized: 'bool',
+        pk: 'string',
         finalizedOn: 'date',
         calls: {
             type: 'list',

@@ -12,7 +12,7 @@ const useBills = () => {
         return await new Promise<Bill>(async (resolve, reject) => {
             realm.write(() => {
                 const client = realm.objectForPrimaryKey<Client>(ClientSchemaName, clientId.toString());
-                const openBill = client.bills.find(b => !b.isFinalized);
+                const openBill = client.bills.find(b => b.finalizedOn === null);
                 if (!openBill) {
                     const newOpenBill = createNewBill();
                     client.bills.push(newOpenBill);
@@ -26,7 +26,7 @@ const useBills = () => {
     const createNewBill = (): Bill => {
         return {
             pk: Guid.create().toString(),
-            isFinalized: false,
+            finalizedOn: null,
             calls: [],
         };
     }

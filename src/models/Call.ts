@@ -3,7 +3,7 @@ const CallSchema = {
     name: CallSchemaName,
     primaryKey: 'pk',
     properties: {
-        pk: 'int',
+        pk: 'string',
         isBilled: 'bool',
         callReason: 'string',
         contactNotes: 'string',

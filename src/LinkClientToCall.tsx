@@ -55,7 +55,7 @@ const LinkClientToCall = (props: LinkClientToCallProps) => {
       timestamp,
       type,
     });
-    navigation.navigate('DraftBill');
+    navigation.navigate('DraftBill', { clientId });
   }
   const onGoToClientDetail = (clientId: string) =>
     navigation.push('ClientDetail', { clientId });

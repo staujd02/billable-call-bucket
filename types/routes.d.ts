@@ -3,7 +3,7 @@ import Routes from 'src/constants/routes';
 
 export type RootStackParamList = {
   Home: undefined;
-  DraftBill: undefined;
+  DraftBill: Guid;
   CallLinkedToClient: undefined;
   EditLinkedCall: undefined;
   DraftBillsByClient: undefined;
