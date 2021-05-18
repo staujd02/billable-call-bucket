@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, RefreshControlBase } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
 import { LinkClientToCallProps } from '../types/routes';
@@ -12,9 +12,8 @@ import useClients from './hooks/useClients';
 import useContacts from './hooks/useContacts';
 import { formatContact, formatHoursMinutesSeconds, formatPhoneNumber, formatTimestamp } from './service/formatter';
 
-const LinkClientToCall = (props: LinkClientToCallProps) => {
+const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
 
-  const { navigation, route } = props;
   const { phoneNumber, duration, timestamp, type }: CallLog = route.params.callLog;
 
   const { loadContactByNumber, loadedContact } = useContacts();

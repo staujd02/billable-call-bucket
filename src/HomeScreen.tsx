@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, RefreshControlBase } from 'react-native';
+import { FlatList } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
