@@ -9,6 +9,17 @@ const useCalls = () => {
 
     const { getRealm } = usePersistentStorage();
     const { getOpenBill } = useBills();
+    
+    const deleteCall = async (callId: string): Promise<void> => {
+        const realm = (await getRealm());
+        await new Promise<void>(async (resolve, reject) => {
+            realm.write(() => {
+                const call = realm.objectForPrimaryKey<Call>(CallSchemaName, callId);
+                realm.delete(call);
+                resolve();
+            })
+        });
+    }
 
     const getCall = async (callId: string): Promise<Call> => {
         const realm = (await getRealm());
@@ -40,8 +51,9 @@ const useCalls = () => {
     }
 
     return {
-        addBillableCall,
         getCall,
+        deleteCall,
+        addBillableCall,
     }
 }
 
