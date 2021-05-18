@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View, RefreshControlBase } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
 import { LinkClientToCallProps } from '../types/routes';
