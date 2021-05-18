@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
-import { Bill, Call, Client } from '../types/calls';
+import { Bill, Client } from '../types/calls';
 import { DraftBillProps } from '../types/routes';
 import AppButton from './control/AppButton';
-import MultiActionButton from './control/MultiActionButton';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
+import MarkableBilledCall from './custom-control/MarkableBilledCall';
 import useBills from './hooks/useBills';
 import useClients from './hooks/useClients';
 import { formatHoursMinutesSeconds, formatTimestamp } from './service/formatter';
@@ -27,9 +27,6 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
     loadClient();
     loadBill();
   }, [])
-
-  const getIcon = (item: Call): string =>
-    item.isBilled ? 'check-square' : 'square';
 
   const toggleCallBilledStatus = pk => { };
 
@@ -60,15 +57,14 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
       <Text style={styles.header}>Calls</Text>
       <FlatList
         data={calls}
+        style={styles.list}
         keyExtractor={c => c.pk.toString()}
         renderItem={
           ({ item }) => (
-            <MultiActionButton
-              mainTitle={item.contactNotes + ' ' + item.callReason}
-              onPressMainAction={() => onGoToCallLinkedToClient(item.pk.toString())}
-              onPressSecondaryAction={() => toggleCallBilledStatus(item.pk.toString())}
-              secondaryTitle="invoice call"
-              secondarySymbol={getIcon(item)} />
+            <MarkableBilledCall
+              call={item}
+              onGoToCallLinkedToClient={onGoToCallLinkedToClient}
+              toggleCallBilledStatus={toggleCallBilledStatus} />
           )
         }
       />
@@ -89,6 +85,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  list: {
+    paddingLeft: 5,
+    paddingRight: 5,
   },
   header: {
     color: AppColorStyles.text,
