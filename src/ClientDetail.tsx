@@ -33,7 +33,7 @@ const ClientDetail = ({ navigation, route }: ClientDetailProps) => {
     <View style={styles.column} >
       <Text style={styles.header}>{client?.name}</Text>
       <Text style={styles.label}>{client?.description}</Text>
-      <View style={styles.row} >
+      <View style={styles.row}>
         <AppButton title="Edit" onPress={onGoToEditClient} />
         <AppButton title="Delete" onPress={onDelete} />
       </View>

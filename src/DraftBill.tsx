@@ -30,7 +30,8 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   const toggleCallBilledStatus = pk => { };
 
-  const onGoToCallLinkedToClient = pk => navigation.push('CallLinkedToClient');
+  const onGoToCallLinkedToClient = pk => 
+    navigation.push('CallLinkedToClient', { callId: pk, clientName: client.name });
   const onGoToBill = () => navigation.navigate('Bill');
 
   const calls = bill === null ? [] : bill.calls;
