@@ -49,7 +49,7 @@ const useClients = () => {
         });
     }
 
-    const getClient = async (clientGuid: Guid): Promise<Client> => {
+    const getClient = async (clientGuid: string): Promise<Client> => {
         const realm = (await getRealm());
         return await new Promise<Client>(async (resolve, reject) => {
             realm.write(() => {

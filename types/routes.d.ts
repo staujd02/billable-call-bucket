@@ -2,22 +2,35 @@ import { StackScreenProps } from '@react-navigation/stack';
 import Routes from 'src/constants/routes';
 
 type ClientNameWithCallId = {
-   callId: string,
-   clientName: string,
+  callId: string,
+  clientName: string,
+}
+
+type ClientNameWithBillId = {
+  billId: string,
+  clientName: string,
+}
+
+type ClientIdRoute = {
+  clientId: string,
+}
+
+type BillIdRoute = {
+  billId: string,
 }
 
 export type RootStackParamList = {
   Home: undefined;
-  DraftBill: Guid;
+  DraftBill: ClientIdRoute;
   CallLinkedToClient: ClientNameWithCallId;
   EditLinkedCall: ClientNameWithCallId;
   DraftBillsByClient: undefined;
   BillingHistoryByClient: undefined;
   ClientBillingHistory: undefined;
-  EditClient: Guid;
+  EditClient: ClientIdRoute;
   AddNewClient: undefined;
-  Bill: undefined;
-  ClientDetail: Guid;
+  Bill: ClientNameWithBillId;
+  ClientDetail: ClientIdRoute;
   ClientList: undefined;
   LinkClientToCall: CallLog;
 };

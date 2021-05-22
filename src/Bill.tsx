@@ -1,43 +1,99 @@
-import React from 'react';
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { AppColorStyles, AppFontStyles } from '../styles/default';
+import { Bill } from '../types/calls';
 import { BillProps } from '../types/routes';
+import AppButton from './control/AppButton';
+import DoubleTextLayout from './custom-control/DoubleTextLayout';
+import SelectableBilledCallItem from './custom-control/SelectableBilledCallItem';
+import useBills from './hooks/useBills';
+import { formatDate, formatHoursMinutesSeconds, formatTimestamp } from './service/formatter';
 
-const Bill = (props: BillProps) => {
+const BillComponent = ({ route, navigation }: BillProps) => {
 
-  const { navigation } = props;
+  const { billId, clientName } = route.params;
 
-  const onGotoCall = () => navigation.push('CallLinkedToClient');
+  const [bill, setBill] = useState<Bill>(null);
 
-  const data = [
-    { key: 'Devin', duration: '1h 30min.' },
-    { key: 'Dan', duration: '2h 30min.'  },
-    { key: 'Dominic', duration: '30min.'  },
-  ];
+  const {
+    getBill,
+  } = useBills();
+
+  const loadBill = async () => setBill(await getBill(billId))
+
+  useEffect(() => {
+    loadBill();
+  }, [])
+
+  const onGoHome = async () =>
+    navigation.navigate('Home');
+
+  const calls = bill === null ? [] : bill.calls;
+  const callDurationSum = calls.reduce((prev, cur) => cur.duration + prev, 0);
+
+  const earliestCall = calls.reduce((prev, cur) => parseInt(cur.timestamp) > parseInt(prev.timestamp) ? prev : cur, calls[0]);
+  const earliestCallDate = calls.length > 0
+    ? formatTimestamp(earliestCall.timestamp)
+    : "";
+
+  const latestCall = calls.reduce((prev, cur) => parseInt(cur.timestamp) < parseInt(prev.timestamp) ? prev : cur, calls[0]);
+  const latestCallDate = calls.length > 0
+    ? formatTimestamp(latestCall.timestamp)
+    : "";
+
+  const finalizedOn = bill
+    ? formatDate(bill.finalizedOn)
+    : "";
 
   return (
     <View style={styles.container} >
-      <Text>Client Name</Text>
-      <Text>Calls Billed</Text>
-      <Text>Duration Billed</Text>
-      <Text>Calls</Text>
+      <Text style={styles.header}>{clientName}</Text>
+      <DoubleTextLayout label="Total Duration:" content={formatHoursMinutesSeconds(callDurationSum)} />
+      <DoubleTextLayout label="Number of Calls:" content={calls.length.toString()} />
+      <DoubleTextLayout label="Earliest Call:" content={earliestCallDate} />
+      <DoubleTextLayout label="Latest Call:" content={latestCallDate} />
+      <DoubleTextLayout label="Finalized On:" content={finalizedOn} />
+      <Text style={styles.header}>Calls</Text>
       <FlatList
-        data={data}
+        data={calls}
+        style={styles.list}
+        keyExtractor={c => c.pk.toString()}
         renderItem={
-          ({ item }) => <Button onPress={onGotoCall} title="Call Entry">{item.key} - {item.duration}</Button>
+          ({ item }) => (
+            <SelectableBilledCallItem
+              call={item}
+              onPress={() => { }}
+            />
+          )
         }
       />
+      <View style={styles.spacer}></View>
+      <AppButton onPress={onGoHome} title="Go Home" />
+      <View style={styles.spacer}></View>
     </View>
   );
 };
 
-export default Bill;
+export default BillComponent;
 
 const styles = StyleSheet.create({
+  spacer: {
+    padding: 10 
+  },
   container: {
     flex: 1,
-    paddingTop: 22,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  list: {
+    backgroundColor: 'green',
+  },
+  header: {
+    color: AppColorStyles.text,
+    textAlign: 'center',
+    fontSize: AppFontStyles.titleSize,
+    marginBottom: 10,
+    marginTop: 10,
   },
 });

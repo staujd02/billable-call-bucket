@@ -1,11 +1,33 @@
 import { Guid } from "guid-typescript";
 import { Bill, Client } from "../../types/calls";
+import { BillSchemaName } from "../models/Bill";
 import { ClientSchemaName } from "../models/Client";
 import usePersistentStorage from "./usePersistentStorage";
 
 const useBills = () => {
 
     const { getRealm } = usePersistentStorage();
+
+    const getBill = async (billId: string): Promise<Bill> => {
+        const realm = (await getRealm());
+        return await new Promise<Bill>(async (resolve, reject) => {
+            realm.write(() => {
+                const bill = realm.objectForPrimaryKey<Bill>(BillSchemaName, billId);
+                resolve(bill);
+            })
+        });
+    }
+
+    const markBillAsFinalized = async (billId: string) => {
+        const realm = (await getRealm());
+        return await new Promise<void>(async (resolve, reject) => {
+            realm.write(() => {
+                const bill = realm.objectForPrimaryKey<Bill>(BillSchemaName, billId);
+                bill.finalizedOn = new Date();
+                resolve();
+            })
+        });
+    }
 
     const getOpenBill = async (clientId: string) => {
         const realm = (await getRealm());
@@ -32,7 +54,9 @@ const useBills = () => {
     }
 
     return {
-        getOpenBill
+        getBill,
+        getOpenBill,
+        markBillAsFinalized,
     }
 }
 

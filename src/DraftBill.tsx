@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { formatHoursMinutesSeconds, formatTimestamp } from './service/formatter';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { Bill, Client } from '../types/calls';
 import { DraftBillProps } from '../types/routes';
@@ -9,7 +10,6 @@ import MarkableBilledCall from './custom-control/MarkableBilledCall';
 import useBills from './hooks/useBills';
 import useCalls from './hooks/useCalls';
 import useClients from './hooks/useClients';
-import { formatHoursMinutesSeconds, formatTimestamp } from './service/formatter';
 
 const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
@@ -19,7 +19,10 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
   const [bill, setBill] = useState<Bill>(null);
 
   const { getClient } = useClients();
-  const { getOpenBill } = useBills();
+  const {
+    getOpenBill,
+    markBillAsFinalized,
+  } = useBills();
   const {
     markCallAsBilled,
     clearCallsAsBilledStatus
@@ -43,7 +46,11 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   const onGoToCallLinkedToClient = pk =>
     navigation.push('CallLinkedToClient', { callId: pk, clientName: client.name });
-  const onGoToBill = () => navigation.navigate('Bill');
+
+  const onFinalizeBill = async () => {
+    await markBillAsFinalized(bill.pk);
+    navigation.navigate('Bill', { billId: bill.pk, clientName: client.name });
+  }
 
   const calls = bill === null ? [] : bill.calls;
   const clientName = client === null ? "" : client.name;
@@ -61,12 +68,14 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   return (
     <View style={styles.container} >
-      <Text style={styles.header}>{clientName}</Text>
-      <DoubleTextLayout label="Total Duration:" content={formatHoursMinutesSeconds(callDurationSum)} />
-      <DoubleTextLayout label="Number of Calls:" content={calls.length.toString()} />
-      <DoubleTextLayout label="Earliest Call:" content={earliestCallDate} />
-      <DoubleTextLayout label="Latest Call:" content={latestCallDate} />
-      <Text style={styles.header}>Calls</Text>
+      <View style={styles.content}>
+        <Text style={styles.header}>{clientName}</Text>
+        <DoubleTextLayout label="Total Duration:" content={formatHoursMinutesSeconds(callDurationSum)} />
+        <DoubleTextLayout label="Number of Calls:" content={calls.length.toString()} />
+        <DoubleTextLayout label="Earliest Call:" content={earliestCallDate} />
+        <DoubleTextLayout label="Latest Call:" content={latestCallDate} />
+        <Text style={styles.header}>Calls</Text>
+      </View>
       <FlatList
         data={calls}
         style={styles.list}
@@ -80,7 +89,7 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
           )
         }
       />
-      <AppButton onPress={onGoToBill} title="Finalize Bill" />
+      <AppButton onPress={onFinalizeBill} title="Finalize Bill" />
       <View style={styles.spacer}></View>
     </View>
   );
@@ -108,5 +117,15 @@ const styles = StyleSheet.create({
     fontSize: AppFontStyles.titleSize,
     marginBottom: 10,
     marginTop: 10,
+  },
+  content: {
+    paddingTop: 10,
+    flex: 1,
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: AppColorStyles.background,
   },
 });

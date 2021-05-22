@@ -12,12 +12,16 @@ export function formatPhoneNumber(phoneNumber: string): string {
     }
 }
 
-export function formatLogType(type:CallLogType): string {
+export function formatLogType(type: CallLogType): string {
     return type === "INCOMING" ? 'IN' : 'OUT';
 }
 
-export function formatTimestamp(timestamp: string): string{
+export function formatTimestamp(timestamp: string): string {
     const dateObject = new Date(parseInt(timestamp));
+    return formatDate(dateObject);
+}
+
+export function formatDate(dateObject: Date): string {
     const dateString = `${dateObject.getDay()}/${dateObject.getMonth()}/${dateObject.getFullYear()}`;
     const timeString = `${dateObject.getHours()}:${dateObject.getMinutes()}${dateObject.getMinutes() < 10 ? "0" : ""}`;
     return `${dateString} ${timeString}`;
