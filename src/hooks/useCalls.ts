@@ -1,5 +1,5 @@
 import { Guid } from "guid-typescript";
-import { Bill, Call, NewBillbleCall } from "../../types/calls";
+import { Bill, Call, CallDetailUpdate, NewBillbleCall } from "../../types/calls";
 import { BillSchemaName } from "../models/Bill";
 import { CallSchemaName } from "../models/Call";
 import useBills from "./useBills";
@@ -30,6 +30,18 @@ const useCalls = () => {
             })
         });
     }
+    
+    const updateCall = async ({ callPk, callReason, contactNotes }: CallDetailUpdate): Promise<void> => {
+        const realm = (await getRealm());
+        return await new Promise<void>(async (resolve, reject) => {
+            realm.write(() => {
+                const call = realm.objectForPrimaryKey<Call>(CallSchemaName, callPk);
+                call.callReason = callReason;
+                call.contactNotes = contactNotes;
+                resolve();
+            })
+        });
+    }
 
     const markCallAsBilled = async (callId: string): Promise<void> =>
         await setCallsBillStatus(getRealm, callId, true);
@@ -47,7 +59,7 @@ const useCalls = () => {
             });
         });
     }
-
+    
     const addBillableCall = async (billableCall: NewBillbleCall) => {
         const openBill = await getOpenBill(billableCall.clientPk);
         const realm = (await getRealm());
@@ -70,6 +82,7 @@ const useCalls = () => {
     return {
         getCall,
         deleteCall,
+        updateCall,
         addBillableCall,
         markCallAsBilled,
         clearCallsAsBilledStatus,

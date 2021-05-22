@@ -22,7 +22,7 @@ const CallLinkedToClient = ({ navigation, route }: CallLinkedToClientProps) => {
     loadCall()
   }, []);
 
-  const onGotoEdit = () => navigation.push('EditLinkedCall');
+  const onGotoEdit = () => navigation.push('EditLinkedCall', { ...route.params });
   const onDelete = async () => {
     await deleteCall(callId);
     navigation.pop();

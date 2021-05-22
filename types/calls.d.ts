@@ -1,4 +1,5 @@
 export type CallLogType = "OUTGOING" | "INCOMING" | "MISSED" | "UNKNOWN";
+
 export type CallLog = {
     phoneNumber: string,
     duration: number,
@@ -7,6 +8,12 @@ export type CallLog = {
     dateTime: string,
     type: CallLogType,
     rawType: number,
+}
+
+export type CallDetailUpdate = {
+    callPk: string,
+    callReason: string,
+    contactNotes: string,
 }
 
 export type NewBillbleCall = {
