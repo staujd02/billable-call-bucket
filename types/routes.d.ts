@@ -6,6 +6,12 @@ type ClientNameWithCallId = {
   clientName: string,
 }
 
+type ClientNameWithCallIdAndReadPermission = {
+  callId: string,
+  clientName: string,
+  readOnly: boolean,
+}
+
 type ClientNameWithBillId = {
   billId: string,
   clientName: string,
@@ -22,11 +28,11 @@ type BillIdRoute = {
 export type RootStackParamList = {
   Home: undefined;
   DraftBill: ClientIdRoute;
-  CallLinkedToClient: ClientNameWithCallId;
+  CallLinkedToClient: ClientNameWithCallIdAndReadPermission;
   EditLinkedCall: ClientNameWithCallId;
   DraftBillsByClient: undefined;
   BillingHistoryByClient: undefined;
-  ClientBillingHistory: undefined;
+  ClientBillingHistory: ClientIdRoute;
   EditClient: ClientIdRoute;
   AddNewClient: undefined;
   Bill: ClientNameWithBillId;

@@ -45,7 +45,11 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
   };
 
   const onGoToCallLinkedToClient = pk =>
-    navigation.push('CallLinkedToClient', { callId: pk, clientName: client.name });
+    navigation.push('CallLinkedToClient', {
+      callId: pk,
+      clientName: client.name,
+      readOnly: false
+    });
 
   const onFinalizeBill = async () => {
     await markBillAsFinalized(bill.pk);
@@ -103,9 +107,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: AppColorStyles.background,
   },
   list: {
     paddingLeft: 5,

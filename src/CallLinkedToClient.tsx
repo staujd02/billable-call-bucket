@@ -9,7 +9,7 @@ import useCalls from './hooks/useCalls';
 
 const CallLinkedToClient = ({ navigation, route }: CallLinkedToClientProps) => {
 
-  const { callId, clientName } = route.params;
+  const { callId, clientName, readOnly } = route.params;
 
   const [call, setCall] = useState<Call>(null);
 
@@ -37,10 +37,13 @@ const CallLinkedToClient = ({ navigation, route }: CallLinkedToClientProps) => {
           ? <CallDetails call={call} />
           : <Text>Loading Details...</Text>
       }
-      <View style={styles.row}>
-        <AppButton title="Edit" onPress={onGotoEdit} />
-        <AppButton title="Delete" onPress={onDelete} />
-      </View>
+      {
+        !readOnly &&
+        <View style={styles.row}>
+          <AppButton title="Edit" onPress={onGotoEdit} />
+          <AppButton title="Delete" onPress={onDelete} />
+        </View>
+      }
     </View>
   );
 };

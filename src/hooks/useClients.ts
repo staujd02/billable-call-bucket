@@ -1,6 +1,6 @@
 import { Guid } from "guid-typescript";
 import { useState } from "react";
-import { Client, NewClient, UpdateClient } from "../../types/calls";
+import { Bill, Client, NewClient, UpdateClient } from "../../types/calls";
 import { ClientSchemaName } from "../models/Client";
 import { enumerate } from "../utility/enumerate";
 import usePersistentStorage from "./usePersistentStorage";
@@ -81,25 +81,46 @@ const useClients = () => {
         );
     }
 
-    const searchClientsWithOpenBills = async (search: string, count: number) => {
+    const searchClientsWithOpenBills = async (search: string, count: number) =>
+        await searchBills(getRealm, search, setClients, count, b => b.finalizedOn === null);
+
+    const searchClientsWithFinalizedBills = async (search: string, count: number) =>
+        await searchBills(getRealm, search, setClients, count, b => b.finalizedOn !== null);
+
+    async function searchBills(
+        getRealm: () => Promise<Realm>,
+        search: string,
+        setClients,
+        count: number,
+        billSearch: (b: Bill) => boolean
+    ) {
         const result = (await getRealm())
             .objects<Client>(ClientSchemaName)
             .sorted('name')
-            .filter(f =>
-                f.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-                && f.bills.some(b => b.finalizedOn === null)
-            )
-            .values();
+            .filter(f => f.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+                && f.bills.some(billSearch)
+            ).values();
         setClients(
             enumerate<Client>(result, count)
         );
     }
 
-    const loadClientsWithOpenBills = async (count: number): Promise<void> => {
+    const loadClientsWithOpenBills = async (count: number): Promise<void> =>
+        await loadClientsWithBills(getRealm, setClients, count, b => b.finalizedOn === null);
+
+    const loadClientsWithFinalizedBills = async (count: number): Promise<void> =>
+        await loadClientsWithBills(getRealm, setClients, count, b => b.finalizedOn !== null);
+
+    async function loadClientsWithBills(
+        getRealm: () => Promise<Realm>,
+        setClients,
+        count: number,
+        billSearch: (b: Bill) => boolean
+    ) {
         const result = (await getRealm())
             .objects<Client>(ClientSchemaName)
             .sorted('name')
-            .filter(f => f.bills.some(b => b.finalizedOn === null))
+            .filter(f => f.bills.some(billSearch))
             .values();
         setClients(
             enumerate<Client>(result, count)
@@ -108,14 +129,16 @@ const useClients = () => {
 
     return {
         clients,
-        loadClients,
-        searchClients,
         addClient,
         getClient,
+        loadClients,
         deleteClient,
         updateClient,
-        searchClientsWithOpenBills,
+        searchClients,
         loadClientsWithOpenBills,
+        searchClientsWithOpenBills,
+        loadClientsWithFinalizedBills,
+        searchClientsWithFinalizedBills,
     }
 }
 

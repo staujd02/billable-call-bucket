@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
-import { Bill } from '../types/calls';
+import { Bill, Call } from '../types/calls';
 import { BillProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
@@ -27,6 +27,13 @@ const BillComponent = ({ route, navigation }: BillProps) => {
 
   const onGoHome = async () =>
     navigation.navigate('Home');
+
+  const onGoToCallLinkedToClient = async ({ pk }: Call) =>
+    navigation.navigate('CallLinkedToClient', {
+      clientName,
+      callId: pk,
+      readOnly: true,
+    });
 
   const calls = bill === null ? [] : bill.calls;
   const callDurationSum = calls.reduce((prev, cur) => cur.duration + prev, 0);
@@ -54,19 +61,20 @@ const BillComponent = ({ route, navigation }: BillProps) => {
       <DoubleTextLayout label="Latest Call:" content={latestCallDate} />
       <DoubleTextLayout label="Finalized On:" content={finalizedOn} />
       <Text style={styles.header}>Calls</Text>
-      <FlatList
-        data={calls}
-        style={styles.list}
-        keyExtractor={c => c.pk.toString()}
-        renderItem={
-          ({ item }) => (
-            <SelectableBilledCallItem
-              call={item}
-              onPress={() => { }}
-            />
-          )
-        }
-      />
+      <View style={styles.listContainer}>
+        <FlatList
+          data={calls}
+          keyExtractor={c => c.pk.toString()}
+          renderItem={
+            ({ item }) => (
+              <SelectableBilledCallItem
+                call={item}
+                onPress={() => onGoToCallLinkedToClient(item)}
+              />
+            )
+          }
+        />
+      </View>
       <View style={styles.spacer}></View>
       <AppButton onPress={onGoHome} title="Go Home" />
       <View style={styles.spacer}></View>
@@ -78,16 +86,20 @@ export default BillComponent;
 
 const styles = StyleSheet.create({
   spacer: {
-    padding: 10 
+    padding: 10
+  },
+  listContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: "row",
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  list: {
-    backgroundColor: 'green',
   },
   header: {
     color: AppColorStyles.text,

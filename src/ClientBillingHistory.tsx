@@ -2,9 +2,7 @@ import React from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import { ClientBillingHistoryProps } from '../types/routes';
 
-const ClientBillingHistory = (props: ClientBillingHistoryProps) => {
-
-  const { navigation } = props;
+const ClientBillingHistory = ({ navigation, route }: ClientBillingHistoryProps) => {
 
   const onGoToBill = () => navigation.push('Bill');
   
