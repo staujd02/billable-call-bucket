@@ -7,6 +7,7 @@ import AppButton from './control/AppButton';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
 import MarkableBilledCall from './custom-control/MarkableBilledCall';
 import useBills from './hooks/useBills';
+import useCalls from './hooks/useCalls';
 import useClients from './hooks/useClients';
 import { formatHoursMinutesSeconds, formatTimestamp } from './service/formatter';
 
@@ -19,6 +20,10 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   const { getClient } = useClients();
   const { getOpenBill } = useBills();
+  const {
+    markCallAsBilled,
+    clearCallsAsBilledStatus
+  } = useCalls();
 
   const loadClient = async () => setClient(await getClient(id()))
   const loadBill = async () => setBill(await getOpenBill(id()))
@@ -28,9 +33,15 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
     loadBill();
   }, [])
 
-  const toggleCallBilledStatus = pk => { };
+  const toggleCallBilledStatus = async pk => {
+    const call = bill.calls.find(c => c.pk === pk);
+    call.isBilled
+      ? await clearCallsAsBilledStatus(pk)
+      : await markCallAsBilled(pk)
+    await loadBill();
+  };
 
-  const onGoToCallLinkedToClient = pk => 
+  const onGoToCallLinkedToClient = pk =>
     navigation.push('CallLinkedToClient', { callId: pk, clientName: client.name });
   const onGoToBill = () => navigation.navigate('Bill');
 
@@ -40,12 +51,12 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   const earliestCall = calls.reduce((prev, cur) => parseInt(cur.timestamp) > parseInt(prev.timestamp) ? prev : cur, calls[0]);
   const earliestCallDate = calls.length > 0
-    ?  formatTimestamp(earliestCall.timestamp)
+    ? formatTimestamp(earliestCall.timestamp)
     : "";
 
   const latestCall = calls.reduce((prev, cur) => parseInt(cur.timestamp) < parseInt(prev.timestamp) ? prev : cur, calls[0]);
   const latestCallDate = calls.length > 0
-    ?  formatTimestamp(latestCall.timestamp)
+    ? formatTimestamp(latestCall.timestamp)
     : "";
 
   return (
@@ -79,7 +90,7 @@ export default DraftBill;
 
 const styles = StyleSheet.create({
   spacer: {
-    padding: 10 
+    padding: 10
   },
   container: {
     flex: 1,
