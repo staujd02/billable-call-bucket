@@ -17,7 +17,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
   const { phoneNumber, duration, timestamp, type }: CallLog = route.params.callLog;
 
   const { loadContactByNumber, loadedContact } = useContacts();
-  const { clients, loadClients, searchClients } = useClients();
+  const { clients, loadClientsWithOpenBills, searchClients } = useClients();
   const { addBillableCall } = useCalls();
 
   const title = loadedContact !== null
@@ -28,6 +28,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
   const [loadCount, setLoadCount] = useState(10);
   const [callReason, setCallNotes] = useState("");
   const [contactNotes, setContactNotes] = useState("");
+  const [searchingClientList, setSearchingClientList] = useState(false);
 
   useEffect(() => {
     loadContactByNumber(phoneNumber)
@@ -41,7 +42,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
   useEffect(() => {
     searchValue
       ? searchClients(searchValue, loadCount)
-      : loadClients(loadCount);
+      : loadClientsWithOpenBills(loadCount);
   }, [searchValue, loadCount]);
 
   const onGoToDraftBill = async (clientId: string) => {
@@ -64,21 +65,26 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Call Details</Text>
-      <DoubleTextLayout label="Contact:" content={title} />
-      <DoubleTextLayout label="When:" content={formattedStamp} />
-      <DoubleTextLayout label="Duration:" content={formattedDuration} />
-      <DoubleTextLayout label="Call Direction:" content={type} />
-      <InlineTextInputWithLabel
-        label="Contact Notes:"
-        onChangeText={s => setContactNotes(s)}
-        value={contactNotes} />
-      <InlineTextInputWithLabel
-        label="Call Notes:"
-        onChangeText={s => setCallNotes(s)}
-        value={callReason} />
+      {!searchingClientList && <>
+        <Text style={styles.header}>Call Details</Text>
+        <DoubleTextLayout label="Contact:" content={title} />
+        <DoubleTextLayout label="When:" content={formattedStamp} />
+        <DoubleTextLayout label="Duration:" content={formattedDuration} />
+        <DoubleTextLayout label="Call Direction:" content={type} />
+        <InlineTextInputWithLabel
+          label="Contact Notes:"
+          onChangeText={s => setContactNotes(s)}
+          value={contactNotes} />
+        <InlineTextInputWithLabel
+          label="Call Notes:"
+          onChangeText={s => setCallNotes(s)}
+          value={callReason} />
+      </>}
       <Text style={styles.header}>Clients</Text>
-      <SearchBox value={searchValue} onChangeText={text => setSearchValue(text)} />
+      <SearchBox
+        value={searchValue}
+        onFocus={f => setSearchingClientList(f)}
+        onChangeText={text => setSearchValue(text)} />
       <FlatList
         style={styles.list}
         data={clients}

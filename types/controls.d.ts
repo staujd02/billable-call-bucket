@@ -9,6 +9,7 @@ export type MultiActionButtonProps = {
 export type SearchBoxProps = {
     value: string,
     onChangeText: (text: string) => void
+    onFocus?: (focued: boolean) => void;
 }
 
 export type InlineTextInputWithLabelProps = {
