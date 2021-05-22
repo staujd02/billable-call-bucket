@@ -26,7 +26,7 @@ const HomeScreen = (props: HomeScreenProps) => {
   return (
     <View style={styles.container} >
       <View style={styles.navigationRow} >
-        <AppButton title="Draft Bills" onPress={onGoToDraftBillsByClient} />
+        <AppButton title="Open Bills" onPress={onGoToDraftBillsByClient} />
         <AppButton title="Billing History" onPress={onGoToBillingHistoryByClient} />
         <AppButton title="Client List" onPress={onGoToClientList} />
       </View>
