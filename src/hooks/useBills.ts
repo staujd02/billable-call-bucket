@@ -18,6 +18,16 @@ const useBills = () => {
         });
     }
 
+    const getSortedClientBills = async (clientId: string): Promise<Array<Bill>> => {
+        const realm = (await getRealm());
+        return await new Promise<Array<Bill>>(async (resolve, reject) => {
+            realm.write(() => {
+                const client = realm.objectForPrimaryKey<Client>(ClientSchemaName, clientId)
+                resolve(client.bills.sorted("finalizedOn"));
+            })
+        });
+    }
+
     const markBillAsFinalized = async (billId: string) => {
         const realm = (await getRealm());
         return await new Promise<void>(async (resolve, reject) => {
@@ -57,6 +67,7 @@ const useBills = () => {
         getBill,
         getOpenBill,
         markBillAsFinalized,
+        getSortedClientBills,
     }
 }
 
