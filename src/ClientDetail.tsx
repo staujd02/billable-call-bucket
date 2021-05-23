@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native'
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { Client } from '../types/calls';
@@ -6,26 +7,31 @@ import { ClientDetailProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import useClients from './hooks/useClients';
 
+
 const ClientDetail = ({ navigation, route }: ClientDetailProps) => {
 
   const [client, setClient] = useState<Client>(null);
 
+  const isFocused = useIsFocused();
+
   const { getClient, deleteClient } = useClients();
-  
+
   const id = () => route.params.clientId;
 
   const loadClient = async () =>
     setClient(await getClient(id()));
 
   useEffect(() => {
-    loadClient()
-  }, []);
+    if (isFocused)
+      loadClient()
+  }, [isFocused]);
 
   const onGoToEditClient = () =>
     navigation.push('EditClient', { clientId: id() });
 
   const onDelete = async () => {
-    await deleteClient(id()); 
+    setClient(null);
+    await deleteClient(id());
     navigation.pop();
   }
 

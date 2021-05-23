@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -13,6 +14,8 @@ const ClientList = (props: ClientListProps) => {
 
   const { clients, loadClients, searchClients } = useClients();
 
+  const isFocused = useIsFocused();
+
   const onGoToClientDetail = (id: string) =>
     navigation.push('ClientDetail', { clientId: id });
   const onGoToAddClient = () => navigation.push('AddNewClient');
@@ -21,17 +24,18 @@ const ClientList = (props: ClientListProps) => {
   const [loadCount, setLoadCount] = useState(10);
 
   useEffect(() => {
-    searchValue
-      ? searchClients(searchValue, loadCount)
-      : loadClients(loadCount);
-  }, [searchValue, loadCount]);
+    if (isFocused)
+      searchValue
+        ? searchClients(searchValue, loadCount)
+        : loadClients(loadCount);
+  }, [searchValue, loadCount, isFocused]);
 
   return (
     <View style={styles.container} >
       <Text style={styles.header}>Client List</Text>
       <SearchBox value={searchValue} onChangeText={text => setSearchValue(text)} />
       <FlatList
-        data={clients}
+        data={clients?.filter(c => c.isValid())}
         keyExtractor={c => c.pk.toString()}
         style={styles.flatList}
         renderItem={
