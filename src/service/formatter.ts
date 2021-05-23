@@ -27,6 +27,10 @@ export function formatDate(dateObject: Date): string {
     return `${dateString} ${timeString}`;
 }
 
+export function formatDateWithoutTime(dateObject: Date): string {
+    return dateObject.toLocaleDateString();
+}
+
 export function formatContact(contact: Contact): string {
     return `${contact.givenName} ${contact.familyName}`;
 }

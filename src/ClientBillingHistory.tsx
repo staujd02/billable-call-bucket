@@ -41,10 +41,7 @@ const ClientBillingHistory = ({ navigation, route }: ClientBillingHistoryProps) 
   return (
     <View style={styles.container} >
       <Text style={styles.header}>{client?.name}'s Billing History</Text>
-      <DoubleTextLayout label="Number of Bills:" content={client?.bills.length.toString()} />
-      <DoubleTextLayout label="Totat Duration Billed:" content={"?"} />
-      <DoubleTextLayout label="Total Calls Billed:" content={"?"} />
-      <Text style={styles.header}>Bills</Text>
+      <Text style={styles.header}>Bills ({client?.bills.length.toString()})</Text>
       <View style={styles.listContainer}>
         <FlatList
           data={bills}
