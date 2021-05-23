@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { formatHoursMinutesSeconds, formatTimestamp } from './service/formatter';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
@@ -18,6 +19,8 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
   const [client, setClient] = useState<Client>(null);
   const [bill, setBill] = useState<Bill>(null);
 
+  const isFocused = useIsFocused();
+
   const { getClient } = useClients();
   const {
     getOpenBill,
@@ -34,7 +37,7 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
   useEffect(() => {
     loadClient();
     loadBill();
-  }, [])
+  }, [isFocused])
 
   const toggleCallBilledStatus = async pk => {
     const call = bill.calls.find(c => c.pk === pk);
@@ -53,10 +56,10 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   const onFinalizeBill = async () => {
     await markBillAsFinalized(bill.pk);
-    navigation.navigate('Bill', { billId: bill.pk, clientName: client.name });
+    navigation.replace('Bill', { billId: bill.pk, clientName: client.name });
   }
 
-  const calls = bill === null ? [] : bill.calls;
+  const calls = bill === null ? [] : bill.calls.filter(c => c.isValid());
   const clientName = client === null ? "" : client.name;
   const callDurationSum = calls.reduce((prev, cur) => cur.duration + prev, 0);
 
@@ -72,27 +75,28 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   return (
     <View style={styles.container} >
-      <View style={styles.content}>
-        <Text style={styles.header}>{clientName}</Text>
-        <DoubleTextLayout label="Total Duration:" content={formatHoursMinutesSeconds(callDurationSum)} />
-        <DoubleTextLayout label="Number of Calls:" content={calls.length.toString()} />
-        <DoubleTextLayout label="Earliest Call:" content={earliestCallDate} />
-        <DoubleTextLayout label="Latest Call:" content={latestCallDate} />
-        <Text style={styles.header}>Calls</Text>
+      <Text style={styles.header}>{clientName}</Text>
+      <DoubleTextLayout label="Total Duration:" content={formatHoursMinutesSeconds(callDurationSum)} />
+      <DoubleTextLayout label="Number of Calls:" content={calls.length.toString()} />
+      <DoubleTextLayout label="Earliest Call:" content={earliestCallDate} />
+      <DoubleTextLayout label="Latest Call:" content={latestCallDate} />
+      <Text style={styles.header}>Calls</Text>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={calls}
+          style={styles.list}
+          keyExtractor={c => c.pk.toString()}
+          renderItem={
+            ({ item }) => (
+              <MarkableBilledCall
+                call={item}
+                onGoToCallLinkedToClient={onGoToCallLinkedToClient}
+                toggleCallBilledStatus={toggleCallBilledStatus} />
+            )
+          }
+        />
       </View>
-      <FlatList
-        data={calls}
-        style={styles.list}
-        keyExtractor={c => c.pk.toString()}
-        renderItem={
-          ({ item }) => (
-            <MarkableBilledCall
-              call={item}
-              onGoToCallLinkedToClient={onGoToCallLinkedToClient}
-              toggleCallBilledStatus={toggleCallBilledStatus} />
-          )
-        }
-      />
+      <View style={styles.spacer}></View>
       <AppButton onPress={onFinalizeBill} title="Finalize Bill" />
       <View style={styles.spacer}></View>
     </View>
@@ -103,10 +107,18 @@ export default DraftBill;
 
 const styles = StyleSheet.create({
   spacer: {
-    padding: 10
+    padding: 5
   },
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: AppColorStyles.background,
+  },
+  listContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: "column",
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: AppColorStyles.background,
@@ -130,6 +142,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: AppColorStyles.background,
+    // backgroundColor: AppColorStyles.background,
+    backgroundColor: 'green',
   },
 });

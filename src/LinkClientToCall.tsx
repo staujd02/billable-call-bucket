@@ -55,7 +55,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
       timestamp,
       type,
     });
-    navigation.navigate('DraftBill', { clientId });
+    navigation.replace('DraftBill', { clientId });
   }
   const onGoToClientDetail = (clientId: string) =>
     navigation.push('ClientDetail', { clientId });

@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
@@ -12,6 +13,8 @@ const CallLinkedToClient = ({ navigation, route }: CallLinkedToClientProps) => {
   const { callId, clientName, readOnly } = route.params;
 
   const [call, setCall] = useState<Call>(null);
+  
+  const isFocused = useIsFocused();
 
   const { getCall, deleteCall } = useCalls();
 
@@ -19,11 +22,13 @@ const CallLinkedToClient = ({ navigation, route }: CallLinkedToClientProps) => {
     setCall(await getCall(callId));
 
   useEffect(() => {
-    loadCall()
-  }, []);
+    if(isFocused)
+      loadCall();
+  }, [isFocused]);
 
   const onGotoEdit = () => navigation.push('EditLinkedCall', { ...route.params });
   const onDelete = async () => {
+    setCall(null);
     await deleteCall(callId);
     navigation.pop();
   }
