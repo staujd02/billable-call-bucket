@@ -39,6 +39,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         <FlatList
           data={callLogData || []}
           style={styles.list}
+          onScrollEndDrag={() => loadMore(3)}
           keyExtractor={i => i.timestamp}
           renderItem={
             ({ item }) => <SelectableCallItem onPress={() => onGoToLinkClientToCall(item)} callLog={item} />

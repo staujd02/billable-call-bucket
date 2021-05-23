@@ -6,7 +6,7 @@ import CallLogs from 'react-native-call-log';
 
 const useCallLogs = () => {
 
-    const DEFAULT_AMOUNT = 8;
+    const DEFAULT_AMOUNT = 10;
     const [numberLoaded, setNumberLoaded] = useState<number>(DEFAULT_AMOUNT);
     const [callLogData, setCallLogData] = useState<Array<CallLog>>([]);
     const meaningCallFilter = (value: CallLog, index: number, array: CallLog[]): boolean =>
@@ -32,7 +32,7 @@ const useCallLogs = () => {
     return {
         loadMore,
         callLogData,
-        refreshLogs: () => fetchData(numberLoaded), 
+        refreshLogs: () => fetchData(DEFAULT_AMOUNT), 
     }
 }
 
