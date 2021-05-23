@@ -6,13 +6,12 @@ const useContacts = () => {
     
     const [loadedContact, setLoadedContact] = useState<Contact>(null);
 
-    async function loadContactByNumber(number) : Promise<Array<Contact>> {
+    async function loadContactByNumber(number: string) : Promise<void> {
         if ((await requestContactPermission())){
             const contacts = await Contacts.getContactsByPhoneNumber(number);
             if(matchingContactExist(contacts))
                 setLoadedContact(contacts[0])
         }
-        return [];
     }
 
     function matchingContactExist (matchingContacts: Array<Contact>): boolean {
