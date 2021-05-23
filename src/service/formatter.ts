@@ -22,8 +22,8 @@ export function formatTimestamp(timestamp: string): string {
 }
 
 export function formatDate(dateObject: Date): string {
-    const dateString = `${dateObject.getDay()}/${dateObject.getMonth()}/${dateObject.getFullYear()}`;
-    const timeString = `${dateObject.getHours()}:${dateObject.getMinutes()}${dateObject.getMinutes() < 10 ? "0" : ""}`;
+    const dateString = `${dateObject.toLocaleDateString()}`;
+    const timeString = `${dateObject.getHours()}:${dateObject.getMinutes() < 10 ? "0" : ""}${dateObject.getMinutes()}`;
     return `${dateString} ${timeString}`;
 }
 
