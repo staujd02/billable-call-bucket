@@ -23,7 +23,10 @@ const useBills = () => {
         return await new Promise<Array<Bill>>(async (resolve, reject) => {
             realm.write(() => {
                 const client = realm.objectForPrimaryKey<Client>(ClientSchemaName, clientId)
-                resolve(client.bills.sorted("finalizedOn", true));
+                resolve(
+                    client.bills.sorted("finalizedOn", true)
+                                .filter(b => b.finalizedOn !== null)
+                );
             })
         });
     }

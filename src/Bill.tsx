@@ -7,7 +7,8 @@ import AppButton from './control/AppButton';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
 import SelectableBilledCallItem from './custom-control/SelectableBilledCallItem';
 import useBills from './hooks/useBills';
-import { formatDate, formatHoursMinutesSeconds, formatTimestamp } from './service/formatter';
+import { formatDate, formatHoursMinutesSeconds } from './service/formatter';
+import { countCalls, findEarliestCallDate, findLatestCallDate, sumCallDuration } from './utility/callRollups';
 
 const BillComponent = ({ route, navigation }: BillProps) => {
 
@@ -36,17 +37,11 @@ const BillComponent = ({ route, navigation }: BillProps) => {
     });
 
   const calls = bill === null ? [] : bill.calls;
-  const callDurationSum = calls.reduce((prev, cur) => cur.duration + prev, 0);
 
-  const earliestCall = calls.reduce((prev, cur) => parseInt(cur.timestamp) > parseInt(prev.timestamp) ? prev : cur, calls[0]);
-  const earliestCallDate = calls.length > 0
-    ? formatTimestamp(earliestCall.timestamp)
-    : "";
-
-  const latestCall = calls.reduce((prev, cur) => parseInt(cur.timestamp) < parseInt(prev.timestamp) ? prev : cur, calls[0]);
-  const latestCallDate = calls.length > 0
-    ? formatTimestamp(latestCall.timestamp)
-    : "";
+  const numberOfCalls = countCalls(bill);
+  const callDurationSum = sumCallDuration(bill);
+  const earliestCallDate = findEarliestCallDate(bill.calls);
+  const latestCallDate = findLatestCallDate(bill.calls);
 
   const finalizedOn = bill
     ? formatDate(bill.finalizedOn)
@@ -56,7 +51,7 @@ const BillComponent = ({ route, navigation }: BillProps) => {
     <View style={styles.container} >
       <Text style={styles.header}>{clientName}</Text>
       <DoubleTextLayout label="Total Duration:" content={formatHoursMinutesSeconds(callDurationSum)} />
-      <DoubleTextLayout label="Number of Calls:" content={calls.length.toString()} />
+      <DoubleTextLayout label="Number of Calls:" content={numberOfCalls.toString()} />
       <DoubleTextLayout label="Earliest Call:" content={earliestCallDate} />
       <DoubleTextLayout label="Latest Call:" content={latestCallDate} />
       <DoubleTextLayout label="Finalized On:" content={finalizedOn} />

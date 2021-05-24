@@ -41,13 +41,18 @@ export type Client = {
     pk: string,
     name: string,
     description: string,
-    bills: Array<Bill>
+    bills: Realm.Results<Bill & Realm.Object & ThingsIKnowExist>
 }
 
 export type Bill = {
     pk: string,
     finalizedOn: Date,
-    calls: Array<Call>
+    calls: Realm.Results<Call & Realm.Object & ThingsIKnowExist>
+}
+
+// I don't know where I'm typing incorrectly, but these functions exist
+export type ThingsIKnowExist = {
+    push(...items: T[]): number;
 }
 
 export type Call = {

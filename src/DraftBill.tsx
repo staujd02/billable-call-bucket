@@ -11,6 +11,7 @@ import MarkableBilledCall from './custom-control/MarkableBilledCall';
 import useBills from './hooks/useBills';
 import useCalls from './hooks/useCalls';
 import useClients from './hooks/useClients';
+import { countCalls, findEarliestCallDate, findLatestCallDate, sumCallDuration } from './utility/callRollups';
 
 const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
@@ -59,25 +60,19 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
     navigation.replace('Bill', { billId: bill.pk, clientName: client.name });
   }
 
-  const calls = bill === null ? [] : bill.calls.filter(c => c.isValid());
   const clientName = client === null ? "" : client.name;
-  const callDurationSum = calls.reduce((prev, cur) => cur.duration + prev, 0);
+  const calls = bill === null ? [] : bill.calls.filter(c => c.isValid());
 
-  const earliestCall = calls.reduce((prev, cur) => parseInt(cur.timestamp) > parseInt(prev.timestamp) ? prev : cur, calls[0]);
-  const earliestCallDate = calls.length > 0
-    ? formatTimestamp(earliestCall.timestamp)
-    : "";
-
-  const latestCall = calls.reduce((prev, cur) => parseInt(cur.timestamp) < parseInt(prev.timestamp) ? prev : cur, calls[0]);
-  const latestCallDate = calls.length > 0
-    ? formatTimestamp(latestCall.timestamp)
-    : "";
+  const numberOfCalls = countCalls(bill);
+  const callDurationSum = sumCallDuration(bill);
+  const earliestCallDate = findEarliestCallDate(calls);
+  const latestCallDate = findLatestCallDate(calls);
 
   return (
     <View style={styles.container} >
       <Text style={styles.header}>{clientName}</Text>
       <DoubleTextLayout label="Total Duration:" content={formatHoursMinutesSeconds(callDurationSum)} />
-      <DoubleTextLayout label="Number of Calls:" content={calls.length.toString()} />
+      <DoubleTextLayout label="Number of Calls:" content={numberOfCalls.toString()} />
       <DoubleTextLayout label="Earliest Call:" content={earliestCallDate} />
       <DoubleTextLayout label="Latest Call:" content={latestCallDate} />
       <Text style={styles.header}>Calls</Text>
