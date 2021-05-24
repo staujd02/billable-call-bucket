@@ -18,7 +18,7 @@ const SelectableBillItem = ({ bill, onOpenBillPress, onClosedBillPress }: Select
 
     const billedMessage =
         isDraft
-            ? "In Draft"
+            ? "Open Bill"
             : `Finalized On: ${formatDateWithoutTime(finalizedOn)}`;
 
     return <SelectableListItem

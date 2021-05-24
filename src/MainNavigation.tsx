@@ -30,10 +30,10 @@ const MainNavigation = () => {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={createOptions('Home')} />
         <Stack.Screen name="LinkClientToCall" component={LinkClientToCall} options={createOptions('Link Client To Call')} />
-        <Stack.Screen name="DraftBill" component={DraftBill} options={createOptions('Draft Bill')} />
+        <Stack.Screen name="DraftBill" component={DraftBill} options={createOptions('Open Bill')} />
         <Stack.Screen name="CallLinkedToClient" component={CallLinkedToClient} options={createOptions('Call Linked To Client')} />
         <Stack.Screen name="EditLinkedCall" component={EditLinkedCall} options={createOptions('Edit Linked Call')} />
-        <Stack.Screen name="DraftBillsByClient" component={DraftBillsByClient} options={createOptions('Draft Bills By Client')} />
+        <Stack.Screen name="DraftBillsByClient" component={DraftBillsByClient} options={createOptions('Open Bills By Client')} />
         <Stack.Screen name="BillingHistoryByClient" component={BillingHistoryByClient} options={createOptions('Billing History By Client')} />
         <Stack.Screen name="ClientBillingHistory" component={ClientBillingHistory} options={createOptions('Client Billing History')} />
         <Stack.Screen name="EditClient" component={EditClient} options={createOptions('Edit Client')} />
