@@ -23,6 +23,8 @@ const ClientList = (props: ClientListProps) => {
   const [searchValue, setSearchValue] = useState("");
   const [loadCount, setLoadCount] = useState(10);
 
+  const loadMore = () => setLoadCount(loadCount + 5);
+
   useEffect(() => {
     if (isFocused)
       searchValue
@@ -38,6 +40,7 @@ const ClientList = (props: ClientListProps) => {
         data={clients?.filter(c => c.isValid())}
         keyExtractor={c => c.pk.toString()}
         style={styles.flatList}
+        onScrollEndDrag={() => loadMore()}
         renderItem={
           ({ item }) => (
             <AppButton

@@ -20,6 +20,8 @@ const BillingHistoryByClient = ({ navigation }: BillingHistoryByClientProps) => 
   const [searchValue, setSearchValue] = useState("");
   const [loadCount, setLoadCount] = useState(10);
 
+  const loadMore = () => setLoadCount(loadCount + 5);
+
   useEffect(() => {
     searchValue
       ? searchClientsWithFinalizedBills(searchValue, loadCount)
@@ -34,6 +36,7 @@ const BillingHistoryByClient = ({ navigation }: BillingHistoryByClientProps) => 
         data={clients}
         keyExtractor={c => c.pk.toString()}
         style={styles.flatList}
+        onScrollEndDrag={() => loadMore()}
         renderItem={
           ({ item }) => (
             <AppButton

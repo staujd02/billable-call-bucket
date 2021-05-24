@@ -3,7 +3,6 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { Bill, Client } from '../types/calls';
 import { ClientBillingHistoryProps } from '../types/routes';
-import DoubleTextLayout from './custom-control/DoubleTextLayout';
 import SelectableBillItem from './custom-control/SelectableBillItem';
 import useBills from './hooks/useBills';
 import useClients from './hooks/useClients';

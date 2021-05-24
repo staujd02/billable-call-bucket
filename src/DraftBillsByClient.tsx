@@ -15,6 +15,8 @@ const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
   const [searchValue, setSearchValue] = useState("");
   const [loadCount, setLoadCount] = useState(10);
 
+  const loadMore = () => setLoadCount(loadCount + 5);
+
   useEffect(() => {
     searchValue
       ? searchClientsWithOpenBills(searchValue, loadCount)
@@ -29,6 +31,7 @@ const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
         data={clients}
         keyExtractor={c => c.pk.toString()}
         style={styles.flatList}
+        onScrollEndDrag={() => loadMore()}
         renderItem={
           ({ item }) => (
             <AppButton
