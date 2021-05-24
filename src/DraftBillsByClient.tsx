@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { DraftBillsByClientProps } from '../types/routes';
@@ -8,20 +9,22 @@ import useClients from './hooks/useClients';
 
 const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
 
-  const { clients, loadClientsWithOpenBills, searchClientsWithOpenBills } = useClients();
-
-  const onGoToLinkedToClient = (clientId: string) => navigation.push('DraftBill', { clientId }); 
-
   const [searchValue, setSearchValue] = useState("");
   const [loadCount, setLoadCount] = useState(10);
+
+  const { clients, loadClientsWithOpenBills, searchClientsWithOpenBills } = useClients();
+  const isFocused = useIsFocused();
+
+  const onGoToLinkedToClient = (clientId: string) => navigation.push('DraftBill', { clientId });
 
   const loadMore = () => setLoadCount(loadCount + 5);
 
   useEffect(() => {
-    searchValue
-      ? searchClientsWithOpenBills(searchValue, loadCount)
-      : loadClientsWithOpenBills(loadCount);
-  }, [searchValue, loadCount]);
+    if (isFocused)
+      searchValue
+        ? searchClientsWithOpenBills(searchValue, loadCount)
+        : loadClientsWithOpenBills(loadCount);
+  }, [searchValue, loadCount, isFocused]);
 
   return (
     <View style={styles.container} >

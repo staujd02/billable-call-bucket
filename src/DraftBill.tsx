@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { formatHoursMinutesSeconds, formatTimestamp } from './service/formatter';
+import { formatHoursMinutesSeconds } from './service/formatter';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { Bill, Client } from '../types/calls';
 import { DraftBillProps } from '../types/routes';
@@ -36,8 +36,10 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
   const loadBill = async () => setBill(await getOpenBill(id()))
 
   useEffect(() => {
-    loadClient();
-    loadBill();
+    if (isFocused) {
+      loadClient();
+      loadBill();
+    }
   }, [isFocused])
 
   const toggleCallBilledStatus = async pk => {

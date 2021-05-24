@@ -40,8 +40,8 @@ const BillComponent = ({ route, navigation }: BillProps) => {
 
   const numberOfCalls = countCalls(bill);
   const callDurationSum = sumCallDuration(bill);
-  const earliestCallDate = findEarliestCallDate(bill.calls);
-  const latestCallDate = findLatestCallDate(bill.calls);
+  const earliestCallDate = findEarliestCallDate(calls);
+  const latestCallDate = findLatestCallDate(calls);
 
   const finalizedOn = bill
     ? formatDate(bill.finalizedOn)
