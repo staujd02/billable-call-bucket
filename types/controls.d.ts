@@ -6,6 +6,15 @@ export type MultiActionButtonProps = {
     secondarySymbol: string,
 }
 
+export type FlexingMultiActionButtonProps = {
+    onPressMainAction: (event: GestureResponderEvent) => void,
+    onPressSecondaryAction: (event: GestureResponderEvent) => void,
+    titles: Array<string>,
+    layout: Array<number>,
+    secondaryTitle: string,
+    secondarySymbol: string,
+}
+
 export type SearchBoxProps = {
     value: string,
     onChangeText: (text: string) => void

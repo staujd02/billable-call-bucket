@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Call, CallLogType } from '../../types/calls';
-import MultiActionButton from '../control/MultiActionButton';
+import FlexingMultiActionButton from '../control/FlexingMultiActionButton';
 import useContacts from '../hooks/useContacts';
-import { formatPhoneNumber, formatContact, formatTimestamp, formatLogType } from '../service/formatter';
+import { formatPhoneNumber, formatContact, formatLogType, formatDatePortionOfTimestamp } from '../service/formatter';
 
 const MarkableBilledCall = ({ call, onGoToCallLinkedToClient, toggleCallBilledStatus }: MarkableBilledCallProps) => {
 
@@ -13,22 +13,23 @@ const MarkableBilledCall = ({ call, onGoToCallLinkedToClient, toggleCallBilledSt
         loadContactByNumber(phoneNumber)
     }, []);
 
-    const stamp = formatTimestamp(timestamp);
+    const stamp = formatDatePortionOfTimestamp(timestamp);
     const shortType = formatLogType(type as CallLogType);
     const title = loadedContact !== null
         ? formatContact(loadedContact)
         : formatPhoneNumber(phoneNumber);
 
-    const mainTitle = `${title} ${shortType} ${stamp}`;
     const icon = isBilled ? 'check-square' : 'square';
 
     return (
-        <MultiActionButton
-            mainTitle={mainTitle}
+        <FlexingMultiActionButton 
+            titles={[title, shortType, stamp]}
+            layout={[2, 1, 2]}
             onPressMainAction={() => onGoToCallLinkedToClient(pk)}
             onPressSecondaryAction={() => toggleCallBilledStatus(pk)}
             secondaryTitle="invoice call"
-            secondarySymbol={icon} />
+            secondarySymbol={icon}
+        />
     )
 }
 

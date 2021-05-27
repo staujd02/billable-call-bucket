@@ -21,6 +21,11 @@ export function formatTimestamp(timestamp: string): string {
     return formatDate(dateObject);
 }
 
+export function formatDatePortionOfTimestamp(timestamp: string): string {
+    const dateObject = new Date(parseInt(timestamp));
+    return formatDateWithoutTime(dateObject);
+}
+
 export function formatDate(dateObject: Date): string {
     const dateString = `${dateObject.toLocaleDateString()}`;
     const timeString = `${dateObject.getHours()}:${dateObject.getMinutes() < 10 ? "0" : ""}${dateObject.getMinutes()}`;
