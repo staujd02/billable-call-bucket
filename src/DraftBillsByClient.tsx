@@ -6,18 +6,29 @@ import { DraftBillsByClientProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import SearchBox from './control/SearchBox';
 import useClients from './hooks/useClients';
+import useCSVExport from './hooks/useCSVExport';
 
 const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [loadCount, setLoadCount] = useState(10);
+  const [exportInProgress, setExportInProgress] = useState(false);
+  const [exportComplete, setExportComplete] = useState(false);
 
   const { clients, loadClientsWithOpenBills, searchClientsWithOpenBills } = useClients();
   const isFocused = useIsFocused();
+  const { exportAllOpenBills } = useCSVExport();
 
   const onGoToLinkedToClient = (clientId: string) => navigation.push('DraftBill', { clientId });
+  const exportOpenBills = async () => {
+    setExportInProgress(true);
+    exportAllOpenBills();
+    setExportInProgress(false);
+    setExportComplete(true);
+  }
 
   const loadMore = () => setLoadCount(loadCount + 5);
+  const getTitle = () => exportInProgress ? "Exporting" : "Export All Open Bills";
 
   useEffect(() => {
     if (isFocused)
@@ -45,6 +56,9 @@ const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
         }
       />
       <View style={styles.spacer} />
+      {!exportComplete && <AppButton onPress={exportOpenBills} title={getTitle()} />}
+      {exportComplete && <Text style={styles.exportText}>Export Finished: Check your downloads folder</Text>}
+      <View style={styles.spacer} />
     </View>
   );
 }
@@ -52,6 +66,11 @@ const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
 export default DraftBillsByClient;
 
 const styles = StyleSheet.create({
+  exportText: {
+    padding: 15,
+    color: AppColorStyles.headerText,
+    backgroundColor: AppColorStyles.headerBackground,
+  },
   spacer: {
     height: 20
   },

@@ -81,18 +81,18 @@ const useClients = () => {
         );
     }
 
-    const getClientWithOpenBillsIteratorableValue = async () => {
+    const getClientsWithOpenBillsIteratorableValue = async () => {
         return (await getRealm())
             .objects<Client>(ClientSchemaName)
             .filter(cl => cl.bills
                 .some(b => b !== null))
-            .flatMap(cl => cl.bills
-                .flatMap(b => b.calls
-                    .flatMap(c => ({
+            .map(cl => cl.bills
+                .map(b => b.calls
+                    .map(c => ({
                         ...c,
                         clientName: cl.name,
                         description: cl.description
-                    }))))
+                    })).flat()).flat()).flat()
             .values();
     }
 
@@ -154,7 +154,7 @@ const useClients = () => {
         searchClientsWithOpenBills,
         loadClientsWithFinalizedBills,
         searchClientsWithFinalizedBills,
-        getClientWithOpenBillsIteratorableValue,
+        getClientsWithOpenBillsIteratorableValue,
     }
 }
 

@@ -36,7 +36,26 @@ async function requestContactPermission(): Promise<boolean> {
     }
 }
 
+async function requestFileWritePermission(): Promise<boolean> {
+    try {
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            {
+                title: 'Allow App Access to Contacts',
+                message: "This app needs access to your contacts to link names with numbers.",
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+            },
+        );
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+    } catch (e) {
+        return false;
+    }
+}
+
 export {
     requestContactPermission,
-    requestCallLogPermission
+    requestCallLogPermission,
+    requestFileWritePermission,
 };

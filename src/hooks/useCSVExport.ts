@@ -1,11 +1,12 @@
 import { formatHoursMinutesSeconds, formatPhoneNumber, formatTimestamp } from "../service/formatter";
+import { requestFileWritePermission } from "../service/permissionRequest";
 import useClients from "./useClients";
 import useFileStorage from "./useFileStorage";
 
 const useCSVExport = () => {
 
     const {
-        getClientWithOpenBillsIteratorableValue,
+        getClientsWithOpenBillsIteratorableValue,
     } = useClients();
 
     const {
@@ -13,8 +14,10 @@ const useCSVExport = () => {
     } = useFileStorage();
 
     const exportAllOpenBills = async () => {
-        const calls = await getClientWithOpenBillsIteratorableValue();
-        await saveFile(makeCallMapIterator(calls));
+        if(await requestFileWritePermission()){
+            const calls = await getClientsWithOpenBillsIteratorableValue();
+            await saveFile(makeCallMapIterator(calls));
+        }
     }
 
     function* makeCallMapIterator(calls: IterableFlattenCalls) {
@@ -26,16 +29,17 @@ const useCSVExport = () => {
         return [
             encapsulate(call.clientName),
             encapsulate(call.description),
-            formatPhoneNumber(call.phoneNumber),
+            formatNumber(call.phoneNumber),
             encapsulate(call.contactNotes),
             encapsulate(call.callReason),
             formatHoursMinutesSeconds(call.duration),
             formatisBilled(call.isBilled),
             formatTimestamp(call.timestamp),
             encapsulate(call.type),
-        ].join(",");
+        ].join(",").concat("\n");
     }
 
+    const formatNumber = s => s ? formatPhoneNumber(s) : "";
     const encapsulate = (s: string) => `"${s}"`;
     const formatisBilled = (billed: boolean) => billed ? "Marked as Billed" : "";
 
