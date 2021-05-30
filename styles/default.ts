@@ -5,22 +5,36 @@ export const ColorPalette = {
     dark: '#1f4c82',
     boring: '#688ab2',
 
+    green: "#00802b",
+
     white: "#fff",
     black: "#000",
 }
 
-export const AppStyle = {
+export const AppColorStyles = {
     headerBackground: ColorPalette.pop,
     headerText: ColorPalette.lightest,
     navigationBackground: ColorPalette.boring,
     background: ColorPalette.lightest,
 
     text: ColorPalette.pop,
+    detailText: ColorPalette.dark,
 
     buttonText: ColorPalette.pop,
     buttonBackground: ColorPalette.light,
 
     listItemBorderColor: ColorPalette.boring,
 
+    multiActionSymbolColor: ColorPalette.white,
+    multiActionSymbolButtonColor: ColorPalette.green, // "#ff0",
+    multiActionBackgroundColor: ColorPalette.light,
+
+    searchPlaceholderTextColor: ColorPalette.pop,
+    searchBackgroundColor: ColorPalette.lightest,
+    searchTextColor: ColorPalette.dark,
+}
+
+export const AppFontStyles = {
     titleSize: 24,
+    detailSize: 18,
 }

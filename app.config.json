@@ -1,0 +1,9 @@
+{
+  "android": {
+    "permissions": [
+      "READ_CALL_LOG",
+      "READ_CONTACTS"
+    ],
+    "package": "com.billable.app"
+  }
+}
