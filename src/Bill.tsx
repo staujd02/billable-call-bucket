@@ -70,9 +70,10 @@ const BillComponent = ({ route, navigation }: BillProps) => {
           }
         />
       </View>
-      <View style={styles.spacer}></View>
-      <AppButton onPress={onGoHome} title="Go Home" />
-      <View style={styles.spacer}></View>
+      <View style={styles.spacer}>
+        <AppButton onPress={onGoHome} title="Go Home" />
+        <AppButton onPress={onGoHome} title="Export Bill" />
+      </View>
     </View>
   );
 };

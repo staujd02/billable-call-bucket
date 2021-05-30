@@ -12,7 +12,8 @@ const useBillExportor = () => {
     } = useClients();
 
     const {
-        getOpenBill
+        getOpenBill,
+        getBill,
     } = useBills();
 
     const {
@@ -26,11 +27,23 @@ const useBillExportor = () => {
         }
     }
 
-    async function* makeClientIterator(clients) {
+    async function* makeClientIterator(clients: IterableIterator<Client & Realm.Object>) {
         yield fileHeader();
         for (const c of clients)
             for (const call of (await getOpenBill(c.pk)).calls)
                 yield formatCallToCSVLine(call, c);
+    }
+
+    const exportSpecificBill = async (billId: string, client: Client) => {
+        if (await requestFileWritePermission()) {
+            await saveFile(makeBillIterator(billId, client));
+        }
+    }
+
+    async function* makeBillIterator(billId: string, client: Client) {
+        yield fileHeader();
+        for (const call of (await getBill(billId)).calls)
+            yield formatCallToCSVLine(call, client);
     }
 
     function fileHeader() {
@@ -65,6 +78,7 @@ const useBillExportor = () => {
     const formatIsBilled = (billed: boolean) => billed ? "Marked as Billed" : "";
 
     return {
+        exportSpecificBill,
         exportAllOpenBills
     }
 }
