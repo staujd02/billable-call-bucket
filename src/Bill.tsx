@@ -1,37 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
-import { Bill, Call } from '../types/calls';
+import { Bill, Call, Client } from '../types/calls';
 import { BillProps } from '../types/routes';
 import AppButton from './control/AppButton';
+import ExportButton from './control/ExportButton';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
 import SelectableBilledCallItem from './custom-control/SelectableBilledCallItem';
+import useBillExportor from './hooks/useBillExportor';
 import useBills from './hooks/useBills';
+import useClients from './hooks/useClients';
 import { formatDate, formatHoursMinutesSeconds } from './service/formatter';
 import { countCalls, findEarliestCallDate, findLatestCallDate, sumCallDuration } from './utility/callRollups';
 
 const BillComponent = ({ route, navigation }: BillProps) => {
 
-  const { billId, clientName } = route.params;
+  const { billId, clientId } = route.params;
 
   const [bill, setBill] = useState<Bill>(null);
+  const [client, setClient] = useState<Client>(null);
 
   const {
     getBill,
   } = useBills();
+  
+  const {
+    getClient,
+  } = useClients();
 
-  const loadBill = async () => setBill(await getBill(billId))
+  const loadBill = async () => setBill(await getBill(billId));
+  const loadClient = async () => setClient(await getClient(clientId));
 
   useEffect(() => {
     loadBill();
+    loadClient()
   }, [])
+
+  const { exportSpecificBill } = useBillExportor();
 
   const onGoHome = async () =>
     navigation.navigate('Home');
 
   const onGoToCallLinkedToClient = async ({ pk }: Call) =>
     navigation.navigate('CallLinkedToClient', {
-      clientName,
+      clientName: client?.name,
       callId: pk,
       readOnly: true,
     });
@@ -43,13 +55,15 @@ const BillComponent = ({ route, navigation }: BillProps) => {
   const earliestCallDate = findEarliestCallDate(calls);
   const latestCallDate = findLatestCallDate(calls);
 
+  const exportThisBill = () => exportSpecificBill(billId, client);
+
   const finalizedOn = bill
     ? formatDate(bill.finalizedOn)
     : "";
 
   return (
     <View style={styles.container} >
-      <Text style={styles.header}>{clientName}</Text>
+      <Text style={styles.header}>{client?.name}</Text>
       <DoubleTextLayout label="Total Duration:" content={formatHoursMinutesSeconds(callDurationSum)} />
       <DoubleTextLayout label="Number of Calls:" content={numberOfCalls.toString()} />
       <DoubleTextLayout label="Earliest Call:" content={earliestCallDate} />
@@ -72,7 +86,7 @@ const BillComponent = ({ route, navigation }: BillProps) => {
       </View>
       <View style={styles.spacer}>
         <AppButton onPress={onGoHome} title="Go Home" />
-        <AppButton onPress={onGoHome} title="Export Bill" />
+        {client && <ExportButton exportProcess={exportThisBill} exportTitle={"Export This Bill"} />}
       </View>
     </View>
   );

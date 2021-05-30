@@ -6,8 +6,8 @@ import { DraftBillsByClientProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import SearchBox from './control/SearchBox';
 import useClients from './hooks/useClients';
-import useBillExportor from './hooks/useBillExportor';
 import ExportButton from './control/ExportButton';
+import useBillExportor from './hooks/useBillExportor';
 
 const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
 
