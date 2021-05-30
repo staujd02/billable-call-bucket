@@ -6,7 +6,7 @@ import { DraftBillsByClientProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import SearchBox from './control/SearchBox';
 import useClients from './hooks/useClients';
-import useCSVExport from './hooks/useCSVExport';
+import useBillExportor from './hooks/useBillExportor';
 
 const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
 
@@ -17,7 +17,7 @@ const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
 
   const { clients, loadClientsWithOpenBills, searchClientsWithOpenBills } = useClients();
   const isFocused = useIsFocused();
-  const { exportAllOpenBills } = useCSVExport();
+  const { exportAllOpenBills } = useBillExportor();
 
   const onGoToLinkedToClient = (clientId: string) => navigation.push('DraftBill', { clientId });
   const exportOpenBills = async () => {

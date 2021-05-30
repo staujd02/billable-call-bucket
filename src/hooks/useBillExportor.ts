@@ -5,7 +5,7 @@ import useBills from "./useBills";
 import useClients from "./useClients";
 import useFileStorage from "./useFileStorage";
 
-const useCSVExport = () => {
+const useBillExportor = () => {
 
     const {
         getClientsWithOpenBillsIteratorableValue,
@@ -69,4 +69,4 @@ const useCSVExport = () => {
     }
 }
 
-export default useCSVExport;
+export default useBillExportor;
