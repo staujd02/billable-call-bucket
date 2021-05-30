@@ -64,6 +64,11 @@ const useClients = () => {
         await new Promise<void>(async (resolve, reject) => {
             realm.write(() => {
                 const client = realm.objectForPrimaryKey<Client>(ClientSchemaName, clientId);
+                for (const bill of client.bills) {
+                    for(const call of bill.calls)                    
+                        realm.delete(call);
+                    realm.delete(bill);
+                }
                 realm.delete(client);
                 resolve();
             })
