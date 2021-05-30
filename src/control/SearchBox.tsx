@@ -4,14 +4,14 @@ import { StyleSheet } from 'react-native';
 import { AppColorStyles } from "../../styles/default";
 import { SearchBoxProps } from "../../types/controls";
 
-const SearchBox = ({ value, onChangeText, onFocus: onFocusChange }: SearchBoxProps) => {
+const SearchBox = ({ value, onChangeText, onFocus: onFocusChange, classOverride }: SearchBoxProps) => {
     return (
         <TextInput 
             onFocus={() => onFocusChange && onFocusChange(true)}
             onBlur={() => onFocusChange && onFocusChange(false)}
             placeholder="Search" 
             placeholderTextColor={AppColorStyles.searchPlaceholderTextColor} 
-            style={styles.searchTextContainer} 
+            style={{ ...styles.searchTextContainer, ...classOverride }} 
             value={value} 
             onChangeText={onChangeText} />
     );

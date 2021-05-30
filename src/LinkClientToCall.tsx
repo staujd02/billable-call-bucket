@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import { formatContact, formatHoursMinutesSeconds, formatPhoneNumber, formatTimestamp } from './service/formatter';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
 import { LinkClientToCallProps } from '../types/routes';
 import MultiActionButton from './control/MultiActionButton';
 import SearchBox from './control/SearchBox';
+import SymbolButton from './control/SymbolButton';
 import DoubleTextLayout from './custom-control/DoubleTextLayout';
 import InlineTextInputWithLabel from './custom-control/InlineTextInputWithLabel';
 import useCalls from './hooks/useCalls';
 import useClients from './hooks/useClients';
 import useContacts from './hooks/useContacts';
-import { formatContact, formatHoursMinutesSeconds, formatPhoneNumber, formatTimestamp } from './service/formatter';
 
 const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
 
@@ -19,6 +21,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
   const { loadContactByNumber, loadedContact } = useContacts();
   const { clients, loadClientsWithOpenBills, searchClients } = useClients();
   const { addBillableCall } = useCalls();
+  const isFocused = useIsFocused();
 
   const title = loadedContact !== null
     ? formatContact(loadedContact)
@@ -40,10 +43,11 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
   }, [loadedContact])
 
   useEffect(() => {
-    searchValue
-      ? searchClients(searchValue, loadCount)
-      : loadClientsWithOpenBills(loadCount);
-  }, [searchValue, loadCount]);
+    if (isFocused)
+      searchValue
+        ? searchClients(searchValue, loadCount)
+        : loadClientsWithOpenBills(loadCount);
+  }, [searchValue, loadCount, isFocused]);
 
   const onGoToDraftBill = async (clientId: string) => {
     await addBillableCall({
@@ -59,6 +63,9 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
   }
   const onGoToClientDetail = (clientId: string) =>
     navigation.push('ClientDetail', { clientId });
+
+  const goToAddClient = () =>
+    navigation.push('AddNewClient');
 
   const formattedDuration = formatHoursMinutesSeconds(duration);
   const formattedStamp = formatTimestamp(timestamp);
@@ -81,10 +88,17 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
           value={callReason} />
       </>}
       <Text style={styles.header}>Clients</Text>
-      <SearchBox
-        value={searchValue}
-        onFocus={f => setSearchingClientList(f)}
-        onChangeText={text => setSearchValue(text)} />
+      <View style={styles.searchRow}>
+        <SearchBox
+          value={searchValue}
+          classOverride={styles.searchBoxOverride}
+          onFocus={f => setSearchingClientList(f)}
+          onChangeText={text => setSearchValue(text)} />
+        <SymbolButton
+          onPress={() => goToAddClient()}
+          symbol="plus-circle"
+          title="Add Client" />
+      </View>
       <FlatList
         style={styles.list}
         data={clients}
@@ -114,6 +128,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
+  placeHolder: {
+    width: 35,
+    height: 35,
+  },
+  searchRow: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    alignItems: "center",
+    paddingRight: 12,
+    marginBottom: 10,
+  },
   header: {
     color: AppColorStyles.text,
     textAlign: 'center',
@@ -132,5 +158,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     justifyContent: 'center',
   },
-  list: {}
+  list: {},
+  searchBoxOverride: {
+    flex: 1,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 6,
+  }
 });

@@ -19,6 +19,7 @@ export type SearchBoxProps = {
     value: string,
     onChangeText: (text: string) => void
     onFocus?: (focued: boolean) => void;
+    classOverride?: NamedStyles,
 }
 
 export type InlineTextInputWithLabelProps = {

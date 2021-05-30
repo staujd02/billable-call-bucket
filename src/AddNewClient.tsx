@@ -5,9 +5,8 @@ import { AddNewClientProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import useClients from './hooks/useClients';
 
-const AddNewClient = (props: AddNewClientProps) => {
+const AddNewClient = ({ navigation }: AddNewClientProps) => {
 
-  const { navigation } = props;
   const { addClient } = useClients();
 
   const [name, setName] = useState("");
