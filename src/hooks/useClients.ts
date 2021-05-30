@@ -85,14 +85,7 @@ const useClients = () => {
         return (await getRealm())
             .objects<Client>(ClientSchemaName)
             .filter(cl => cl.bills
-                .some(b => b !== null))
-            .map(cl => cl.bills
-                .map(b => b.calls
-                    .map(c => ({
-                        ...c,
-                        clientName: cl.name,
-                        description: cl.description
-                    })).flat()).flat()).flat()
+                .some(b => b.finalizedOn === null))
             .values();
     }
 

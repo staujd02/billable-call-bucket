@@ -1,5 +1,7 @@
+import { Call, Client } from "../../types/calls";
 import { formatHoursMinutesSeconds, formatPhoneNumber, formatTimestamp } from "../service/formatter";
 import { requestFileWritePermission } from "../service/permissionRequest";
+import useBills from "./useBills";
 import useClients from "./useClients";
 import useFileStorage from "./useFileStorage";
 
@@ -10,38 +12,57 @@ const useCSVExport = () => {
     } = useClients();
 
     const {
+        getOpenBill
+    } = useBills();
+
+    const {
         saveFile
     } = useFileStorage();
 
     const exportAllOpenBills = async () => {
-        if(await requestFileWritePermission()){
-            const calls = await getClientsWithOpenBillsIteratorableValue();
-            await saveFile(makeCallMapIterator(calls));
+        if (await requestFileWritePermission()) {
+            const clients = await getClientsWithOpenBillsIteratorableValue();
+            await saveFile(makeClientIterator(clients));
         }
     }
 
-    function* makeCallMapIterator(calls: IterableFlattenCalls) {
-        for (const call of calls)
-            yield formatCallToCSVLine(call);
+    async function* makeClientIterator(clients) {
+        yield fileHeader();
+        for (const c of clients)
+            for (const call of (await getOpenBill(c.pk)).calls)
+                yield formatCallToCSVLine(call, c);
     }
 
-    function formatCallToCSVLine(call: FlattenedCall) {
+    function fileHeader() {
         return [
-            encapsulate(call.clientName),
-            encapsulate(call.description),
-            formatNumber(call.phoneNumber),
+            encapsulate("Client Name"),
+            encapsulate("Client Description"),
+            encapsulate("Phone Call Number"),
+            encapsulate("Call Contact Note"),
+            encapsulate("Call Note"),
+            encapsulate("Call Duration"),
+            encapsulate("Call Was Marked As Billed"),
+            encapsulate("Call Timestamp"),
+            encapsulate("Call Direction"),
+        ].join(",").concat("\n");
+    }
+
+    function formatCallToCSVLine(call: Call & Realm.Object, client: Client): string {
+        return [
+            encapsulate(client.name),
+            encapsulate(client.description),
+            formatPhoneNumber(call.phoneNumber),
             encapsulate(call.contactNotes),
             encapsulate(call.callReason),
             formatHoursMinutesSeconds(call.duration),
-            formatisBilled(call.isBilled),
+            formatIsBilled(call.isBilled),
             formatTimestamp(call.timestamp),
             encapsulate(call.type),
         ].join(",").concat("\n");
     }
 
-    const formatNumber = s => s ? formatPhoneNumber(s) : "";
     const encapsulate = (s: string) => `"${s}"`;
-    const formatisBilled = (billed: boolean) => billed ? "Marked as Billed" : "";
+    const formatIsBilled = (billed: boolean) => billed ? "Marked as Billed" : "";
 
     return {
         exportAllOpenBills
@@ -49,17 +70,3 @@ const useCSVExport = () => {
 }
 
 export default useCSVExport;
-
-type FlattenedCall = {
-    clientName: string;
-    description: string;
-    pk: string;
-    isBilled: boolean;
-    callReason: string;
-    contactNotes: string;
-    phoneNumber: string;
-    duration: number;
-    timestamp: string;
-    type: string;
-};
-type IterableFlattenCalls = IterableIterator<FlattenedCall>;
