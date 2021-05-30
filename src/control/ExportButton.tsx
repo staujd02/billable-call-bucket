@@ -3,13 +3,13 @@ import { Text, StyleSheet } from 'react-native';
 import { AppColorStyles } from '../../styles/default';
 import AppButton from './AppButton';
 
-const ExportButton = ({ exportProcess, exportTitle }: ExportButtonProps) => {
+const ExportButton = ({ exportProcess, exportTitle, exportMessage }: ExportButtonProps) => {
 
     const [exportInProgress, setExportInProgress] = useState(false);
     const [exportComplete, setExportComplete] = useState(false);
 
     const getTitle = () => exportInProgress ? "Exporting..." : exportTitle;
-    const exportOpenBills = async () => {
+    const runExport = async () => {
         setExportInProgress(true);
         await exportProcess();
         setExportInProgress(false);
@@ -18,8 +18,8 @@ const ExportButton = ({ exportProcess, exportTitle }: ExportButtonProps) => {
 
     return (
         <>
-            {!exportComplete && <AppButton onPress={exportOpenBills} title={getTitle()} />}
-            {exportComplete && <Text style={styles.exportText}>Export Finished: Check your downloads folder</Text>}
+            {!exportComplete && <AppButton onPress={runExport} title={getTitle()} />}
+            {exportComplete && <Text style={styles.exportText}>{exportMessage}</Text>}
         </>
     )
 }
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
 type ExportButtonProps = {
     exportProcess: () => Promise<void>
     exportTitle: string
+    exportMessage: string
 }
 
 export default ExportButton;

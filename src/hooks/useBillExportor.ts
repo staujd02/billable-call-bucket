@@ -22,6 +22,7 @@ const useBillExportor = () => {
 
     const exportAllOpenBills = async () => {
         if (await requestFileWritePermission()) {
+            console.log("Starting...")
             const clients = await getClientsWithOpenBillsIteratorableValue();
             await saveFile(makeClientIterator(clients));
         }
@@ -29,6 +30,7 @@ const useBillExportor = () => {
 
     async function* makeClientIterator(clients: IterableIterator<Client & Realm.Object>) {
         yield fileHeader();
+        console.log("iterating...")
         for (const c of clients)
             for (const call of (await getOpenBill(c.pk)).calls)
                 yield formatCallToCSVLine(call, c);

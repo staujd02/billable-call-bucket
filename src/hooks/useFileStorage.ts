@@ -22,6 +22,7 @@ const useFileStorage = () => {
             stream.write(generatedLine.value);
         }
         stream.close();
+        console.log("Done...")
     };
 
     return {

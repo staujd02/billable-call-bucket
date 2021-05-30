@@ -19,7 +19,7 @@ const ClientBillingHistory = ({ navigation, route }: ClientBillingHistoryProps) 
 
   const onGoToBill = (bill: Bill) =>
     navigation.push('Bill', {
-      clientId: client.pk,
+      clientId,
       billId: bill.pk,
     });
 

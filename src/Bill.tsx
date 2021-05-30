@@ -23,7 +23,7 @@ const BillComponent = ({ route, navigation }: BillProps) => {
   const {
     getBill,
   } = useBills();
-  
+
   const {
     getClient,
   } = useClients();
@@ -86,7 +86,11 @@ const BillComponent = ({ route, navigation }: BillProps) => {
       </View>
       <View style={styles.spacer}>
         <AppButton onPress={onGoHome} title="Go Home" />
-        {client && <ExportButton exportProcess={exportThisBill} exportTitle={"Export This Bill"} />}
+        {client && <ExportButton
+          exportProcess={exportThisBill}
+          exportTitle="Export This Bill"
+          exportMessage="Exported to downloads" />
+        }
       </View>
     </View>
   );
@@ -96,7 +100,12 @@ export default BillComponent;
 
 const styles = StyleSheet.create({
   spacer: {
-    padding: 10
+    alignSelf: "stretch",
+    padding: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
   listContainer: {
     flex: 1,
