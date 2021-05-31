@@ -59,7 +59,7 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   const onFinalizeBill = async () => {
     await markBillAsFinalized(bill.pk);
-    navigation.replace('Bill', { billId: bill.pk, clientName: client.name });
+    navigation.replace('Bill', { billId: bill.pk, clientId: id() });
   }
 
   const clientName = client === null ? "" : client.name;

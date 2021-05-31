@@ -130,4 +130,7 @@ buck-out/
 .expo/*
 web-build/
 
+# Build APKs
+*.apk
+
 # @end expo-cli
