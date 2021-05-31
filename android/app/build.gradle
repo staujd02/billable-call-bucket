@@ -153,6 +153,11 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('bill_me_key.keystore')
+            storePassword 'goldSax15'
+            keyPassword 'goldSax15'
+        }
 
     }
     buildTypes {
