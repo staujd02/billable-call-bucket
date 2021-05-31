@@ -131,3 +131,6 @@ buck-out/
 web-build/
 
 # @end expo-cli
+
+# Build Artifacts
+*.apk
