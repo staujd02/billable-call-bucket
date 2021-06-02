@@ -1,3 +1,4 @@
+import { faCheckSquare, faSquare } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect } from 'react';
 import { Call, CallLogType } from '../../types/calls';
 import FlexingMultiActionButton from '../control/FlexingMultiActionButton';
@@ -19,7 +20,7 @@ const MarkableBilledCall = ({ call, onGoToCallLinkedToClient, toggleCallBilledSt
         ? formatContact(loadedContact)
         : formatPhoneNumber(phoneNumber);
 
-    const icon = isBilled ? 'check-square' : 'square';
+    const icon = isBilled ? faCheckSquare : faSquare;
 
     return (
         <FlexingMultiActionButton 

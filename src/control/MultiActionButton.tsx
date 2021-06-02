@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { AppColorStyles } from "../../styles/default";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { MultiActionButtonProps } from "../../types/controls";
 
 const MultiActionButton = ({ onPressMainAction, onPressSecondaryAction, mainTitle, secondaryTitle, secondarySymbol }: MultiActionButtonProps) => (
@@ -12,7 +12,7 @@ const MultiActionButton = ({ onPressMainAction, onPressSecondaryAction, mainTitl
         </TouchableOpacity>
         <TouchableOpacity accessibilityActions={[{ name: "click", label: secondaryTitle}]} 
             onPress={onPressSecondaryAction} style={styles.symbolContainer}>
-            <FontAwesome5 name={secondarySymbol} size={24} color={AppColorStyles.multiActionSymbolColor} />
+            <FontAwesomeIcon icon={secondarySymbol} size={24} color={AppColorStyles.multiActionSymbolColor} />
         </TouchableOpacity>
     </View>
 );

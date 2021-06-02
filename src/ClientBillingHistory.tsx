@@ -11,7 +11,7 @@ const ClientBillingHistory = ({ navigation, route }: ClientBillingHistoryProps) 
 
   const { clientId } = route.params;
 
-  const [client, setClient] = useState<Client>(null);
+  const [client, setClient] = useState<Client | null>(null);
   const [bills, setBills] = useState<Array<Bill>>([]);
 
   const { getClient } = useClients();

@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { AppColorStyles } from "../../styles/default";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { FlexingMultiActionButtonProps } from "../../types/controls";
 
 const FlexingMultiActionButton = ({ onPressMainAction, onPressSecondaryAction, titles, layout, secondaryTitle, secondarySymbol }: FlexingMultiActionButtonProps) => (
@@ -19,7 +19,7 @@ const FlexingMultiActionButton = ({ onPressMainAction, onPressSecondaryAction, t
         </TouchableOpacity>
         <TouchableOpacity accessibilityActions={[{ name: "click", label: secondaryTitle }]}
             onPress={onPressSecondaryAction} style={styles.symbolButton}>
-            <FontAwesome5 name={secondarySymbol} size={24} color={AppColorStyles.multiActionSymbolColor} />
+            <FontAwesomeIcon icon={secondarySymbol} size={24} color={AppColorStyles.multiActionSymbolColor} />
         </TouchableOpacity>
     </View>
 );

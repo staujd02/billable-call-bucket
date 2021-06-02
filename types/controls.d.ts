@@ -1,9 +1,11 @@
+import { IconDefinition } from "@fortawesome/fontawesome-common-types"
+
 export type MultiActionButtonProps = {
     onPressMainAction: (event: GestureResponderEvent) => void,
     onPressSecondaryAction: (event: GestureResponderEvent) => void,
     mainTitle: string,
     secondaryTitle: string,
-    secondarySymbol: string,
+    secondarySymbol: IconDefinition,
 }
 
 export type FlexingMultiActionButtonProps = {
@@ -12,7 +14,7 @@ export type FlexingMultiActionButtonProps = {
     titles: Array<string>,
     layout: Array<number>,
     secondaryTitle: string,
-    secondarySymbol: string,
+    secondarySymbol: IconDefinition,
 }
 
 export type SearchBoxProps = {
@@ -48,5 +50,5 @@ export type AppButtonProps = {
 export type SymbolButtonProps = {
     onPress: (event: GestureResponderEvent) => void,
     title: string,
-    symbol: string,
+    symbol: IconDefinition,
 }

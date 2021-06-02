@@ -1,15 +1,3 @@
-rootProject.name = 'Bill Me'
-include ':rn-fetch-blob'
-project(':rn-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/rn-fetch-blob/android')
-include ':rn-fetch-blob'
-project(':rn-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/rn-fetch-blob/android')
-include ':realm'
-project(':realm').projectDir = new File(rootProject.projectDir, '../node_modules/realm/react-native/android')
-
-apply from: '../node_modules/react-native-unimodules/gradle.groovy'
-includeUnimodulesProjects()
-
-apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle");
-applyNativeModulesSettingsGradle(settings)
-
+rootProject.name = 'BillMe'
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

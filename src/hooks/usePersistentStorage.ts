@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Realm from 'realm';
 import { Schema_1 } from '../models/Schema';
 
@@ -8,6 +7,7 @@ const usePersistentStorage = () => {
         {
             schema: Schema_1.schema,
             schemaVersion: Schema_1.version,
+            path: "bill-me-repositiory"
         }
     );
 

@@ -1,3 +1,4 @@
+import { faChevronCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { FlatList } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
@@ -32,9 +33,9 @@ const HomeScreen = (props: HomeScreenProps) => {
       </View>
       <View style={styles.content} >
         <View style={styles.callHeader}>
-          <SymbolButton onPress={() => loadMore(3)} symbol="chevron-circle-down" title="Load More"></SymbolButton>
+          <SymbolButton onPress={() => loadMore(3)} symbol={faChevronCircleDown} title="Load More"></SymbolButton>
           <Text style={styles.callHeaderText}>Recent Calls</Text>
-          <SymbolButton onPress={() => refreshLogs()} symbol="sync-alt" title="Refresh"></SymbolButton>
+          <SymbolButton onPress={() => refreshLogs()} symbol={faSyncAlt} title="Refresh"></SymbolButton>
         </View>
         <FlatList
           data={callLogData || []}

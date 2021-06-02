@@ -12,7 +12,7 @@ const CallLinkedToClient = ({ navigation, route }: CallLinkedToClientProps) => {
 
   const { callId, clientName, readOnly } = route.params;
 
-  const [call, setCall] = useState<Call>(null);
+  const [call, setCall] = useState<Call | null>(null);
   
   const isFocused = useIsFocused();
 
@@ -39,7 +39,7 @@ const CallLinkedToClient = ({ navigation, route }: CallLinkedToClientProps) => {
       <Text style={styles.header}>Call for {clientName}</Text>
       {
         isLoaded
-          ? <CallDetails call={call} />
+          ? <CallDetails call={call as Call} />
           : <Text>Loading Details...</Text>
       }
       {
