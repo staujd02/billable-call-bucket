@@ -24,7 +24,7 @@ const defaultStyle = {
 };
 
 const MainNavigation = () => {
-  const createOptions = title => ({  title, headerTintColor: AppColorStyles.headerText, headerStyle: defaultStyle });
+  const createOptions = (title: string) => ({  title, headerTintColor: AppColorStyles.headerText, headerStyle: defaultStyle });
   return (
     <NavigationContainer>
       <Stack.Navigator>

@@ -13,6 +13,7 @@ import InlineTextInputWithLabel from './custom-control/InlineTextInputWithLabel'
 import useCalls from './hooks/useCalls';
 import useClients from './hooks/useClients';
 import useContacts from './hooks/useContacts';
+import { faMoneyBill, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
 
@@ -96,7 +97,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
           onChangeText={text => setSearchValue(text)} />
         <SymbolButton
           onPress={() => goToAddClient()}
-          symbol="plus-circle"
+          symbol={faPlusCircle}
           title="Add Client" />
       </View>
       <FlatList
@@ -110,7 +111,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
               onPressMainAction={() => onGoToClientDetail(item.pk.toString())}
               onPressSecondaryAction={() => onGoToDraftBill(item.pk.toString())}
               secondaryTitle={"bill " + item.name}
-              secondarySymbol='money-bill' />
+              secondarySymbol={faMoneyBill} />
           )
         }
       />

@@ -2,14 +2,14 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet } from 'react-native';
 import { AppColorStyles } from "../../styles/default";
-import { FontAwesome5 } from '@expo/vector-icons';
 import { SymbolButtonProps } from "../../types/controls";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const SymbolButton = ({ onPress, symbol, title }: SymbolButtonProps) => {
     return (
         <TouchableOpacity accessibilityActions={[{ name: "click", label: title}]} 
             onPress={onPress} style={styles.appButtonContainer}>
-            <FontAwesome5 name={symbol} size={24} color="black" />
+            <FontAwesomeIcon icon={symbol} size={24} color="black" />
         </TouchableOpacity>
     );
 }

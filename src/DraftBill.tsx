@@ -17,8 +17,8 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   const id = () => route.params.clientId;
 
-  const [client, setClient] = useState<Client>(null);
-  const [bill, setBill] = useState<Bill>(null);
+  const [client, setClient] = useState<Client | null>(null);
+  const [bill, setBill] = useState<Bill | null>(null);
 
   const isFocused = useIsFocused();
 
@@ -59,7 +59,7 @@ const DraftBill = ({ navigation, route }: DraftBillProps) => {
 
   const onFinalizeBill = async () => {
     await markBillAsFinalized(bill.pk);
-    navigation.replace('Bill', { billId: bill.pk, clientName: client.name });
+    navigation.replace('Bill', { billId: bill.pk, clientId: client.pk });
   }
 
   const clientName = client === null ? "" : client.name;
