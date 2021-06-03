@@ -3,10 +3,17 @@
   This file was created by '@expo/configure-splash-screen' and some of it's content shouldn't be modified by hand
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <data>
+    <variable
+        android:name="isValid"
+        android:type="com.billme.data.ViewModel" />
+  </data>
   <item android:drawable="@color/splashscreen_background"/>
-  <item>
+  <item
+      android:height="1500px"
+      android:width="1500px">
     <bitmap
-        android:src="@drawable/splashscreen_image"
+        android:src="@{isValid ? @drawable/splashscreen_image : @drawable/blank_image}"
         android:gravity="center"/>
   </item>
 </layer-list>
