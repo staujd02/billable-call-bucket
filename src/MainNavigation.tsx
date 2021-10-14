@@ -16,6 +16,7 @@ import Bill from './Bill';
 import ClientDetail from './ClientDetail';
 import ClientList from './ClientList';
 import { AppColorStyles } from '../styles/default';
+import FirstTimeUser from './FirstTimeUser';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -28,6 +29,7 @@ const MainNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createOptions('FirstTimeUser')} />
         <Stack.Screen name="Home" component={HomeScreen} options={createOptions('Home')} />
         <Stack.Screen name="LinkClientToCall" component={LinkClientToCall} options={createOptions('Link Client To Call')} />
         <Stack.Screen name="DraftBill" component={DraftBill} options={createOptions('Open Bill')} />

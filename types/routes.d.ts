@@ -26,6 +26,7 @@ type BillIdRoute = {
 }
 
 export type RootStackParamList = {
+  FirstTimeUser: undefined;
   Home: undefined;
   DraftBill: ClientIdRoute;
   CallLinkedToClient: ClientNameWithCallIdAndReadPermission;
@@ -41,6 +42,7 @@ export type RootStackParamList = {
   LinkClientToCall: CallLog;
 };
 
+type FirstTimeUserProps = StackScreenProps<RootStackParamList, 'FirstTimeUser'>;
 type HomeScreenProps = StackScreenProps<RootStackParamList, 'HomeScreen'>;
 type DraftBillProps = StackScreenProps<RootStackParamList, 'DraftBill'>;
 type CallLinkedToClientProps = StackScreenProps<RootStackParamList, 'CallLinkedToClient'>;
