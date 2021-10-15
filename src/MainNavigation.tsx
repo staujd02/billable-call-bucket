@@ -17,6 +17,7 @@ import ClientDetail from './ClientDetail';
 import ClientList from './ClientList';
 import { AppColorStyles } from '../styles/default';
 import FirstTimeUser from './FirstTimeUser';
+import LandingPage from './LandingPage';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -26,12 +27,14 @@ const defaultStyle = {
 
 const MainNavigation = () => {
   const createOptions = (title: string) => ({  title, headerTintColor: AppColorStyles.headerText, headerStyle: defaultStyle });
+  const createLandingPageOptions = (title: string) => ({ ...createOptions(title) });
   const createEmptyHeader = () => ({ headerTitle: () => <></> });
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createEmptyHeader()} />
-        <Stack.Screen name="Home" component={HomeScreen} options={createOptions('Home')} />
+        <Stack.Screen name="LandingPage" component={LandingPage} options={createEmptyHeader()} />
+        <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createLandingPageOptions('Daedalus')} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={createLandingPageOptions('Home')} />
         <Stack.Screen name="LinkClientToCall" component={LinkClientToCall} options={createOptions('Link Client To Call')} />
         <Stack.Screen name="DraftBill" component={DraftBill} options={createOptions('Open Bill')} />
         <Stack.Screen name="CallLinkedToClient" component={CallLinkedToClient} options={createOptions('Call Linked To Client')} />

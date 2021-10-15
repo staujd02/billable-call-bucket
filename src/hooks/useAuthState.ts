@@ -6,11 +6,11 @@ const legalKey = 1;
 
 type MaybeLegal = Legal | undefined;
 
-const useAuthState = () => {
+const useRegistration = () => {
 
     const { getRealm } = usePersistentStorage();
 
-    const getAuthState = async (): Promise<MaybeLegal> => {
+    const getRegistrationState = async (): Promise<MaybeLegal> => {
         const realm = (await getRealm());
         return await new Promise<MaybeLegal>(async (resolve, reject) => {
             realm.write(() => {
@@ -21,8 +21,8 @@ const useAuthState = () => {
     }
 
     return {
-        getAuthState,
+        getRegistrationState,
     }
 }
 
-export default useAuthState;
+export default useRegistration;
