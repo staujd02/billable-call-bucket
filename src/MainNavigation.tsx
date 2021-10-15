@@ -26,10 +26,11 @@ const defaultStyle = {
 
 const MainNavigation = () => {
   const createOptions = (title: string) => ({  title, headerTintColor: AppColorStyles.headerText, headerStyle: defaultStyle });
+  const createEmptyHeader = () => ({ headerTitle: () => <></> });
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createOptions('FirstTimeUser')} />
+        <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createEmptyHeader()} />
         <Stack.Screen name="Home" component={HomeScreen} options={createOptions('Home')} />
         <Stack.Screen name="LinkClientToCall" component={LinkClientToCall} options={createOptions('Link Client To Call')} />
         <Stack.Screen name="DraftBill" component={DraftBill} options={createOptions('Open Bill')} />

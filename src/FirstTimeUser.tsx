@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
+import AppSplashScreen from "./SplashView";
 
 const FirstTimeUser = () => {
 
-    return (
+  const [establishedAuthentication, setEstablishedAuthentication] = useState<boolean>(false);
+
+  const checkUsersAuthState = async () => {
+    // setEstablishedAuthentication(await )
+  }
+
+  useEffect(() => {
+    checkUsersAuthState();
+  }, []);
+
+  return !establishedAuthentication
+  ? <AppSplashScreen />
+  : (
     <View style={styles.column}>
       <Text style={styles.header}>Big Logo</Text>
       <Text style={styles.header}>Daedalus</Text>
@@ -12,7 +25,7 @@ const FirstTimeUser = () => {
       <Text style={styles.header}>Thin Bar</Text>
       <Text style={styles.header}>I have not registered my company login</Text>
     </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({

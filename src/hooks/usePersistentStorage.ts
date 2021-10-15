@@ -1,12 +1,12 @@
 import Realm from 'realm';
-import { Schema_1 } from '../models/Schema';
+import { Schema_2 } from '../models/Schema';
 
 const usePersistentStorage = () => {
 
     const getRealm = async () => await Realm.open(
         {
-            schema: Schema_1.schema,
-            schemaVersion: Schema_1.version,
+            schema: Schema_2.schema,
+            schemaVersion: Schema_2.version,
             path: "bill-me-repositiory"
         }
     );
