@@ -16,7 +16,7 @@ const FirstTimeUser = ({ navigation }: FirstTimeUserProps) => {
         </View>
         <View style={styles.separator}></View>
         <View style={styles.sizeController}>
-          <AppButton title="Register my corporate login" onPress={() => { }} />
+          <AppButton title="Register my corporate login" onPress={() => navigation.push('TermsAndConditions')} />
         </View>
       </View>
     </View>

@@ -18,6 +18,7 @@ import ClientList from './ClientList';
 import { AppColorStyles } from '../styles/default';
 import FirstTimeUser from './FirstTimeUser';
 import LandingPage from './LandingPage';
+import TermsAndConditions from './TermsAndConditions';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -34,6 +35,7 @@ const MainNavigation = () => {
       <Stack.Navigator>
         <Stack.Screen name="LandingPage" component={LandingPage} options={createEmptyHeader()} />
         <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createLandingPageOptions('Daedalus Solutions')} />
+        <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} options={createOptions('Agreement')} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={createLandingPageOptions('Home')} />
         <Stack.Screen name="LinkClientToCall" component={LinkClientToCall} options={createOptions('Link Client To Call')} />
         <Stack.Screen name="DraftBill" component={DraftBill} options={createOptions('Open Bill')} />
