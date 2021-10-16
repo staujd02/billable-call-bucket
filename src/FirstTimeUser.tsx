@@ -2,12 +2,13 @@ import React from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { FirstTimeUserProps } from "../types/routes";
+import AnimatedLogo from "./control/AnimatedLogo";
 
 const FirstTimeUser = ({ navigation }: FirstTimeUserProps) => {
 
   return (
       <View style={styles.column}>
-        <Text style={styles.header}>Big Logo</Text>
+        <AnimatedLogo />
         <Text style={styles.header}>Daedalus</Text>
         <Text style={styles.header}>I have not registered my company login</Text>
         <Text style={styles.header}>Thin Bar</Text>
