@@ -33,7 +33,7 @@ const MainNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="LandingPage" component={LandingPage} options={createEmptyHeader()} />
-        <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createLandingPageOptions('Daedalus')} />
+        <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createLandingPageOptions('Daedalus Solutions')} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={createLandingPageOptions('Home')} />
         <Stack.Screen name="LinkClientToCall" component={LinkClientToCall} options={createOptions('Link Client To Call')} />
         <Stack.Screen name="DraftBill" component={DraftBill} options={createOptions('Open Bill')} />

@@ -3,35 +3,34 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { FirstTimeUserProps } from "../types/routes";
 import AnimatedLogo from "./control/AnimatedLogo";
+import AppButton from "./control/AppButton";
 
 const FirstTimeUser = ({ navigation }: FirstTimeUserProps) => {
 
   return (
-      <View style={styles.column}>
-        <AnimatedLogo />
-        <Text style={styles.header}>Daedalus</Text>
-        <Text style={styles.header}>I have not registered my company login</Text>
-        <Text style={styles.header}>Thin Bar</Text>
-        <Text style={styles.header}>Login</Text>
+    <View style={styles.column}>
+      <AnimatedLogo />
+      <View>
+        <View style={styles.sizeController}>
+          <AppButton title="Login" onPress={() => { }} />
+        </View>
+        <View style={styles.separator}></View>
+        <View style={styles.sizeController}>
+          <AppButton title="Register my corporate login" onPress={() => { }} />
+        </View>
       </View>
-    );
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   column: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
   },
-  row: {
-    backgroundColor: '#fff',
-    alignSelf: 'stretch',
-    display: "flex",
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: "center",
-    marginTop: 20,
+  sizeController: {
+    padding: 15,
   },
   header: {
     color: AppColorStyles.text,
@@ -45,6 +44,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: AppFontStyles.detailSize,
   },
+  separator: {
+    marginTop: 5,
+    marginBottom: 5,
+    height: 2,
+    backgroundColor: "#0f1247",
+  }
 });
 
 export default FirstTimeUser;
