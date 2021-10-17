@@ -4,6 +4,8 @@ import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { ThirdPartyAuthenticationProps } from '../types/routes';
 
 const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps) => {
+  // https://firebase.google.com/docs/auth/web/firebaseui
+  // https://firebase.google.com/docs/web/setup
   return (
     <View style={styles.column} >
       <Text style={styles.header}>Ensure you have registered your corporate login first.</Text>
