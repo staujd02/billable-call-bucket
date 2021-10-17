@@ -26,6 +26,7 @@ type BillIdRoute = {
 }
 
 export type RootStackParamList = {
+  ThirdPartyAuthentication: undefined;
   ComplianceTestLogin: undefined;
   TermsAndConditions: undefined;
   FirstTimeUser: undefined;
@@ -45,6 +46,7 @@ export type RootStackParamList = {
   LinkClientToCall: CallLog;
 };
 
+type ThirdPartyAuthenticationProps = StackScreenProps<RootStackParamList, 'ThirdPartyAuthentication'>;
 type ComplianceTestLoginProps = StackScreenProps<RootStackParamList, 'ComplianceTestLogin'>;
 type TermsAndConditionsProps = StackScreenProps<RootStackParamList, 'TermsAndConditions'>;
 type LandingPageProps = StackScreenProps<RootStackParamList, 'LandingPage'>;
