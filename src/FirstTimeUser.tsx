@@ -1,18 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { FirstTimeUserProps } from "../types/routes";
 import AnimatedLogo from "./control/AnimatedLogo";
 import AppButton from "./control/AppButton";
 
 const FirstTimeUser = ({ navigation }: FirstTimeUserProps) => {
-
   return (
     <View style={styles.column}>
       <AnimatedLogo />
       <View>
         <View style={styles.sizeController}>
-          <AppButton title="Login" onPress={() => { }} />
+          <AppButton title="Login" onPress={() => navigation.navigate('ComplianceTestLogin')} />
         </View>
         <View style={styles.separator}></View>
         <View style={styles.sizeController}>

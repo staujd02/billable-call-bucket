@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { AppColorStyles, AppFontStyles } from "../styles/default";
 import { TermsAndConditionsProps } from "../types/routes";
@@ -53,18 +53,20 @@ Should you use this software for any purpose other than your corporation’s CRM
 
 In the course of using this app, when you are prompted to authenticate with any third-party authentication or identity providers, you assert that you are utilizing your corporate login. 
 
+You understand when you are prompted to authenticate with any third-party authenticator or identity provider it is exclusively for the purpose of establishing the authenticity of your corporate identity. Your authentication is not intended to prevent unauthorized access of information captured in this app in the course of its usage. You understand after verifying the authenticity of your corporate identity no further challenges of identity will be presented to ensure the subsequent users of this app on this device are the same individual who passed the initial corporate identity verification. To keep information captured in this application private and secure, you should enable your devices security offerings such as a lock screen pin code, facial identity recognition features, or other biometric security offerings. If you do not find this satisfactory, you should not agree to the Terms and promptly uninstall this app.
+
 You understand these Terms to be an addendum to the Terms and Conditions outlined in the app store. If any provision of these Terms is determined to be conflict with the Terms and Conditions outlined in the app store, the addendum provision shall overrule the conflicting provision outlined in the Terms and Conditions listed on the app store. 
 
 If any provision of these Terms is determined to be invalid, illegal, or unenforceable, it shall not affect the enforceability of any other provision of these Terms. Rather, the invalid, illegal, or unenforceable provision shall be modified so that it is valid, legal, and enforceable and to the fullest extent possible, reflects the intention of the parties. 
 
 The creator of this app shall not be liable (whether under contract, tort (including negligence) or otherwise) for: 
 
-(a) losses that were not caused by the creator’s breach of these Terms; 
+(a) losses that were not caused by the app creator’s breach of these Terms; 
 
-(b) any loss or damage that was not, at the time the relevant contract with you was formed, a reasonably foreseeable consequence of the creator breaching these Terms; 
+(b) any loss or damage that was not, at the time the relevant contract with you was formed, a reasonably foreseeable consequence of the app creator breaching these Terms; 
 
 (c) losses relating to any business of yours, loss of profits, or loss of opportunity; or 
 
 (d) loss of data stored on the Device, or inability to access data. 
 
-Nothing in these Terms is intended to exclude or limit the creator of this app liability for: (i) death or personal injury; (ii) fraud; (iii) fraudulent misrepresentation; (iv) any implied terms as to title which cannot be excluded or limited by law; or (v) any liability that cannot be excluded or limited by law. `;
+Nothing in these Terms is intended to exclude or limit the app creator's liability for: (i) death or personal injury; (ii) fraud; (iii) fraudulent misrepresentation; (iv) any implied terms as to title which cannot be excluded or limited by law; or (v) any liability that cannot be excluded or limited by law. `;
