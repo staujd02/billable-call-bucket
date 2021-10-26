@@ -1,4 +1,5 @@
 import React from 'react';
+import auth from '@react-native-firebase/auth';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { ThirdPartyAuthenticationProps } from '../types/routes';
@@ -6,6 +7,24 @@ import { ThirdPartyAuthenticationProps } from '../types/routes';
 const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps) => {
   // https://firebase.google.com/docs/auth/web/firebaseui
   // https://firebase.google.com/docs/web/setup
+
+  auth()
+    .createUserWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
+    .then(() => {
+      console.log('User account created & signed in!');
+    })
+    .catch(error => {
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('That email address is already in use!');
+      }
+
+      if (error.code === 'auth/invalid-email') {
+        console.log('That email address is invalid!');
+      }
+
+      console.error(error);
+    });
+
   return (
     <View style={styles.column} >
       <Text style={styles.header}>Ensure you have registered your corporate login first.</Text>
