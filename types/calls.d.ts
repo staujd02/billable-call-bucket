@@ -1,3 +1,7 @@
+export enum AuthMethodTypes {
+    "EMAIL"
+}
+
 export type CallLogType = "OUTGOING" | "INCOMING" | "MISSED" | "UNKNOWN";
 
 export type CallLog = {
@@ -50,11 +54,14 @@ export type Bill = {
     calls: Realm.Results<Call & Realm.Object & ThingsIKnowExist<Call>>
 }
 
-export type Legal = {
-    pk: number,
+export type LegalInfo = {
     acceptanceTimestamp: Date,
-    authenticationMethod: 'string',
+    authenticationMethod: AuthMethodTypes,
 }
+
+export type Legal = {
+    pk: number
+} & LegalInfo
 
 // I don't know where I'm typing incorrectly, but these functions exist
 export type ThingsIKnowExist<T> = {

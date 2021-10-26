@@ -1,34 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { ThirdPartyAuthenticationProps } from '../types/routes';
+import AppButton from './control/AppButton';
+import useRegistration from './hooks/useAuthState';
+import { AuthMethodTypes } from '../types/calls';
 
 const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps) => {
-  // https://firebase.google.com/docs/auth/web/firebaseui
-  // https://firebase.google.com/docs/web/setup
 
-  auth()
-    .createUserWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
-    .then(() => {
-      console.log('User account created & signed in!');
-    })
-    .catch(error => {
-      if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [error, setError] = useState<string>();
 
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
+  const {
+    setRegistrationState
+  } = useRegistration();
 
-      console.error(error);
-    });
+  const register = async () => {
+
+    if (!email)
+      return setError("You must enter a vaild email.");
+
+    if (!password)
+      return setError("You must create a password");
+
+    try {
+      await auth().createUserWithEmailAndPassword(email, password);
+      await setRegistrationState({
+        acceptanceTimestamp: new Date(Date.now()),
+        authenticationMethod: AuthMethodTypes.EMAIL,
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HomeScreen' }],
+      });
+    } catch (error: any) {
+      if (error.code === 'auth/email-already-in-use')
+        setError('That email address is already in use!');
+      else if (error.code === 'auth/invalid-email')
+        setError('That email address is invalid!');
+      else
+        setError('Unknown Error: ' + error.code);
+    }
+  }
 
   return (
-    <View style={styles.column} >
-      <Text style={styles.header}>Ensure you have registered your corporate login first.</Text>
-    </View>
+    <ScrollView contentContainerStyle={styles.contentContainerStyle} style={styles.column} >
+      <View style={styles.headerBanner}>
+        <Text style={styles.header}>Registered your corporate email for access.</Text>
+      </View>
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Corporate Email:</Text>
+        <TextInput style={styles.textInputStyle} value={email} onChangeText={t => setEmail(t)} />
+      </View>
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Create Password:</Text>
+        <TextInput style={styles.textInputStyle} secureTextEntry={true} value={password} onChangeText={t => setPassword(t)} />
+      </View>
+      {error && <Text style={styles.warningLabel}>{error}</Text>}
+      <AppButton title="Register Corporate Email" onPress={register} />
+    </ScrollView>
   );
 };
 
@@ -38,6 +70,8 @@ const styles = StyleSheet.create({
   column: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  contentContainerStyle: {
     alignItems: 'center',
     justifyContent: 'flex-start',
   },

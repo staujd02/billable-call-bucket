@@ -1,4 +1,4 @@
-import { Legal } from "../../types/calls";
+import { Legal, LegalInfo } from "../../types/calls";
 import { LegalSchemaName } from "../models/Legal";
 import usePersistentStorage from "./usePersistentStorage";
 
@@ -20,8 +20,22 @@ const useRegistration = () => {
         });
     }
 
+    const setRegistrationState = async (register: LegalInfo): Promise<void> => {
+        const realm = (await getRealm());
+        return await new Promise<void>(async (resolve, reject) => {
+            realm.write(() => {
+                realm.create<Legal>(LegalSchemaName, {
+                    ...register,
+                    pk: legalKey,
+                });
+                resolve();
+            })
+        });
+    }
+
     return {
         getRegistrationState,
+        setRegistrationState,
     }
 }
 
