@@ -32,7 +32,7 @@ const useRegistration = () => {
             })
         });
     }
-
+    
     return {
         getRegistrationState,
         setRegistrationState,

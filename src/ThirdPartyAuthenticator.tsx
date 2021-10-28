@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
@@ -6,37 +6,84 @@ import { ThirdPartyAuthenticationProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import useRegistration from './hooks/useAuthState';
 import LoadingAnimation from './control/LoadingAnimation';
+import { Guid } from 'guid-typescript';
 
 const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps) => {
 
   const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [showMessage, setShowMessage] = useState<boolean>(false);
 
   const {
-    setRegistrationState
+    setRegistrationState,
+    getRegistrationState,
   } = useRegistration();
+
+  useEffect(() => {
+    attemptSignIn();
+  }, []);
+
+  useEffect(() =>
+    auth().onUserChanged(async authenticatedUser => {
+      if (authenticatedUser && !authenticatedUser.emailVerified) {
+        await authenticatedUser.sendEmailVerification();
+        setLoading(false);
+        setShowMessage(true);
+      }
+      if (authenticatedUser?.emailVerified) {
+        const registration = await getRegistrationState();
+        if (registration)
+          await completeRegistration();
+      }
+    }), []);
+
+  const resendConfirmation = async () => {
+    const user = auth().currentUser;
+    if (user && !user.emailVerified)
+      await user.sendEmailVerification();
+  }
+
+  const attemptSignIn = async () => {
+    const registration = await getRegistrationState();
+    if (registration) {
+      const { userName, passKey } = registration;
+      const user = await auth().signInWithEmailAndPassword(userName, passKey);
+      if (user.user.emailVerified) {
+        await completeRegistration();
+      }
+    }
+  }
+
+  const completeRegistration = async () => {
+    const registration = await getRegistrationState();
+    if (registration) {
+      await setRegistrationState({
+        ...registration,
+        emailVerified: false,
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HomeScreen' }],
+      });
+    }
+  }
 
   const register = async () => {
 
     if (!email)
-      return setError("You must enter a vaild email.");
-
-    if (!password)
-      return setError("You must create a password");
+      return setError("You must enter an email address.");
 
     try {
       setLoading(true);
-      await auth().createUserWithEmailAndPassword(email, password);
+      const passKey = Guid.create().toString();
+      await auth().createUserWithEmailAndPassword(email, passKey);
       await setRegistrationState({
         acceptanceTimestamp: new Date(Date.now()),
         authenticationMethod: "EMAIL",
-      });
-      setLoading(false);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'HomeScreen' }],
+        passKey,
+        userName: email,
+        emailVerified: false,
       });
     } catch (error: any) {
       if (error.code === 'auth/email-already-in-use')
@@ -58,12 +105,13 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
         <Text style={styles.label}>Corporate Email:</Text>
         <TextInput style={styles.textInputStyle} value={email} onChangeText={t => setEmail(t)} />
       </View>
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>Create Password:</Text>
-        <TextInput style={styles.textInputStyle} secureTextEntry={true} value={password} onChangeText={t => setPassword(t)} />
-      </View>
       {error && <Text style={styles.warningLabel}>{error}</Text>}
-      <AppButton title="Register Corporate Email" onPress={register} />
+      {!showMessage && <AppButton title="Register Corporate Email" onPress={register} />}
+      {showMessage && <Text style={styles.instructionLabel}>
+        An email with a verification link been sent.
+        Please follow instructions in the email to complete the registration process.
+      </Text>}
+      {showMessage && <AppButton title="Re-send Confirmation Email" onPress={resendConfirmation} />}
       {loading && <LoadingAnimation />}
     </View>
   );
@@ -101,6 +149,13 @@ const styles = StyleSheet.create({
     color: AppColorStyles.warningTextColor,
     textAlign: 'center',
     fontSize: AppFontStyles.detailSize,
+    marginBottom: 5,
+  },
+  instructionLabel: {
+    color: AppColorStyles.detailText,
+    textAlign: 'center',
+    fontSize: AppFontStyles.detailSize,
+    padding: 10,
     marginBottom: 5,
   },
   inputGroup: {

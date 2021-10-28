@@ -54,6 +54,9 @@ export type Bill = {
 export type LegalInfo = {
     acceptanceTimestamp: Date,
     authenticationMethod: AuthMethodTypes,
+    passKey: string, 
+    userName: string,
+    emailVerified: boolean,
 }
 
 export type Legal = {

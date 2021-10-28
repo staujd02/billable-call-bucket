@@ -4,8 +4,11 @@ const LegalSchema = {
     primaryKey: 'pk',
     properties: {
         pk: 'int',
+        passKey: 'string',
+        userName: 'string',
         acceptanceTimestamp: 'date',
         authenticationMethod: 'string',
+        emailVerified: 'bool',
     }
 }
 
