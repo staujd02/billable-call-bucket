@@ -1,7 +1,4 @@
-export enum AuthMethodTypes {
-    "EMAIL"
-}
-
+export type AuthMethodTypes = "EMAIL";
 export type CallLogType = "OUTGOING" | "INCOMING" | "MISSED" | "UNKNOWN";
 
 export type CallLog = {

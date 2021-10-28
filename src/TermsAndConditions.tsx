@@ -11,7 +11,7 @@ const TermsAndConditions = ({ navigation }: TermsAndConditionsProps) => {
       <ScrollView>
         <Text>{Terms}</Text>
         <View style={styles.sizeController}>
-          <AppButton title="I agree to these terms" onPress={() => { }} />
+          <AppButton title="I agree to these terms" onPress={() => navigation.navigate('ThirdPartyAuthentication')} />
         </View>
       </ScrollView>
     </View>

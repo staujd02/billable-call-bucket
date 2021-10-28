@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { ThirdPartyAuthenticationProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import useRegistration from './hooks/useAuthState';
-import { AuthMethodTypes } from '../types/calls';
+import LoadingAnimation from './control/LoadingAnimation';
 
 const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps) => {
 
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [error, setError] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     setRegistrationState
@@ -26,11 +27,13 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
       return setError("You must create a password");
 
     try {
+      setLoading(true);
       await auth().createUserWithEmailAndPassword(email, password);
       await setRegistrationState({
         acceptanceTimestamp: new Date(Date.now()),
-        authenticationMethod: AuthMethodTypes.EMAIL,
+        authenticationMethod: "EMAIL",
       });
+      setLoading(false);
       navigation.reset({
         index: 0,
         routes: [{ name: 'HomeScreen' }],
@@ -42,13 +45,14 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
         setError('That email address is invalid!');
       else
         setError('Unknown Error: ' + error.code);
+      setLoading(false);
     }
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.contentContainerStyle} style={styles.column} >
+    <View style={styles.column} >
       <View style={styles.headerBanner}>
-        <Text style={styles.header}>Registered your corporate email for access.</Text>
+        <Text style={styles.header}>Register your corporate email for access.</Text>
       </View>
       <View style={styles.inputGroup}>
         <Text style={styles.label}>Corporate Email:</Text>
@@ -60,7 +64,8 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
       </View>
       {error && <Text style={styles.warningLabel}>{error}</Text>}
       <AppButton title="Register Corporate Email" onPress={register} />
-    </ScrollView>
+      {loading && <LoadingAnimation />}
+    </View>
   );
 };
 
@@ -70,8 +75,6 @@ const styles = StyleSheet.create({
   column: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  contentContainerStyle: {
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
