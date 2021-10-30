@@ -16,7 +16,8 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
   const [showMessage, setShowMessage] = useState<boolean>(false);
 
   const {
-    setRegistrationState,
+    completeRegistrationState,
+    createRegistrationState,
     getRegistrationState,
   } = useRegistration();
 
@@ -58,10 +59,7 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
   const completeRegistration = async () => {
     const registration = await getRegistrationState();
     if (registration) {
-      await setRegistrationState({
-        ...registration,
-        emailVerified: false,
-      });
+      await completeRegistrationState();
       navigation.reset({
         index: 0,
         routes: [{ name: 'HomeScreen' }],
@@ -78,7 +76,7 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
       setLoading(true);
       const passKey = Guid.create().toString();
       await auth().createUserWithEmailAndPassword(email, passKey);
-      await setRegistrationState({
+      await createRegistrationState({
         acceptanceTimestamp: new Date(Date.now()),
         authenticationMethod: "EMAIL",
         passKey,
@@ -111,6 +109,7 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
         An email with a verification link been sent.
         Please follow instructions in the email to complete the registration process.
       </Text>}
+      {showMessage && <AppButton styleOverrides={styles.button} title="I confirmed my email" onPress={attemptSignIn} />}
       {showMessage && <AppButton title="Re-send Confirmation Email" onPress={resendConfirmation} />}
       {loading && <LoadingAnimation />}
     </View>
@@ -120,6 +119,9 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
 export default ThirdPartyAuthentication;
 
 const styles = StyleSheet.create({
+  button: {
+    marginBottom: 15
+  },
   column: {
     flex: 1,
     backgroundColor: '#fff',
