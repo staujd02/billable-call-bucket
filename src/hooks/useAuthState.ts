@@ -32,23 +32,36 @@ const useRegistration = () => {
             })
         });
     }
-    
+
     const completeRegistrationState = async (): Promise<void> => {
         const realm = (await getRealm());
         return await new Promise<void>(async (resolve, reject) => {
             realm.write(() => {
                 const legal = realm.objectForPrimaryKey<MaybeLegal>(LegalSchemaName, legalKey);
-                if(legal)
+                if (legal)
                     legal.emailVerified = true;
                 resolve();
             })
         });
     }
-    
+
+    const indicateEmailVerificationWasSent = async (): Promise<void> => {
+        const realm = (await getRealm());
+        return await new Promise<void>(async (resolve, reject) => {
+            realm.write(() => {
+                const legal = realm.objectForPrimaryKey<MaybeLegal>(LegalSchemaName, legalKey);
+                if (legal)
+                    legal.emailVerificationSent = true;
+                resolve();
+            })
+        });
+    }
+
     return {
         getRegistrationState,
         createRegistrationState,
         completeRegistrationState,
+        indicateEmailVerificationWasSent,
     }
 }
 

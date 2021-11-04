@@ -57,6 +57,7 @@ export type LegalInfo = {
     passKey: string, 
     userName: string,
     emailVerified: boolean,
+    emailVerificationSent: boolean,
 }
 
 export type Legal = {

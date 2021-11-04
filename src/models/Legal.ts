@@ -9,6 +9,7 @@ const LegalSchema = {
         acceptanceTimestamp: 'date',
         authenticationMethod: 'string',
         emailVerified: 'bool',
+        emailVerificationSent: 'bool',
     }
 }
 

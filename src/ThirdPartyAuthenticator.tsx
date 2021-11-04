@@ -19,6 +19,7 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
     completeRegistrationState,
     createRegistrationState,
     getRegistrationState,
+    indicateEmailVerificationWasSent,
   } = useRegistration();
 
   useEffect(() => {
@@ -27,8 +28,10 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
 
   useEffect(() =>
     auth().onUserChanged(async authenticatedUser => {
-      if (authenticatedUser && !authenticatedUser.emailVerified) {
+      const registration = await getRegistrationState();
+      if (authenticatedUser && !authenticatedUser.emailVerified && (!registration || !registration.emailVerificationSent)) {
         await authenticatedUser.sendEmailVerification();
+        await indicateEmailVerificationWasSent(); 
         setLoading(false);
         setShowMessage(true);
       }
@@ -50,6 +53,8 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
     if (registration) {
       const { userName, passKey } = registration;
       const user = await auth().signInWithEmailAndPassword(userName, passKey);
+      setShowMessage(true);
+      setEmail(user.user.email || "");
       if (user.user.emailVerified) {
         await completeRegistration();
       }
@@ -82,6 +87,7 @@ const ThirdPartyAuthentication = ({ navigation }: ThirdPartyAuthenticationProps)
         passKey,
         userName: email,
         emailVerified: false,
+        emailVerificationSent: false,
       });
     } catch (error: any) {
       if (error.code === 'auth/email-already-in-use')
