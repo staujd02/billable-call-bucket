@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import Routes from 'src/constants/routes';
+import { CallLog } from './calls';
 
 type ClientNameWithCallId = {
   callId: string,
@@ -26,7 +26,12 @@ type BillIdRoute = {
 }
 
 export type RootStackParamList = {
-  Home: undefined;
+  ThirdPartyAuthentication: undefined;
+  ComplianceTestLogin: undefined;
+  TermsAndConditions: undefined;
+  FirstTimeUser: undefined;
+  LandingPage: undefined;
+  HomeScreen: undefined;
   DraftBill: ClientIdRoute;
   CallLinkedToClient: ClientNameWithCallIdAndReadPermission;
   EditLinkedCall: ClientNameWithCallId;
@@ -41,6 +46,11 @@ export type RootStackParamList = {
   LinkClientToCall: CallLog;
 };
 
+type ThirdPartyAuthenticationProps = StackScreenProps<RootStackParamList, 'ThirdPartyAuthentication'>;
+type ComplianceTestLoginProps = StackScreenProps<RootStackParamList, 'ComplianceTestLogin'>;
+type TermsAndConditionsProps = StackScreenProps<RootStackParamList, 'TermsAndConditions'>;
+type LandingPageProps = StackScreenProps<RootStackParamList, 'LandingPage'>;
+type FirstTimeUserProps = StackScreenProps<RootStackParamList, 'FirstTimeUser'>;
 type HomeScreenProps = StackScreenProps<RootStackParamList, 'HomeScreen'>;
 type DraftBillProps = StackScreenProps<RootStackParamList, 'DraftBill'>;
 type CallLinkedToClientProps = StackScreenProps<RootStackParamList, 'CallLinkedToClient'>;

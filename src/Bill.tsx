@@ -39,7 +39,7 @@ const BillComponent = ({ route, navigation }: BillProps) => {
   const { exportSpecificBill } = useBillExportor();
 
   const onGoHome = async () =>
-    navigation.navigate('Home');
+    navigation.navigate('HomeScreen');
 
   const onGoToCallLinkedToClient = async ({ pk }: Call) =>
     navigation.navigate('CallLinkedToClient', {

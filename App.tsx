@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   useColorScheme,
@@ -41,16 +40,9 @@ const Section: React.FC<{
 };
 
 const App = () => {
-  // const isDarkMode = useColorScheme() === 'dark';
-
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  // };
-
   return (
     <MainNavigation />
   );
-  //  <SafeAreaView style={backgroundStyle}> </SafeAreaView>
 };
 
 const styles = StyleSheet.create({
