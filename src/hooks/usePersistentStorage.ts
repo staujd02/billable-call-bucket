@@ -1,18 +1,27 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Realm from 'realm';
 import { Schema_2 } from '../models/Schema';
 
 const usePersistentStorage = () => {
 
-    // store key
-    // and get key value here: https://www.npmjs.com/package/react-native-shared-preferences
+    const keyStoreValue = 'encrypt-key';
 
-    const getRealm = async () => await Realm.open(
-        {
+    const getKey = async () => {
+        let key = await AsyncStorage.getItem(keyStoreValue);
+        let encrypt: Uint8Array = new Uint8Array(key ? parseInt(key) : Date.now());
+        if (!key)
+            await AsyncStorage.setItem(keyStoreValue, encrypt.toString());
+        return encrypt;
+    }
+
+    const getRealm = async () => {
+        return await Realm.open({
             schema: Schema_2.schema,
             schemaVersion: Schema_2.version,
-            path: "bill-me-repositiory"
-        }
-    );
+            path: "bill-me-repositiory",
+            encryptionKey: await getKey()
+        });
+    }
 
     return {
         getRealm
