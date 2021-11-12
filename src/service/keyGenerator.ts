@@ -2,10 +2,10 @@ import { generateSecureRandom } from 'react-native-securerandom';
 import * as Keychain from 'react-native-keychain';
 
 const convertKeyStringToBuffer: (key: string) => Uint8Array = (key: string) =>
-    new Uint8Array(Buffer.from(key, 'base64').buffer);
+    Uint8Array.from(Array.from(key).map(letter => letter.charCodeAt(0)));
 
 const convertKeyBufferToString: (rawKey: Uint8Array) => string = (rawKey: Uint8Array) =>
-    Buffer.from(rawKey).toString('base64');
+    Array.from(rawKey).map(byte => String.fromCharCode(byte)).join('');
 
 const getRealmEncryptionKey: () => Promise<Uint8Array> = async () => {
     const username = 'dont-care';
