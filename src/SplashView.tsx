@@ -1,11 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import LoadingIcon from "./control/LoadingIcon";
 
 const AppSplashScreen = () => {
   return (
     <View style={styles.background}>
       <LoadingIcon />
+      <Text style={styles.text}>Decrypting Application Store...</Text>
     </View>
   );
 }
@@ -17,9 +18,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: {
-    width: 400, 
-    height: 400,
+  text: {
+    marginTop: 240, 
+    fontSize: 16,
   },
 });
 

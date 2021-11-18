@@ -10,7 +10,7 @@ import useClients from './hooks/useClients';
 
 const ClientDetail = ({ navigation, route }: ClientDetailProps) => {
 
-  const [client, setClient] = useState<Client>(null);
+  const [client, setClient] = useState<Client | null>(null);
 
   const isFocused = useIsFocused();
 

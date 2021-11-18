@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useRef } from 'react';
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../types/routes';
 import HomeScreen from './HomeScreen';
@@ -21,6 +21,8 @@ import LandingPage from './LandingPage';
 import TermsAndConditions from './TermsAndConditions';
 import ComplianceTestLogin from './ComplianceTestLogin';
 import ThirdPartyAuthentication from './ThirdPartyAuthenticator';
+import ShareConsumer from './ShareConsumer';
+import useShareNavigationSideEffect from './hooks/useShareNavigationSideEffect';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -29,16 +31,23 @@ const defaultStyle = {
 };
 
 const MainNavigation = () => {
+
+  const ref = useRef<NavigationContainerRef>(null);
+  
+  useShareNavigationSideEffect(ref);
+
   const createOptions = (title: string) => ({  title, headerTintColor: AppColorStyles.headerText, headerStyle: defaultStyle });
   const createLandingPageOptions = (title: string) => ({ ...createOptions(title) });
   const createEmptyHeader = () => ({ headerTitle: () => <></> });
+
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={ref}>
       <Stack.Navigator>
         <Stack.Screen name="LandingPage" component={LandingPage} options={createEmptyHeader()} />
         <Stack.Screen name="ThirdPartyAuthentication" component={ThirdPartyAuthentication} options={createOptions('Register')} />
         <Stack.Screen name="ComplianceTestLogin" component={ComplianceTestLogin} options={createOptions('Login')} />
         <Stack.Screen name="FirstTimeUser" component={FirstTimeUser} options={createLandingPageOptions('Daedalus Solutions')} />
+        <Stack.Screen name="ShareConsumer" component={ShareConsumer} options={createOptions('Add Message')} />
         <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} options={createOptions('Agreement')} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={createLandingPageOptions('Home')} />
         <Stack.Screen name="LinkClientToCall" component={LinkClientToCall} options={createOptions('Link Client To Call')} />
@@ -57,6 +66,5 @@ const MainNavigation = () => {
     </NavigationContainer>
   );
 };
-
 
 export default MainNavigation;

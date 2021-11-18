@@ -1,4 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
+import { SharedContent } from '../src/hooks/useShare';
 import { CallLog } from './calls';
 
 type ClientNameWithCallId = {
@@ -21,12 +22,17 @@ type ClientIdRoute = {
   clientId: string,
 }
 
+type ShareTextRoute = {
+  sharedContent: SharedContent,
+}
+
 type BillIdRoute = {
   billId: string,
 }
 
 export type RootStackParamList = {
   ThirdPartyAuthentication: undefined;
+  ShareConsumer: ShareTextRoute;
   ComplianceTestLogin: undefined;
   TermsAndConditions: undefined;
   FirstTimeUser: undefined;
@@ -46,6 +52,7 @@ export type RootStackParamList = {
   LinkClientToCall: CallLog;
 };
 
+type ShareConsumerProps = StackScreenProps<RootStackParamList, 'ShareConsumer'>;
 type ThirdPartyAuthenticationProps = StackScreenProps<RootStackParamList, 'ThirdPartyAuthentication'>;
 type ComplianceTestLoginProps = StackScreenProps<RootStackParamList, 'ComplianceTestLogin'>;
 type TermsAndConditionsProps = StackScreenProps<RootStackParamList, 'TermsAndConditions'>;

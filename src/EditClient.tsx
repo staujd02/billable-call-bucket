@@ -8,6 +8,7 @@ import useClients from './hooks/useClients';
 const EditClient = (props: EditClientProps) => {
 
   const { navigation, route } = props;
+
   const id = () => route.params.clientId;
 
   const { getClient, updateClient } = useClients();
