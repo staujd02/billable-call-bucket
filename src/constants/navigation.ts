@@ -1,5 +1,5 @@
 const Routes = {
-    Home: "HomeScreen",
+    Home: "Home",
     LinkClientToCall: "LinkClientToCall",
     DraftBill: "DraftBill",
     CallLinkedToClient: "CallLinkedToClient",

@@ -1,4 +1,3 @@
-export type AuthMethodTypes = "EMAIL";
 export type CallLogType = "OUTGOING" | "INCOMING" | "MISSED" | "UNKNOWN";
 
 export type CallLog = {
@@ -42,30 +41,17 @@ export type Client = {
     pk: string,
     name: string,
     description: string,
-    bills: Realm.Results<Bill & Realm.Object & ThingsIKnowExist<Bill>>
+    bills: Realm.Results<Bill & Realm.Object & ThingsIKnowExist>
 }
 
 export type Bill = {
     pk: string,
     finalizedOn: Date,
-    calls: Realm.Results<Call & Realm.Object & ThingsIKnowExist<Call>>
+    calls: Realm.Results<Call & Realm.Object & ThingsIKnowExist>
 }
-
-export type LegalInfo = {
-    acceptanceTimestamp: Date,
-    authenticationMethod: AuthMethodTypes,
-    passKey: string, 
-    userName: string,
-    emailVerified: boolean,
-    emailVerificationSent: boolean,
-}
-
-export type Legal = {
-    pk: number
-} & LegalInfo
 
 // I don't know where I'm typing incorrectly, but these functions exist
-export type ThingsIKnowExist<T> = {
+export type ThingsIKnowExist = {
     push(...items: T[]): number;
 }
 

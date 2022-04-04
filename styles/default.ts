@@ -6,7 +6,6 @@ export const ColorPalette = {
     boring: '#688ab2',
 
     green: "#00802b",
-    warning: "#ff0000",
 
     white: "#fff",
     black: "#000",
@@ -27,13 +26,12 @@ export const AppColorStyles = {
     listItemBorderColor: ColorPalette.boring,
 
     multiActionSymbolColor: ColorPalette.white,
-    multiActionSymbolButtonColor: ColorPalette.green,
+    multiActionSymbolButtonColor: ColorPalette.green, // "#ff0",
     multiActionBackgroundColor: ColorPalette.light,
 
     searchPlaceholderTextColor: ColorPalette.pop,
     searchBackgroundColor: ColorPalette.lightest,
     searchTextColor: ColorPalette.dark,
-    warningTextColor: ColorPalette.warning,
 }
 
 export const AppFontStyles = {
