@@ -26,8 +26,10 @@ This app will request permission to access your contacts, but it is not critical
 This app doesn't allow for manual entry of phone call records. If your device cannot make or receive cellular calls, this application is of no use to you.
 
 #### Okay, How Do I Get It?
+
+##### Method 1
 1. Side-load the committed APK here: 
---OR--
+##### Method 2
 1. Download the source code
 2. Build it
 4. Side-load your own APK
