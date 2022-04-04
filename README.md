@@ -10,7 +10,7 @@
 ![bill-me-graphic](https://user-images.githubusercontent.com/20073760/161642146-43aa982e-d43f-4459-9c09-a02e303eab65.png)
 
 ## Application Journey
-This application was built for a nurse who had to report their phone calls. I literally spent hours trying to find an app that could simply record call information. Couldn't find one, so what's a dev to do? I built one - and - now it's time to share it. It's free, and open-source (obvioulsy, since we're here). BUT, I do accept donations as a humble thank-you-so-much-this-saved-me-senseless-hours-of-handwriting-notes.
+This application was built for a nurse who had to report their phone calls. I literally spent hours trying to find an app that could simply record call information. Couldn't find one, so what's a dev to do? I built one - and - now it's time to share it. It's free, and open-source (obviously, since we're here). BUT, I do accept donations as a humble thank-you-so-much-this-saved-me-senseless-hours-of-handwriting-notes.
 
 #### Intent
 Bill Me is an open-source app designed to help you take notes and keep track of your device's phone call records with your clients. If you need to track your business phone calls on your mobile device for the purpose of billing or exporting a record of those calls later, this app was built for you.
@@ -26,11 +26,11 @@ This app will request permission to access your contacts, but it is not critical
 This app doesn't allow for manual entry of phone call records. If your device cannot make or receive cellular calls, this application is of no use to you.
 
 #### Okay, How Do I Get It?
-1. Side-load the commited apk here: 
-- OR -
+1. Side-load the committed APK here: 
+--OR--
 1. Download the source code
 2. Build it
-4. Side-load your own apk
+4. Side-load your own APK
 
 
 #### Limitations
