@@ -1,5 +1,4 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import Routes from 'src/constants/routes';
 
 type ClientNameWithCallId = {
   callId: string,
