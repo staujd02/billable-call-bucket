@@ -28,7 +28,7 @@ This app doesn't allow for manual entry of phone call records. If your device ca
 #### Okay, How Do I Get It?
 
 ##### Method 1
-1. Side-load the committed APK here: 
+1. Side-load the committed APK here: https://github.com/staujd02/billable-call-bucket/blob/main/android/app/release/app-release.apk
 ##### Method 2
 1. Download the source code
 2. Build it
