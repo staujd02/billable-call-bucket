@@ -24,7 +24,8 @@ DerivedData
 # Android/IntelliJ
 #
 build/
-release/
+*.pepk
+*.aab
 .idea
 .gradle
 local.properties
