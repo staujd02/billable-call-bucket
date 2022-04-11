@@ -24,6 +24,7 @@ This application was built for a nurse who had to report their phone calls. I li
 #### Method 1
 1. Download the APK here: https://github.com/staujd02/billable-call-bucket/blob/main/android/app/release/app-release.apk
 2. Side-load it
+
 #### Method 2
 1. Download the source code
 2. Build & Sign it
