@@ -1,14 +1,12 @@
-### Support or Contact
-# Welcome to Bill-Me
+![bill-me-graphic](https://user-images.githubusercontent.com/20073760/161642146-43aa982e-d43f-4459-9c09-a02e303eab65.png)
 *The Open Source Billable Call Manager*
+
 ## [A TypeScript React-Native App](https://www.typescriptlang.org/)
 
 <p>
   <!-- Android -->
   <img alt="Supports Android" longdesc="Supports Android" src="https://img.shields.io/badge/Android-4630EB.svg?style=flat-square&logo=ANDROID&labelColor=A4C639&logoColor=fff" />
 </p>
-
-![bill-me-graphic](https://user-images.githubusercontent.com/20073760/161642146-43aa982e-d43f-4459-9c09-a02e303eab65.png)
 
 ## Application Journey
 This application was built for a nurse who had to report their phone calls. I literally spent hours trying to find an app that could simply record call information. Couldn't find one, so what's a dev to do? I built one - and - now it's time to share it. It's free, and open-source (obviously, since we're here). BUT, I do accept sponserships as a humble thank-you-so-much-this-saved-me-senseless-hours-of-handwriting-notes (sponsor button up above).
