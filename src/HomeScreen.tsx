@@ -1,20 +1,14 @@
-import { faChevronCircleDown, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import { FlatList } from 'react-native';
+import { Button } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
 import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
-import SymbolButton from './control/SymbolButton';
-import SelectableCallItem from './custom-control/SelectableCallItem';
-import useCallLogs from './hooks/useCallLogs';
 
 const HomeScreen = (props: HomeScreenProps) => {
 
   const { navigation } = props;
-
-  const { callLogData, refreshLogs, loadMore } = useCallLogs();
 
   const onGoToDraftBillsByClient = () => navigation.push('DraftBillsByClient');
   const onGoToClientList = () => navigation.push('ClientList');
@@ -33,19 +27,19 @@ const HomeScreen = (props: HomeScreenProps) => {
       </View>
       <View style={styles.content} >
         <View style={styles.callHeader}>
-          <SymbolButton onPress={() => loadMore(3)} symbol={faChevronCircleDown} title="Load More"></SymbolButton>
-          <Text style={styles.callHeaderText}>Recent Calls</Text>
-          <SymbolButton onPress={() => refreshLogs()} symbol={faSyncAlt} title="Refresh"></SymbolButton>
+          <Text style={styles.callHeaderText}>Add Call Record</Text>
         </View>
-        <FlatList
-          data={callLogData || []}
-          style={styles.list}
-          onScrollEndDrag={() => loadMore(3)}
-          keyExtractor={i => i.timestamp}
-          renderItem={
-            ({ item }) => <SelectableCallItem onPress={() => onGoToLinkClientToCall(item)} callLog={item} />
-          }
-        />
+        <Button onPress={() => onGoToLinkClientToCall({
+          dateTime: new Date(),
+          duration: 100,
+          name: "Name",
+          phoneNumber: "Number",
+          rawType: 1,
+          timestamp: new Date(),
+          type: 'INCOMING'
+        })}>
+          Add Phone Record
+        </Button>
       </View>
     </View>
   );
