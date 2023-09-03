@@ -31,6 +31,12 @@ build/
 local.properties
 *.iml
 
+# Java
+*.hprof
+
+# Google
+google-services.json
+
 # node.js
 #
 node_modules/
