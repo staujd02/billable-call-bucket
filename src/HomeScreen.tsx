@@ -29,15 +29,17 @@ const HomeScreen = (props: HomeScreenProps) => {
         <View style={styles.callHeader}>
           <Text style={styles.callHeaderText}>Add Call Record</Text>
         </View>
-        <Button onPress={() => onGoToLinkClientToCall({
-          dateTime: new Date(),
-          duration: 100,
-          name: "Name",
-          phoneNumber: "Number",
-          rawType: 1,
-          timestamp: new Date(),
-          type: 'INCOMING'
-        })}>
+        <Button 
+          title="Add Phone Record"
+          onPress={() => onGoToLinkClientToCall({
+            dateTime: Date.now().toString(),
+            duration: 100,
+            name: "Name",
+            phoneNumber: "Number",
+            rawType: 1,
+            timestamp: Date.now().toString(),
+            type: 'INCOMING'
+          })}>
           Add Phone Record
         </Button>
       </View>
