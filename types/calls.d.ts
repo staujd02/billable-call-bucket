@@ -6,8 +6,7 @@ export type CallLog = {
     name: string,
     timestamp: string,
     dateTime: string,
-    type: CallLogType,
-    rawType: number,
+    type: CallLogType
 }
 
 export type CallDetailUpdate = {

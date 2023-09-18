@@ -17,6 +17,17 @@ export type FlexingMultiActionButtonProps = {
     secondarySymbol: IconDefinition,
 }
 
+export type FlexingExtendableActionButtonProps = {
+    actions: ExtendableActionButton[]
+}
+
+export type ExtendableActionButton = {
+    onPressAction: (event: GestureResponderEvent) => void,
+    title: string,
+    layout: number,
+    isSelected: boolean
+}
+
 export type SearchBoxProps = {
     value: string,
     onChangeText: (text: string) => void
