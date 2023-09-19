@@ -9,10 +9,13 @@ const FlexingExtendableActionButton = ({ actions }: FlexingExtendableActionButto
     <View style={styles.buttonSiblingLayout}>
         {
             actions.map(action => (
-                <TouchableOpacity style={{ ...styles.buttonLayout, backgroundColor: action.isSelected 
-                            ? 'green'
-                            : 'pink'  }} accessibilityActions={[{ name: "click", label: action.title }]} onPress={action.onPressAction}>
-                    <Text key={action.title} style={{ ...styles.appButtonText, flex: action.layout}}>
+                <TouchableOpacity style={{...styles.buttonLayout, ...(!action.isSelected ? {} : styles.buttonLayoutSelectedOverride)}}
+                            accessibilityActions={[{ name: "click", label: action.title }]} onPress={action.onPressAction}>
+                    <Text key={action.title} style={{ 
+                        ...styles.appButtonText, 
+                        flex: action.layout,
+                        ...(action.isSelected ? styles.appButtonTextSelectedOverride : {})
+                    }}>
                         {action.title}
                     </Text>
                 </TouchableOpacity>
@@ -29,12 +32,11 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         backgroundColor: AppColorStyles.buttonBackground,
         borderRadius: 20,
-        marginBottom: 15,
-        marginTop: 15,
+        marginBottom: 20
     },
     buttonLayout: {
         borderColor: AppColorStyles.listItemBorderColor,
-        backgroundColor: 'pink',
+        backgroundColor: AppColorStyles.multiActionBackgroundColor,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -45,10 +47,17 @@ const styles = StyleSheet.create({
         marginRight: 15,
         flexShrink: 1,
     },
+    buttonLayoutSelectedOverride: {
+        borderColor: AppColorStyles.listItemBorderColor,
+        backgroundColor: AppColorStyles.multiActionSymbolButtonColor,
+    },
     appButtonText: {
-        fontSize: 16,
+        fontSize: 18,
         paddingLeft: 5,
         textAlign: 'center',
+    },
+    appButtonTextSelectedOverride: {
+        color: AppColorStyles.multiActionSymbolColor
     }
 });
 

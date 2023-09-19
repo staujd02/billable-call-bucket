@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
-import { Button, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
 import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
-import FlexingExtendableActionButton from './control/FlexingExtendableActionButton';
-import { SelectDatePicker } from './control/DatePicker';
-import { PhoneNumber } from './control/PhoneNumber';
+import { CreatePhoneRecordForm } from './custom-control/CreatePhoneRecordForm';
+import useContacts from './hooks/useContacts';
 
 const HomeScreen = (props: HomeScreenProps) => {
 
   const { navigation } = props;
 
+  const { loadContactByNumber, loadedContact } = useContacts();
+
   const [number, setNumber] = useState("");
   const [duration, setDuration] = useState(15 * 60); // In Seconds
-
   const [date, setDate] = useState(Date.now()); // Timestamp of Call
-  const [dateOpen, setDateOpen] = useState(false);
-  
   const [incoming, setIncoming] = useState(true);
+
+  useEffect(() => {
+    loadContactByNumber(number);
+  }, [number]);
 
   const onGoToDraftBillsByClient = () => navigation.push('DraftBillsByClient');
   const onGoToClientList = () => navigation.push('ClientList');
@@ -28,13 +30,6 @@ const HomeScreen = (props: HomeScreenProps) => {
   const onGoToLinkClientToCall = (callLog: CallLog) => navigation.push('LinkClientToCall', {
     callLog
   });
-
-  const parsedDate = new Date(date);
-  const formattedDate = parsedDate.toLocaleDateString() + " " + parsedDate.toLocaleTimeString();
-
-  const isFifteenMinuteDefault = duration === 15 * 60;
-  const isThirtyMinuteDefault = duration === 30 * 60;
-  const isFortyFiveMinuteDefault = duration === 45 * 60;
 
   return (
     <View style={styles.container} >
@@ -47,74 +42,23 @@ const HomeScreen = (props: HomeScreenProps) => {
         <View style={styles.callHeader}>
           <Text style={styles.callHeaderText}>Add Call Record</Text>
         </View>
-        <View style={styles.callDetails}>
-          <Text style={styles.label}>Number:</Text>
-          <PhoneNumber 
+        <CreatePhoneRecordForm 
+            date={date} 
+            duration={duration} 
             number={number} 
-            style={styles.entry} 
-            onChange={num => setNumber(num)}
-          />
-          <Text style={styles.label}>When:</Text>
-          <Button title={formattedDate} onPress={() => setDateOpen(true)} />
-          <SelectDatePicker 
-            date={new Date(date)} 
-            onCancel={() => { setDateOpen(false); }}
-            onConfirm={(date) => { setDate(date.valueOf()); setDateOpen(false); }}
-            open={dateOpen}
-          />
-          <Text style={styles.label}>Duration (in minutes):</Text>
-          <FlexingExtendableActionButton
-              actions={[
-                {
-                  layout: 1,
-                  onPressAction: () => setDuration(15 * 60),
-                  title: "15",
-                  isSelected: isFifteenMinuteDefault
-                },
-                {
-                  layout: 1,
-                  onPressAction: () => setDuration(30 * 60),
-                  title: "30",
-                  isSelected: isThirtyMinuteDefault
-                },
-                {
-                  layout: 1,
-                  onPressAction: () => setDuration(45 * 60),
-                  title: "45",
-                  isSelected: isFortyFiveMinuteDefault
-                },
-                {
-                  layout: 1,
-                  onPressAction: () => setDuration(60 * 60),
-                  title: "Custom",
-                  isSelected: !isFifteenMinuteDefault && !isThirtyMinuteDefault && !isFortyFiveMinuteDefault
-                }
-              ]}/>
-          <Text style={styles.label}>Phone Call Direction:</Text>
-          <FlexingExtendableActionButton
-              actions={[
-                {
-                  layout: 1,
-                  onPressAction: () => setIncoming(true),
-                  title: "Incoming",
-                  isSelected: incoming
-                },
-                {
-                  layout: 1,
-                  onPressAction: () => setIncoming(false),
-                  title: "Outgoing",
-                  isSelected: !incoming
-                }
-              ]}/>
-        </View>
+            incoming={incoming} 
+            setDate={setDate} 
+            setDuration={setDuration} 
+            setNumber={setNumber} 
+            setIncoming={setIncoming} />
         <Button
           title="Create Call Record"
-          onPress={() => onGoToLinkClientToCall({
+          onPress={async () => onGoToLinkClientToCall({
             dateTime: new Date(date).toISOString(),
             duration: duration,
             phoneNumber: number,
             timestamp: date.toString(),
-            name: "Name",
+            name: loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : "",
             type: incoming ? 'INCOMING' : 'OUTGOING',
           })} />
       </View>
@@ -136,35 +80,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: AppColorStyles.navigationBackground,
   },
-  entry: {
-    fontSize: AppFontStyles.detailSize,
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderColor: 'black',
-  },
-  label: {
-    color: AppColorStyles.text,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'center',
-    fontSize: AppFontStyles.detailSize,
-  },
   content: {
     paddingTop: 10,
     flex: 1,
     backgroundColor: AppColorStyles.background,
   },
   callHeader: {
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'space-between',
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginBottom: 20,
-    marginTop: 10,
-  },
-  callDetails: {
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'space-between',
