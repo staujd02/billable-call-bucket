@@ -1,15 +1,17 @@
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import FlexingExtendableActionButton from '../control/FlexingExtendableActionButton';
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { PhoneNumber } from "../control/PhoneNumber";
 import { AppColorStyles, AppFontStyles } from "../../styles/default";
-import FlexingExtendableActionButton from '../control/FlexingExtendableActionButton';
 import { SelectDatePicker } from '../control/DatePicker';
 import { useState } from "react";
+import { TextInput } from "react-native-gesture-handler";
 
 export type CreatePhoneRecordFormProps = {
     date: number,
     duration: number
     number: string,
     incoming: boolean,
+    name: string,
     setDate: (d: number) => void
     setDuration: (d: number) => void
     setNumber: (n: string) => void
@@ -19,6 +21,7 @@ export type CreatePhoneRecordFormProps = {
 export const CreatePhoneRecordForm = ({
     date,
     duration,
+    name,
     number,
     incoming,
     setDate,
@@ -27,7 +30,13 @@ export const CreatePhoneRecordForm = ({
     setIncoming
 }: CreatePhoneRecordFormProps) => {
   
-   const [dateOpen, setDateOpen] = useState(false);
+    const [dateOpen, setDateOpen] = useState(false);
+    const [isCustom, setIsCustom] = useState(false);
+
+    const onPressHandler = (value: number) => () => {
+      setDuration(value * 60);
+      setIsCustom(false);
+    }
   
     const parsedDate = new Date(date);
     const formattedDate = parsedDate.toLocaleDateString() + " " + parsedDate.toLocaleTimeString();
@@ -35,16 +44,16 @@ export const CreatePhoneRecordForm = ({
     const isFifteenMinuteDefault = duration === 15 * 60;
     const isThirtyMinuteDefault = duration === 30 * 60;
     const isFortyFiveMinuteDefault = duration === 45 * 60;
-    const isCustomDuration = !isFifteenMinuteDefault && !isThirtyMinuteDefault && !isFortyFiveMinuteDefault;
 
     return (
         <View style={styles.callDetails}>
-          <Text style={styles.label}>Number:</Text>
+          <Text style={styles.label}>Number (Optional):</Text>
           <PhoneNumber 
             number={number} 
             style={{ ...styles.entry, marginBottom: 10 }} 
             onChange={num => setNumber(num)}
           />
+          <Text style={styles.label}>Matching Contact: {name}</Text>
           <Text style={styles.label}>When:</Text>
           <TouchableOpacity onPress={() => setDateOpen(true)} style={styles.dateEntry}>
             <Text style={styles.dateEntryLabel}>{formattedDate}</Text>
@@ -55,34 +64,41 @@ export const CreatePhoneRecordForm = ({
             onConfirm={(date) => { setDate(date.valueOf()); setDateOpen(false); }}
             open={dateOpen}
           />
-          <Text style={{...styles.label, marginTop: 20 }}>Duration (in minutes):</Text>
+          <Text style={{...styles.label, marginTop: 20 }}>Billed Duration (in minutes):</Text>
           <FlexingExtendableActionButton
               actions={[
                 {
                   layout: 1,
-                  onPressAction: () => setDuration(15 * 60),
+                  onPressAction: onPressHandler(15),
                   title: "15",
-                  isSelected: isFifteenMinuteDefault
+                  isSelected: isFifteenMinuteDefault && !isCustom
                 },
                 {
                   layout: 1,
-                  onPressAction: () => setDuration(30 * 60),
+                  onPressAction: onPressHandler(30),
                   title: "30",
-                  isSelected: isThirtyMinuteDefault
+                  isSelected: isThirtyMinuteDefault && !isCustom
                 },
                 {
                   layout: 1,
-                  onPressAction: () => setDuration(45 * 60),
+                  onPressAction: onPressHandler(45),
                   title: "45",
-                  isSelected: isFortyFiveMinuteDefault
+                  isSelected: isFortyFiveMinuteDefault && !isCustom
                 },
                 {
                   layout: 1,
-                  onPressAction: () => setDuration(60 * 60),
+                  onPressAction: () => setIsCustom(true),
                   title: "Custom",
-                  isSelected: isCustomDuration
+                  isSelected: isCustom
                 }
               ]}/>
+          {isCustom && <TextInput 
+            style={styles.durationEntry}
+            keyboardType="numeric" 
+            value={duration !== 0 ? (duration / 60).toString() : ""} 
+            onChangeText={(t) => !Number.isNaN(parseInt(t)) 
+                ? setDuration(parseInt(t) * 60) 
+                : setDuration(0)} />}
           <Text style={styles.label}>Phone Call Direction:</Text>
           <FlexingExtendableActionButton
               actions={[
@@ -110,6 +126,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'black',
   },
+  durationEntry: {
+    backgroundColor: AppColorStyles.buttonBackground,
+    borderColor: AppColorStyles.listItemBorderColor,
+    elevation: 3,
+    borderWidth: 3,
+    fontSize: 18,
+    paddingLeft: 32,
+    paddingRight: 32,
+  },
   dateEntry: {
     elevation: 3,
     backgroundColor: AppColorStyles.buttonBackground,
@@ -133,7 +158,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'center',
-    fontSize: AppFontStyles.detailSize,
+    fontSize: 24,
   },
   callDetails: {
     display: 'flex',

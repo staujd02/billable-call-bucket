@@ -1,4 +1,4 @@
-import { StyleProp, TextStyle } from "react-native";
+import { TextStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 type PhoneNumberProps = {
@@ -13,19 +13,20 @@ export const PhoneNumber = ({
     style
 }: PhoneNumberProps) => {
 
-    const defaultFormat = "55555555555";
+    const defaultFormat = "XXXXXXXXXXX";
     const numberToFormat = number.length === 0 ? defaultFormat : number; 
     const formattedAppearance = format(numberToFormat);
 
     const onChangeText = (text: string): void => {
-        const wasAddition = text.length > formattedAppearance.length;
-        const addition = text.slice(formattedAppearance.length - text.length);
-        const validAddition = !Number.isNaN(parseInt(addition || ""));
-        const moreDigitsLeft = number.length < defaultFormat.length;
-        if (wasAddition && validAddition && moreDigitsLeft)
-            onChange(number + addition);
-        else if (text.length <= formattedAppearance.length)
-            onChange(number.slice(0, number.length - 1));
+        onChange(text.replace(/\D/g, ""))
+        // const wasAddition = text.length > formattedAppearance.length;
+        // const addition = text.slice(formattedAppearance.length - text.length);
+        // const validAddition = !Number.isNaN(parseInt(addition || ""));
+        // const moreDigitsLeft = number.length < defaultFormat.length;
+        // if (wasAddition && validAddition && moreDigitsLeft)
+        //     onChange(number + addition);
+        // else if (text.length <= formattedAppearance.length)
+        //     onChange(number.slice(0, number.length - 1));
     };
     return (
         <TextInput
@@ -38,6 +39,8 @@ export const PhoneNumber = ({
 }
 
 function format(numberToFormat: string) {
+    if(numberToFormat.length <= 4)
+        return `${numberToFormat.slice(0, 4)}`;
     if(numberToFormat.length <= 7)
         return `${numberToFormat.slice(0, 3)}-${numberToFormat.slice(3, 7)}`;
     if(numberToFormat.length <= 10)

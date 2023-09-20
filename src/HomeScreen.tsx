@@ -39,14 +39,12 @@ const HomeScreen = (props: HomeScreenProps) => {
         <AppButton title="Client List" onPress={onGoToClientList} />
       </View>
       <View style={styles.content} >
-        <View style={styles.callHeader}>
-          <Text style={styles.callHeaderText}>Add Call Record</Text>
-        </View>
         <CreatePhoneRecordForm 
             date={date} 
             duration={duration} 
             number={number} 
             incoming={incoming} 
+            name={loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : ""}
             setDate={setDate} 
             setDuration={setDuration} 
             setNumber={setNumber} 

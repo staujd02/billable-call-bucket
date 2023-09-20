@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const useContacts = () => {
     
-    const [loadedContact, setLoadedContact] = useState<Contact>(null);
+    const [loadedContact, setLoadedContact] = useState<Contact>();
 
     async function loadContactByNumber(number: string) : Promise<void> {
         if ((await requestContactPermission())){

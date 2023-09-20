@@ -1,3 +1,4 @@
 {
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "cmake.sourceDirectory": "C:/Users/altos/repos/BillMe/node_modules/react-native-gesture-handler/android/src/main/jni"
 }
