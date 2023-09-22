@@ -24,7 +24,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
   const { addBillableCall } = useCalls();
   const isFocused = useIsFocused();
 
-  const title = loadedContact !== null
+  const title = !!loadedContact
     ? formatContact(loadedContact)
     : formatPhoneNumber(phoneNumber);
 
@@ -39,7 +39,7 @@ const LinkClientToCall = ({ navigation, route }: LinkClientToCallProps) => {
   }, []);
 
   useEffect(() => {
-    if (loadedContact !== null && contactNotes === "")
+    if (!!loadedContact && contactNotes === "")
       setContactNotes(formatContact(loadedContact))
   }, [loadedContact])
 

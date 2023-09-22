@@ -47,13 +47,6 @@ export const CreatePhoneRecordForm = ({
 
     return (
         <View style={styles.callDetails}>
-          <Text style={styles.label}>Number (Optional):</Text>
-          <PhoneNumber 
-            number={number} 
-            style={{ ...styles.entry, marginBottom: 10 }} 
-            onChange={num => setNumber(num)}
-          />
-          <Text style={styles.label}>Matching Contact: {name}</Text>
           <Text style={styles.label}>When:</Text>
           <TouchableOpacity onPress={() => setDateOpen(true)} style={styles.dateEntry}>
             <Text style={styles.dateEntryLabel}>{formattedDate}</Text>
@@ -115,6 +108,13 @@ export const CreatePhoneRecordForm = ({
                   isSelected: !incoming
                 }
               ]}/>
+            <Text style={{ ...styles.label, marginBottom: 0 }}>Number (Optional):</Text>
+            <PhoneNumber 
+              number={number} 
+              style={{ ...styles.entry, textAlign: 'center', marginBottom: 10 }} 
+              onChange={num => setNumber(num)}
+            />
+            <Text style={styles.contactLabel}>Matching Contact: {name}</Text>
         </View>
     )
 }
@@ -130,7 +130,9 @@ const styles = StyleSheet.create({
     backgroundColor: AppColorStyles.buttonBackground,
     borderColor: AppColorStyles.listItemBorderColor,
     elevation: 3,
+    textAlign: "center",
     borderWidth: 3,
+    marginBottom: 10,
     fontSize: 18,
     paddingLeft: 32,
     paddingRight: 32,
@@ -158,15 +160,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'center',
-    fontSize: 24,
+    fontSize: 18,
   },
   callDetails: {
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'space-between',
-    alignItems: "center",
+    // display: 'flex',
+    overflow: 'scroll',
+    // flexDirection: "column",
+    // justifyContent: 'space-between',
+    // alignItems: "center",
     paddingLeft: 20,
     paddingRight: 20,
     marginBottom: 20,
   },
+  contactLabel: {
+    color: "grey"
+  }
 });

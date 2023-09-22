@@ -19,14 +19,6 @@ export const PhoneNumber = ({
 
     const onChangeText = (text: string): void => {
         onChange(text.replace(/\D/g, ""))
-        // const wasAddition = text.length > formattedAppearance.length;
-        // const addition = text.slice(formattedAppearance.length - text.length);
-        // const validAddition = !Number.isNaN(parseInt(addition || ""));
-        // const moreDigitsLeft = number.length < defaultFormat.length;
-        // if (wasAddition && validAddition && moreDigitsLeft)
-        //     onChange(number + addition);
-        // else if (text.length <= formattedAppearance.length)
-        //     onChange(number.slice(0, number.length - 1));
     };
     return (
         <TextInput

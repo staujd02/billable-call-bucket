@@ -17,14 +17,14 @@ const SelectableBilledCallItem = ({ call, onPress }: SelectableBillCallItemProps
     const callDirection = formatLogType(call.type as CallLogType);
     const stamp = formatTimestamp(call.timestamp);
 
-    const title = loadedContact !== null
+    const title = !!loadedContact
         ? formatContact(loadedContact)
         : formatPhoneNumber(call.phoneNumber);
 
     return (
         <SelectableListItem
             onPress={onPress}
-            titles={[title, callDirection, stamp]}
+            titles={[title || "---", callDirection, stamp]}
             flexLayout={[2, 1, 2]}
         />
     )

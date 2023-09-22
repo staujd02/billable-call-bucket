@@ -16,7 +16,7 @@ const StaticCallDetails = ({ call }: StaticCallDetailsProps) => {
   const formattedDuration = formatHoursMinutesSeconds(call.duration);
   const stamp = formatTimestamp(call.timestamp);
 
-  const title = loadedContact !== null
+  const title = !!loadedContact
     ? formatContact(loadedContact)
     : formatPhoneNumber(call.phoneNumber);
 

@@ -16,7 +16,7 @@ const MarkableBilledCall = ({ call, onGoToCallLinkedToClient, toggleCallBilledSt
 
     const stamp = formatDatePortionOfTimestamp(timestamp);
     const shortType = formatLogType(type as CallLogType);
-    const title = loadedContact !== null
+    const title = !!loadedContact
         ? formatContact(loadedContact)
         : formatPhoneNumber(phoneNumber);
 
@@ -24,7 +24,7 @@ const MarkableBilledCall = ({ call, onGoToCallLinkedToClient, toggleCallBilledSt
 
     return (
         <FlexingMultiActionButton 
-            titles={[title, shortType, stamp]}
+            titles={[title || "---", shortType, stamp]}
             layout={[2, 1, 2]}
             onPressMainAction={() => onGoToCallLinkedToClient(pk)}
             onPressSecondaryAction={() => toggleCallBilledStatus(pk)}

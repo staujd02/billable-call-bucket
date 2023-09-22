@@ -3,6 +3,8 @@ import { CallLogType } from "../../types/calls";
 
 export function formatPhoneNumber(phoneNumber: string): string {
     switch (phoneNumber.length) {
+        case 11:
+            return `${phoneNumber.slice(0, 1)} (${phoneNumber.slice(1, 4)}) ${phoneNumber.slice(4, 7)}-${phoneNumber.slice(7, 11)}`;
         case 10:
             return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
         case 7:

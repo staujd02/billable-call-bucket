@@ -4,23 +4,33 @@ import { useState } from "react";
 
 const useContacts = () => {
     
-    const [loadedContact, setLoadedContact] = useState<Contact>();
+    const [loadedContact, setLoadedContact] = useState<Contact | null>();
+    const [matchingContacts, setMatchingContacts] = useState<Contact[]>();
 
     async function loadContactByNumber(number: string) : Promise<void> {
         if ((await requestContactPermission())){
             const contacts = await Contacts.getContactsByPhoneNumber(number);
-            if(matchingContactExist(contacts))
+            if(singleMatchingContactExist(contacts))
                 setLoadedContact(contacts[0])
+            else
+                setLoadedContact(null);
+            if(multipleMatchingContactExist(contacts))
+                setMatchingContacts(contacts)
         }
     }
 
-    function matchingContactExist (matchingContacts: Array<Contact>): boolean {
-        return matchingContacts !== null && matchingContacts.length !== 0;
+    function singleMatchingContactExist(matchingContacts: Array<Contact>): boolean {
+        return matchingContacts !== null && matchingContacts.length === 1;
+    }
+    
+    function multipleMatchingContactExist(matchingContacts: Array<Contact>): boolean {
+        return matchingContacts !== null && matchingContacts.length > 0;
     }
 
     return {
         loadContactByNumber,
-        loadedContact
+        loadedContact,
+        matchingContacts
     }
 }
 

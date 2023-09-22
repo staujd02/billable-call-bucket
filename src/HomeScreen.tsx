@@ -7,6 +7,7 @@ import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import { CreatePhoneRecordForm } from './custom-control/CreatePhoneRecordForm';
 import useContacts from './hooks/useContacts';
+import { viewExistingContact } from 'react-native-contacts';
 
 const HomeScreen = (props: HomeScreenProps) => {
 
@@ -44,7 +45,7 @@ const HomeScreen = (props: HomeScreenProps) => {
             duration={duration} 
             number={number} 
             incoming={incoming} 
-            name={loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : ""}
+            name={loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : "None"}
             setDate={setDate} 
             setDuration={setDuration} 
             setNumber={setNumber} 
@@ -75,12 +76,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   container: {
-    flex: 1,
+    overflow: "scroll",
     backgroundColor: AppColorStyles.navigationBackground,
   },
   content: {
     paddingTop: 10,
-    flex: 1,
     backgroundColor: AppColorStyles.background,
   },
   callHeader: {
