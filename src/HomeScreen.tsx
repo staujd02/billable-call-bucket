@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-native';
+import { ScrollView } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppColorStyles, AppFontStyles } from '../styles/default';
 import { CallLog } from '../types/calls';
@@ -7,7 +7,6 @@ import { HomeScreenProps } from '../types/routes';
 import AppButton from './control/AppButton';
 import { CreatePhoneRecordForm } from './custom-control/CreatePhoneRecordForm';
 import useContacts from './hooks/useContacts';
-import { viewExistingContact } from 'react-native-contacts';
 
 const HomeScreen = (props: HomeScreenProps) => {
 
@@ -39,7 +38,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         <AppButton title="Billing History" onPress={onGoToBillingHistoryByClient} />
         <AppButton title="Client List" onPress={onGoToClientList} />
       </View>
-      <View style={styles.content} >
+      <ScrollView style={styles.content} >
         <CreatePhoneRecordForm 
             date={date} 
             duration={duration} 
@@ -50,17 +49,15 @@ const HomeScreen = (props: HomeScreenProps) => {
             setDuration={setDuration} 
             setNumber={setNumber} 
             setIncoming={setIncoming} />
-        <Button
-          title="Create Call Record"
-          onPress={async () => onGoToLinkClientToCall({
-            dateTime: new Date(date).toISOString(),
-            duration: duration,
-            phoneNumber: number,
-            timestamp: date.toString(),
-            name: loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : "",
-            type: incoming ? 'INCOMING' : 'OUTGOING',
+        <AppButton title="Create Call Record" onPress={() => onGoToLinkClientToCall({
+              dateTime: new Date(date).toISOString(),
+              duration: duration,
+              phoneNumber: number,
+              timestamp: date.toString(),
+              name: loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : "",
+              type: incoming ? 'INCOMING' : 'OUTGOING',
           })} />
-      </View>
+        </ScrollView>
     </View>
   );
 };
@@ -69,18 +66,24 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   navigationRow: {
+    height: 30,
     backgroundColor: AppColorStyles.navigationBackground,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginBottom: 20,
     marginTop: 20,
   },
+  button: {
+    backgroundColor: AppColorStyles.buttonBackground,
+    color: AppColorStyles.buttonText,
+  },
   container: {
-    overflow: "scroll",
+    height: "100%",
     backgroundColor: AppColorStyles.navigationBackground,
   },
   content: {
-    paddingTop: 10,
+    // paddingTop: 10,
+    // paddingBottom: 10,
     backgroundColor: AppColorStyles.background,
   },
   callHeader: {
