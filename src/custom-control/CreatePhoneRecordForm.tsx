@@ -3,8 +3,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { PhoneNumber } from "../control/PhoneNumber";
 import { AppColorStyles, AppFontStyles } from "../../styles/default";
 import { SelectDatePicker } from '../control/DatePicker';
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
+import React from 'react';
 
 export type CreatePhoneRecordFormProps = {
     date: number,

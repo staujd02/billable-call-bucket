@@ -39,25 +39,28 @@ const HomeScreen = (props: HomeScreenProps) => {
         <AppButton title="Client List" onPress={onGoToClientList} />
       </View>
       <ScrollView style={styles.content} >
-        <CreatePhoneRecordForm 
-            date={date} 
-            duration={duration} 
-            number={number} 
-            incoming={incoming} 
-            name={loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : "None"}
-            setDate={setDate} 
-            setDuration={setDuration} 
-            setNumber={setNumber} 
-            setIncoming={setIncoming} />
-        <AppButton title="Create Call Record" onPress={() => onGoToLinkClientToCall({
-              dateTime: new Date(date).toISOString(),
-              duration: duration,
-              phoneNumber: number,
-              timestamp: date.toString(),
-              name: loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : "",
-              type: incoming ? 'INCOMING' : 'OUTGOING',
-          })} />
-        </ScrollView>
+        <CreatePhoneRecordForm
+          date={date}
+          duration={duration}
+          number={number}
+          incoming={incoming}
+          name={loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : "None"}
+          setDate={setDate}
+          setDuration={setDuration}
+          setNumber={setNumber}
+          setIncoming={setIncoming} />
+        <AppButton 
+          styleOverrides={styles.button}
+          title="Create Call Record" onPress={() => onGoToLinkClientToCall({
+          dateTime: new Date(date).toISOString(),
+          duration: duration,
+          phoneNumber: number,
+          timestamp: date.toString(),
+          name: loadedContact ? `${loadedContact?.givenName} ${loadedContact?.familyName}` : "",
+          type: incoming ? 'INCOMING' : 'OUTGOING',
+        })} />
+        <Text style={styles.spacer}> </Text>
+      </ScrollView>
     </View>
   );
 };
@@ -65,6 +68,11 @@ const HomeScreen = (props: HomeScreenProps) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  button: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
+  },
   navigationRow: {
     height: 30,
     backgroundColor: AppColorStyles.navigationBackground,
@@ -73,18 +81,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 20,
   },
-  button: {
-    backgroundColor: AppColorStyles.buttonBackground,
-    color: AppColorStyles.buttonText,
+  spacer: {
+    height: 190,
   },
   container: {
     height: "100%",
     backgroundColor: AppColorStyles.navigationBackground,
   },
   content: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
     backgroundColor: AppColorStyles.background,
+    paddingBottom: 40,
   },
   callHeader: {
     display: 'flex',
