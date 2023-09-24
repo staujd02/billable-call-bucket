@@ -51,7 +51,7 @@ const DraftBillsByClient = ({ navigation }: DraftBillsByClientProps) => {
       <ExportButton
         exportProcess={exportAllOpenBills} 
         exportTitle="Export All Open Bills"
-        exportMessage="Export Finished: Check your documents folder"
+        exportMessage="Export Finished: Check your downloads folder"
       />
       <View style={styles.spacer} />
     </View>
