@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.billme"
+    namespace "com.billworthy.organizer"
     defaultConfig {
-        applicationId "com.billme"
+        applicationId "com.billworthy.organizer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

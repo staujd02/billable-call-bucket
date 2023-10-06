@@ -1,4 +1,4 @@
-package com.billme;
+package com.billworthy.organizer;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

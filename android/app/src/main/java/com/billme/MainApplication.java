@@ -1,4 +1,4 @@
-package com.billme;
+package com.billworthy.organizer;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
