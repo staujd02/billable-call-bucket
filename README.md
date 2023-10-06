@@ -15,7 +15,7 @@ This application was built for a nurse who had to report their phone calls. I li
 #### Intent
 Bill Me is an open-source app designed to help you take notes and keep track of your device's phone call records with your clients. If you need to track your business phone calls on your mobile device for the purpose of billing or exporting a record of those calls later, this app was built for you.
 
-All the application data is stored locally. It requires permission to access your call logs to be useful, but the app never transmits this information over any networks or share it with the world wide web. However, you may export a client bill (which is simply a collection of client call records). An exported CSV bill may be found in your local downloads folder after you request an export.
+All the application data is stored locally. The app never transmits this information over any networks or share it with the world wide web. However, you may export a client bill (which is simply a collection of client call records). An exported CSV bill may be found in your local downloads folder after you request an export.
 
 Since all application data is stored local to your device, if your device is lost or damaged, your app data cannot be retrieved.
 
@@ -23,17 +23,20 @@ This app does encrypt its application data. However, no encryption implementatio
 
 This app will request permission to access your contacts, but it is not critical to the app's function. It's a convenience feature that will replace phone numbers where they appear with the first and last name of the contact of the same number.
 
-This app doesn't allow for manual entry of phone call records. If your device cannot make or receive cellular calls, this application is of no use to you.
-
 #### Okay, How Do I Get It?
 
 ##### Method 1
+1. Purchase it on Google Play: 
+##### Method 2
 1. Download the APK here: https://github.com/staujd02/billable-call-bucket/blob/main/android/app/release/app-release.apk
 2. Side-load it
-##### Method 2
+##### Method 3
 1. Download the source code
 2. Build & Sign it
 4. Side-load your own APK
+
+#### Wait a Minute, Aren't you a developer?
+I know that it's annoying to manually enter the call log information. If a developer wants to publish an app with those kinds of permission (specifically READ_CALL_LOG), you have to pretty special and important, which I am neither. There is a working verion of the app that reads call logs and automatically imports them into a list for ease of recording. That version should be tagged `best-version`, but I have no intent of backfilling new features, so you'll have to fork, maintain, and build that version youself :/.
 
 #### Limitations
 - All information is locally stored (no cloud backups)
