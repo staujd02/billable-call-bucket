@@ -13,8 +13,8 @@ const useFileStorage = () => {
     }
 
     const saveFile = async (lines: AsyncGenerator<string, void, unknown>) => {
-        console.log(getPath());
-        const stream = await RNFetchBlob.fs.writeStream(getPath(), 'utf8')
+        const path = getPath();
+        const stream = await RNFetchBlob.fs.writeStream(path, 'utf8')
         while (true) {
             const generatedLine = await lines.next();
             if (!generatedLine.value)
@@ -22,7 +22,13 @@ const useFileStorage = () => {
             stream.write(generatedLine.value);
         }
         stream.close();
-        console.log("Done...")
+        RNFetchBlob.android.addCompleteDownload({
+            path, 
+            showNotification: true,
+            description: "CSV bill export complete.",
+            mime: "text/csv",
+            title: "Bill Exported"
+        });
     };
 
     return {
