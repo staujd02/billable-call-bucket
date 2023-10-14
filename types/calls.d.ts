@@ -49,6 +49,15 @@ export type Bill = {
     calls: Realm.Results<Call & Realm.Object & ThingsIKnowExist<Call>>
 }
 
+export type LegalInfo = {
+    acceptanceTimestamp: Date,
+    termsAccepted: boolean,
+}
+
+export type Legal = {
+    pk: number
+} & LegalInfo
+
 // I don't know where I'm typing incorrectly, but these functions exist
 export type ThingsIKnowExist<T> = {
     push(...items: T[]): number;
