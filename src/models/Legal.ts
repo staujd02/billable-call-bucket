@@ -5,7 +5,8 @@ const LegalSchema = {
     properties: {
         pk: 'int',
         acceptanceTimestamp: 'date',
-        termsAccepted: 'bool',
+        accepted: 'bool',
+        version: 'int',
     }
 }
 

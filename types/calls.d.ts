@@ -51,7 +51,7 @@ export type Bill = {
 
 export type LegalInfo = {
     acceptanceTimestamp: Date,
-    termsAccepted: boolean,
+    accepted: boolean,
 }
 
 export type Legal = {
