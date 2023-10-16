@@ -4,9 +4,8 @@ const LegalSchema = {
     primaryKey: 'pk',
     properties: {
         pk: 'int',
-        acceptanceTimestamp: 'date',
         accepted: 'bool',
-        version: 'int',
+        acceptanceTimestamp: 'date',
     }
 }
 

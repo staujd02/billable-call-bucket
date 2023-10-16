@@ -1,4 +1,4 @@
-import { Legal, LegalInfo } from "../../types/calls";
+import { Legal } from "../../types/calls";
 import { LegalSchemaName } from "../models/Legal";
 import usePersistentStorage from "./usePersistentStorage";
 

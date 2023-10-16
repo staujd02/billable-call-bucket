@@ -1,13 +1,28 @@
-import React from "react";
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, BackHandler  } from 'react-native';
 import { AppColorStyles, AppFontStyles } from "../styles/default";
 import AppButton from "./control/AppButton";
 import { Terms } from "./constants/termsOfService";
+import useAuthState from "./hooks/useAuthState";
 
-const TermsAndConditions = () => {
+interface TermsAndConditionsProps {
+  setHasAccepted: (b: boolean) => void
+}
 
-  const onAccept = () => {}
-  const onDecline = () => {}
+const TermsAndConditions = ({
+ setHasAccepted 
+}: TermsAndConditionsProps) => {
+
+  const {
+    createRegistrationState,
+  } = useAuthState();
+
+  const onAccept = async () => {
+    await createRegistrationState();
+    setHasAccepted(true);
+  }
+  const onDecline = () => {
+    BackHandler.exitApp();
+  }
 
   return (
     <View style={styles.column}>
@@ -15,7 +30,7 @@ const TermsAndConditions = () => {
       <ScrollView>
         <Text>{Terms}</Text>
         <View style={styles.sizeController}>
-          <AppButton title="I agree to these terms" onPress={onAccept} />
+          <AppButton title="I accept these terms" onPress={onAccept} />
           <AppButton title="I decline" onPress={onDecline} />
         </View>
       </ScrollView>
@@ -38,6 +53,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   sizeController: {
+    justifyContent: 'space-between',
+    display: 'flex',
+    alignItems: "center",
+    flexDirection: "row",
     padding: 15,
   },
   separator: {
