@@ -77,9 +77,9 @@ android {
     defaultConfig {
         applicationId "com.billworthy.organizer"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.1"
+        targetSdkVersion 33
+        versionCode 5
+        versionName "1.2"
     }
     signingConfigs {
         debug {
